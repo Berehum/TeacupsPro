@@ -1,15 +1,15 @@
-package io.github.berehum.customentity.utils.nms.v1_16_R3;
+package io.github.berehum.customentity.utils.nms.v1_16_R2;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.IEntityRegistry;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
-import net.minecraft.server.v1_16_R3.Entity;
-import net.minecraft.server.v1_16_R3.WorldServer;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
+import net.minecraft.server.v1_16_R2.Entity;
+import net.minecraft.server.v1_16_R2.WorldServer;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-public class NMSUtils_1_16_R3 implements NMSUtils {
+public class NMSUtils implements INMSUtils {
 
     private final EntityRegistry entityRegistry = new EntityRegistry();
 
@@ -20,12 +20,12 @@ public class NMSUtils_1_16_R3 implements NMSUtils {
 
     @Override
     public CustomEntity createWolfAlpha(Location location) {
-        return new WolfAlpha_1_16_R3(this, location);
+        return new WolfAlpha(this, location);
     }
 
     @Override
     public CustomEntity createWolfMember(Location location, String name) {
-        return new WolfMember_1_16_R3(this, location, name);
+        return new WolfMember(this, location, name);
     }
 
     @Override

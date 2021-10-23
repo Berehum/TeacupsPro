@@ -2,17 +2,14 @@ package io.github.berehum.customentity;
 
 import io.github.berehum.customentity.commands.SpawnAlphaCommand;
 import io.github.berehum.customentity.listeners.SpawnEntity;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
-import io.github.berehum.customentity.utils.nms.v1_16_R1.NMSUtils_1_16_R1;
-import io.github.berehum.customentity.utils.nms.v1_16_R2.NMSUtils_1_16_R2;
-import io.github.berehum.customentity.utils.nms.v1_16_R3.NMSUtils_1_16_R3;
-import io.github.berehum.customentity.utils.nms.v1_17_r1.NMSUtils_1_17_R1;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.v1_16_R1.NMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomEntityMain extends JavaPlugin {
 
-    private NMSUtils nmsUtils;
+    private INMSUtils nmsUtils;
 
     @Override
     public void onLoad() {
@@ -34,16 +31,16 @@ public final class CustomEntityMain extends JavaPlugin {
     public boolean setupNMS(Version version) {
         switch (version) {
             case v1_16_R1:
-                nmsUtils = new NMSUtils_1_16_R1();
+                nmsUtils = new NMSUtils();
                 break;
             case v1_16_R2:
-                nmsUtils = new NMSUtils_1_16_R2();
+                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_16_R2.NMSUtils();
                 break;
             case v1_16_R3:
-                nmsUtils = new NMSUtils_1_16_R3();
+                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_16_R3.NMSUtils();
                 break;
             case v1_17_R1:
-                nmsUtils = new NMSUtils_1_17_R1();
+                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_17_r1.NMSUtils();
                 break;
         }
 
@@ -54,7 +51,7 @@ public final class CustomEntityMain extends JavaPlugin {
     public void onDisable() {
     }
 
-    public NMSUtils getNmsUtils() {
+    public INMSUtils getNmsUtils() {
         return nmsUtils;
     }
 

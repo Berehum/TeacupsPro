@@ -1,19 +1,20 @@
-package io.github.berehum.customentity.utils.nms.v1_16_R3;
+package io.github.berehum.customentity.utils.nms.v1_16_R2;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
-import net.minecraft.server.v1_16_R3.*;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
+import net.minecraft.server.v1_16_R2.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
 import org.bukkit.entity.Entity;
 
-public class WolfMember_1_16_R3 extends EntityWolf implements CustomEntity {
+public class WolfMember extends EntityWolf implements CustomEntity {
 
-    private final NMSUtils nmsUtils;
+    private final INMSUtils nmsUtils;
 
-    public WolfMember_1_16_R3(NMSUtils nmsUtils, Location loc, String name) {
+    public WolfMember(INMSUtils nmsUtils, Location loc, String name) {
         super(EntityTypes.WOLF, ((CraftWorld)loc.getWorld()).getHandle());
+
         this.nmsUtils = nmsUtils;
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
 
@@ -30,7 +31,7 @@ public class WolfMember_1_16_R3 extends EntityWolf implements CustomEntity {
     }
 
     @Override
-    public NMSUtils getNmsUtils() {
+    public INMSUtils getNmsUtils() {
         return nmsUtils;
     }
 

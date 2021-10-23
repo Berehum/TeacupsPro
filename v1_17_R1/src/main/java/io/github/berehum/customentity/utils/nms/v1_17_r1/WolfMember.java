@@ -1,7 +1,7 @@
 package io.github.berehum.customentity.utils.nms.v1_17_r1;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
 import net.minecraft.network.chat.ChatComponentText;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
@@ -12,11 +12,11 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 
-public class WolfMember_1_17_R1 extends EntityWolf implements CustomEntity {
+public class WolfMember extends EntityWolf implements CustomEntity {
 
-    private final NMSUtils nmsUtils;
+    private final INMSUtils nmsUtils;
 
-    public WolfMember_1_17_R1(NMSUtils nmsUtils, Location loc, String name) {
+    public WolfMember(INMSUtils nmsUtils, Location loc, String name) {
         super(EntityTypes.bc, ((CraftWorld)loc.getWorld()).getHandle());
         this.nmsUtils = nmsUtils;
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
@@ -35,7 +35,7 @@ public class WolfMember_1_17_R1 extends EntityWolf implements CustomEntity {
     }
 
     @Override
-    public NMSUtils getNmsUtils() {
+    public INMSUtils getNmsUtils() {
         return nmsUtils;
     }
 

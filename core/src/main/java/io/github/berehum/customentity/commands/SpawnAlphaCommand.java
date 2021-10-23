@@ -1,7 +1,7 @@
 package io.github.berehum.customentity.commands;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 
 public class SpawnAlphaCommand implements CommandExecutor {
 
-    private final NMSUtils nmsUtils;
+    private final INMSUtils nmsUtils;
 
-    public SpawnAlphaCommand(NMSUtils nmsUtils) {
+    public SpawnAlphaCommand(INMSUtils nmsUtils) {
         this.nmsUtils = nmsUtils;
     }
 

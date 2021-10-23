@@ -1,10 +1,10 @@
-package io.github.berehum.customentity.utils.nms.v1_16_R3;
+package io.github.berehum.customentity.utils.nms.v1_16_R1;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
 import io.github.berehum.customentity.utils.nms.IEntityRegistry;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.server.v1_16_R1.*;
 
 import java.util.Map;
 

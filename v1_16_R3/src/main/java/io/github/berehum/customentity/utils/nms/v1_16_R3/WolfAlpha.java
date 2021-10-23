@@ -1,27 +1,27 @@
 package io.github.berehum.customentity.utils.nms.v1_16_R3;
 
-import io.github.berehum.customentity.utils.nms.NMSUtils;
-import io.github.berehum.customentity.utils.nms.WolfAlpha;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.IWolfAlpha;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 
-public class WolfAlpha_1_16_R3 extends EntityWolf implements WolfAlpha {
+public class WolfAlpha extends EntityWolf implements IWolfAlpha {
 
-    private final NMSUtils nmsUtils;
+    private final INMSUtils nmsUtils;
 
-    public WolfAlpha_1_16_R3(NMSUtils nmsUtils, Location loc) {
+    public WolfAlpha(INMSUtils nmsUtils, Location loc) {
         this(nmsUtils, ((CraftWorld)loc.getWorld()).getHandle());
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public WolfAlpha_1_16_R3(NMSUtils nmsUtils, World world) {
+    public WolfAlpha(INMSUtils nmsUtils, World world) {
         this(EntityTypes.WOLF, world, nmsUtils);
     }
 
-    public WolfAlpha_1_16_R3(EntityTypes<? extends EntityWolf> entityTypes, World world, NMSUtils nmsUtils) {
+    public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world, INMSUtils nmsUtils) {
         super(entityTypes, world);
         this.nmsUtils = nmsUtils;
 
@@ -33,14 +33,14 @@ public class WolfAlpha_1_16_R3 extends EntityWolf implements WolfAlpha {
 
     public void initPathfinder() {
         super.initPathfinder();
-        this.goalSelector.a(1, new PathfinderGoalNearestAttackableTarget<EntityHuman>(this, EntityHuman.class, true));
-        this.goalSelector.a(1, new PathfinderGoalNearestAttackableTarget<WolfAlpha_1_16_R3>(this, WolfAlpha_1_16_R3.class, false));
+        this.goalSelector.a(1, new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, true));
+        this.goalSelector.a(1, new PathfinderGoalNearestAttackableTarget<>(this, WolfAlpha.class, false));
         this.goalSelector.a(1, new PathfinderGoalRestrictSun(this));
         this.goalSelector.a(1, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
     }
 
     @Override
-    public NMSUtils getNmsUtils() {
+    public INMSUtils getNmsUtils() {
         return nmsUtils;
     }
 

@@ -1,7 +1,7 @@
 package io.github.berehum.customentity.listeners;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
-import io.github.berehum.customentity.utils.nms.NMSUtils;
+import io.github.berehum.customentity.utils.nms.INMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Animals;
 import org.bukkit.event.EventHandler;
@@ -10,9 +10,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class SpawnEntity implements Listener {
 
-    private final NMSUtils nmsUtils;
+    private final INMSUtils nmsUtils;
 
-    public SpawnEntity(NMSUtils nmsUtils) {
+    public SpawnEntity(INMSUtils nmsUtils) {
         this.nmsUtils = nmsUtils;
     }
 
