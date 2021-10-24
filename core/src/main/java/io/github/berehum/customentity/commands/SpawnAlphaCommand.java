@@ -2,6 +2,7 @@ package io.github.berehum.customentity.commands;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.IWolfAlpha;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,8 +24,9 @@ public class SpawnAlphaCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        CustomEntity customEntity = nmsUtils.createWolfAlpha(player.getLocation());
-        customEntity.spawn();
+        IWolfAlpha customEntity = (IWolfAlpha) nmsUtils.createCustomEntity(CustomEntity.CustomEntityType.ALPHA_WOLF, player.getLocation());
+        nmsUtils.spawnCustomEntity(customEntity);
+        customEntity.createMembers().forEach(nmsUtils::spawnCustomEntity);
         return true;
     }
 }

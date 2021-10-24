@@ -2,6 +2,7 @@ package io.github.berehum.customentity.listeners;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.IWolfAlpha;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Animals;
 import org.bukkit.event.EventHandler;
@@ -22,8 +23,9 @@ public class SpawnEntity implements Listener {
         if (event.getLocation().getBlock().isLiquid()) return;
         if ((int) (Math.random() * 10) == 1) {
             event.setCancelled(true);
-            CustomEntity wolfAlpha = nmsUtils.createWolfAlpha(event.getLocation());
-            wolfAlpha.spawn();
+            IWolfAlpha wolfAlpha = (IWolfAlpha) nmsUtils.createCustomEntity(CustomEntity.CustomEntityType.ALPHA_WOLF, event.getLocation());
+            nmsUtils.spawnCustomEntity(wolfAlpha);
+            wolfAlpha.createMembers().forEach(nmsUtils::spawnCustomEntity);
             Bukkit.broadcastMessage("pack spawned at " + event.getLocation());
         }
     }

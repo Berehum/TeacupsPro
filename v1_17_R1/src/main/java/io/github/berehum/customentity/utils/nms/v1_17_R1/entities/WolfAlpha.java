@@ -1,5 +1,6 @@
-package io.github.berehum.customentity.utils.nms.v1_17_R1;
+package io.github.berehum.customentity.utils.nms.v1_17_R1.entities;
 
+import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.IWolfAlpha;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
 import net.minecraft.network.chat.ChatComponentText;
@@ -15,22 +16,22 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class WolfAlpha extends EntityWolf implements IWolfAlpha {
 
-    private final INMSUtils nmsUtils;
-
-    public WolfAlpha(INMSUtils nmsUtils, Location loc) {
-        this(((CraftWorld)loc.getWorld()).getHandle(), nmsUtils);
+    public WolfAlpha(Location loc) {
+        this(((CraftWorld)loc.getWorld()).getHandle());
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 
     public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world) {
-        this(world, null);
+        this(world);
     }
 
-    public WolfAlpha(World world, INMSUtils nmsUtils) {
+    public WolfAlpha(World world) {
         super(EntityTypes.bc, world);
-        this.nmsUtils = nmsUtils;
 
         this.setHealth(500);
         this.setCustomNameVisible(true);
@@ -46,12 +47,20 @@ public class WolfAlpha extends EntityWolf implements IWolfAlpha {
     }
 
     @Override
-    public INMSUtils getNmsUtils() {
-        return nmsUtils;
+    public Entity getEntity() {
+        return super.getBukkitEntity();
     }
 
     @Override
-    public Entity getEntity() {
-        return super.getBukkitEntity();
+    public CustomEntityType getType() {
+        return CustomEntityType.ALPHA_WOLF;
+    }
+
+    @Override
+    public List<CustomEntity> createMembers() {
+        Location loc = getEntity().getLocation();
+        List<CustomEntity> pack = Arrays.asList(new WolfMember(loc, "&2Beta Wolf"), new WolfMember(loc, "&3Delta Wolf"),
+                new WolfMember(loc, "&6Bere Wolf"), new WolfMember(loc, "&9Warrior Wolf"));
+        return pack;
     }
 }

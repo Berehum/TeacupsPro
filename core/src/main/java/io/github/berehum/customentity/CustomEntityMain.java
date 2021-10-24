@@ -3,7 +3,6 @@ package io.github.berehum.customentity;
 import io.github.berehum.customentity.commands.SpawnAlphaCommand;
 import io.github.berehum.customentity.listeners.SpawnEntity;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
-import io.github.berehum.customentity.utils.nms.v1_16_R1.NMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +30,7 @@ public final class CustomEntityMain extends JavaPlugin {
     public boolean setupNMS(Version version) {
         switch (version) {
             case v1_16_R1:
-                nmsUtils = new NMSUtils();
+                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_16_R1.NMSUtils();
                 break;
             case v1_16_R2:
                 nmsUtils = new io.github.berehum.customentity.utils.nms.v1_16_R2.NMSUtils();
@@ -45,10 +44,6 @@ public final class CustomEntityMain extends JavaPlugin {
         }
 
         return nmsUtils != null;
-    }
-
-    @Override
-    public void onDisable() {
     }
 
     public INMSUtils getNmsUtils() {

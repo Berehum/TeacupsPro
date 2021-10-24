@@ -3,6 +3,9 @@ package io.github.berehum.customentity.utils.nms.v1_16_R2;
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.IEntityRegistry;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.RocketCreeper;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.WolfAlpha;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.WolfMember;
 import net.minecraft.server.v1_16_R2.Entity;
 import net.minecraft.server.v1_16_R2.WorldServer;
 import org.bukkit.Location;
@@ -11,7 +14,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class NMSUtils implements INMSUtils {
 
-    private final EntityRegistry entityRegistry = new EntityRegistry(this);
+    private final EntityRegistry entityRegistry = new EntityRegistry();
 
     @Override
     public IEntityRegistry getEntityRegistry() {
@@ -19,16 +22,15 @@ public class NMSUtils implements INMSUtils {
     }
 
     @Override
-    public CustomEntity createWolfAlpha(Location location) {
-        return new WolfAlpha(this, location);
+    public CustomEntity createCustomEntity(CustomEntity.CustomEntityType type, Location location) {
+        switch (type) {
+            case ALPHA_WOLF: return new WolfAlpha(location);
+            case WOLF_MEMBER: return new WolfMember(location);
+            case ROCKET_CREEPER: return new RocketCreeper(location);
+        }
+        return null;
     }
 
-    @Override
-    public CustomEntity createWolfMember(Location location, String name) {
-        return new WolfMember(this, location, name);
-    }
-
-    @Override
     public void spawnCustomEntity(CustomEntity customEntity) {
         WorldServer world = ((CraftWorld) customEntity.getEntity().getLocation().getWorld()).getHandle();
         world.addEntity((Entity) customEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);

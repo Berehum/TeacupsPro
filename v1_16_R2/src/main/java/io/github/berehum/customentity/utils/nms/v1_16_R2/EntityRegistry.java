@@ -3,28 +3,23 @@ package io.github.berehum.customentity.utils.nms.v1_16_R2;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
 import io.github.berehum.customentity.utils.nms.IEntityRegistry;
-import io.github.berehum.customentity.utils.nms.INMSUtils;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.RocketCreeper;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.WolfAlpha;
+import io.github.berehum.customentity.utils.nms.v1_16_R2.entities.WolfMember;
 import net.minecraft.server.v1_16_R2.*;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.function.Function;
 
 public class EntityRegistry implements IEntityRegistry {
     public static EntityTypes ALPHA_WOLF;
-
-    private final INMSUtils nmsUtils;
-
-    public EntityRegistry(INMSUtils nmsUtils) {
-        this.nmsUtils = nmsUtils;
-    }
+    public static EntityTypes WOLF_MEMBER;
+    public static EntityTypes ROCKET_CREEPER;
 
     public void registerEntities() {
         ALPHA_WOLF =  injectNewEntity("alpha_wolf", "wolf", EntityTypes.Builder.<Entity>a(WolfAlpha::new, EnumCreatureType.CREATURE));
-    }
-
-    private <T extends Entity> EntityTypes injectNewEntity(String name, String extend_from, EntityTypes.b<T> entitytypes_b, EnumCreatureType type) {
-        return injectNewEntity(name, extend_from, EntityTypes.Builder.<Entity>a(entitytypes_b, type));
+        WOLF_MEMBER =  injectNewEntity("wolf_member", "wolf", EntityTypes.Builder.<Entity>a(WolfMember::new, EnumCreatureType.CREATURE));
+        ROCKET_CREEPER =  injectNewEntity("rocket_creeper", "creeper", EntityTypes.Builder.<Entity>a(RocketCreeper::new, EnumCreatureType.CREATURE));
     }
 
     private EntityTypes injectNewEntity(String name, String extend_from, EntityTypes.Builder<Entity> entitytypes_builder) {

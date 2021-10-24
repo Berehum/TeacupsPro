@@ -3,9 +3,10 @@ package io.github.berehum.customentity.utils.nms;
 import org.bukkit.entity.Entity;
 
 public interface CustomEntity {
-    INMSUtils getNmsUtils();
-    default void spawn() {
-        getNmsUtils().spawnCustomEntity(this);
-    };
     Entity getEntity();
+    CustomEntityType getType();
+
+    enum CustomEntityType {
+        ALPHA_WOLF, WOLF_MEMBER, ROCKET_CREEPER;
+    }
 }

@@ -16,13 +16,6 @@
         <build.number>unknown</build.number>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>codemc-nms</id>
-            <url>https://repo.codemc.org/repository/nms/</url>
-        </repository>
-    </repositories>
-
     <modules>
         <module>core</module>
         <module>abstract</module>
