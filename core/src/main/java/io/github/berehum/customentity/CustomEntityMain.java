@@ -18,7 +18,7 @@ public final class CustomEntityMain extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-
+        nmsUtils.getEntityRegistry().registerEntities();
     }
 
     @Override
@@ -40,7 +40,7 @@ public final class CustomEntityMain extends JavaPlugin {
                 nmsUtils = new io.github.berehum.customentity.utils.nms.v1_16_R3.NMSUtils();
                 break;
             case v1_17_R1:
-                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_17_r1.NMSUtils();
+                nmsUtils = new io.github.berehum.customentity.utils.nms.v1_17_R1.NMSUtils();
                 break;
         }
 

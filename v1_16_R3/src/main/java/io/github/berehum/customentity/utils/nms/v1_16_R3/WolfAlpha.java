@@ -13,16 +13,16 @@ public class WolfAlpha extends EntityWolf implements IWolfAlpha {
     private final INMSUtils nmsUtils;
 
     public WolfAlpha(INMSUtils nmsUtils, Location loc) {
-        this(nmsUtils, ((CraftWorld)loc.getWorld()).getHandle());
+        this(((CraftWorld)loc.getWorld()).getHandle(), nmsUtils);
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public WolfAlpha(INMSUtils nmsUtils, World world) {
-        this(EntityTypes.WOLF, world, nmsUtils);
+    public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world) {
+        this(world, null);
     }
 
-    public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world, INMSUtils nmsUtils) {
-        super(entityTypes, world);
+    public WolfAlpha(World world, INMSUtils nmsUtils) {
+        super(EntityTypes.WOLF, world);
         this.nmsUtils = nmsUtils;
 
         this.setHealth(500);

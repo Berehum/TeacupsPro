@@ -1,4 +1,4 @@
-package io.github.berehum.customentity.utils.nms.v1_17_r1;
+package io.github.berehum.customentity.utils.nms.v1_17_R1;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.INMSUtils;

@@ -11,7 +11,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class NMSUtils implements INMSUtils {
 
-    private final EntityRegistry entityRegistry = new EntityRegistry();
+    private final EntityRegistry entityRegistry = new EntityRegistry(this);
 
     @Override
     public IEntityRegistry getEntityRegistry() {

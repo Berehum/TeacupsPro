@@ -1,6 +1,7 @@
-package io.github.berehum.customentity.utils.nms.v1_17_r1;
+package io.github.berehum.customentity.utils.nms.v1_17_R1;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
+import io.github.berehum.customentity.utils.nms.IEntityRegistry;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.Entity;
@@ -9,6 +10,13 @@ import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class NMSUtils implements INMSUtils {
+
+    private final EntityRegistry entityRegistry = new EntityRegistry(this);
+
+    @Override
+    public IEntityRegistry getEntityRegistry() {
+        return entityRegistry;
+    }
 
     @Override
     public CustomEntity createWolfAlpha(Location location) {

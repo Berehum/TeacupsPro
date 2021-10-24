@@ -1,4 +1,4 @@
-package io.github.berehum.customentity.utils.nms.v1_17_r1;
+package io.github.berehum.customentity.utils.nms.v1_17_R1;
 
 import io.github.berehum.customentity.utils.nms.IWolfAlpha;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
@@ -20,23 +20,22 @@ public class WolfAlpha extends EntityWolf implements IWolfAlpha {
     private final INMSUtils nmsUtils;
 
     public WolfAlpha(INMSUtils nmsUtils, Location loc) {
-        this(nmsUtils, ((CraftWorld)loc.getWorld()).getHandle());
+        this(((CraftWorld)loc.getWorld()).getHandle(), nmsUtils);
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public WolfAlpha(INMSUtils nmsUtils, World world) {
-        this(EntityTypes.bc, world, nmsUtils);
+    public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world) {
+        this(world, null);
     }
 
-    public WolfAlpha(EntityTypes<? extends EntityWolf> entityTypes, World world, INMSUtils nmsUtils) {
-        super(entityTypes, world);
+    public WolfAlpha(World world, INMSUtils nmsUtils) {
+        super(EntityTypes.bc, world);
         this.nmsUtils = nmsUtils;
 
         this.setHealth(500);
         this.setCustomNameVisible(true);
         this.setCustomName(new ChatComponentText(ChatColor.translateAlternateColorCodes('&', "&c&lAlpha Wolf")));
     }
-
 
     public void initPathfinder() {
         super.initPathfinder();

@@ -8,7 +8,6 @@ import org.bukkit.entity.Entity;
 
 import java.util.EnumSet;
 
-//@todo make abstract pathfindergoal and entityinsentient to reduce code.
 public class PathfinderGoalFollowLeader extends PathfinderGoal {
     private final EntityInsentient a; // wolf member
     private Entity b; // leader
