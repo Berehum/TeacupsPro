@@ -30,7 +30,7 @@ public class RocketCreeper extends EntityCreeper implements CustomEntity {
 
         this.setHealth(10);
         this.setCustomNameVisible(true);
-        this.setCustomName(new ChatComponentText(ChatColor.translateAlternateColorCodes('&', "&c&lSensitive Creeper")));
+        this.setCustomName(new ChatComponentText(ChatColor.translateAlternateColorCodes('&', "&c&lRocket Creeper")));
     }
 
     @Override
