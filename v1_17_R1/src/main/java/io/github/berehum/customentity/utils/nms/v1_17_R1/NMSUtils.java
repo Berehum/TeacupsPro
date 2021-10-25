@@ -24,9 +24,12 @@ public class NMSUtils implements INMSUtils {
     @Override
     public CustomEntity createCustomEntity(CustomEntity.CustomEntityType type, Location location) {
         switch (type) {
-            case ALPHA_WOLF: return new WolfAlpha(location);
-            case WOLF_MEMBER: return new WolfMember(location);
-            case ROCKET_CREEPER: return new RocketCreeper(location);
+            case ALPHA_WOLF:
+                return new WolfAlpha(location);
+            case WOLF_MEMBER:
+                return new WolfMember(location);
+            case ROCKET_CREEPER:
+                return new RocketCreeper(location);
         }
         return null;
     }

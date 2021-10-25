@@ -1,7 +1,6 @@
 package io.github.berehum.customentity.utils.nms.v1_17_R1.entities;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
-import io.github.berehum.customentity.utils.nms.INMSUtils;
 import io.github.berehum.customentity.utils.nms.v1_17_R1.PathfinderGoalFollowLeader;
 import net.minecraft.network.chat.ChatComponentText;
 import net.minecraft.world.entity.EntityTypes;
@@ -21,7 +20,7 @@ public class WolfMember extends EntityWolf implements CustomEntity {
     }
 
     public WolfMember(Location loc, String name) {
-        this(((CraftWorld)loc.getWorld()).getHandle(), name);
+        this(((CraftWorld) loc.getWorld()).getHandle(), name);
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 

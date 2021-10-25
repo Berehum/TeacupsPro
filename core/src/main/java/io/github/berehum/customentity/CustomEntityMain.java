@@ -2,6 +2,8 @@ package io.github.berehum.customentity;
 
 import io.github.berehum.customentity.commands.SpawnAlphaCommand;
 import io.github.berehum.customentity.listeners.SpawnEntity;
+import io.github.berehum.customentity.utils.nms.CustomEntity;
+import io.github.berehum.customentity.utils.nms.IEntityRegistry;
 import io.github.berehum.customentity.utils.nms.INMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +19,13 @@ public final class CustomEntityMain extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        nmsUtils.getEntityRegistry().registerEntities();
+        registerEntities(nmsUtils.getEntityRegistry());
+    }
+
+    public void registerEntities(IEntityRegistry entityRegistry) {
+        entityRegistry.injectCustomEntity(CustomEntity.CustomEntityType.ALPHA_WOLF, Version.Current.name());
+        entityRegistry.injectCustomEntity(CustomEntity.CustomEntityType.WOLF_MEMBER, Version.Current.name());
+        entityRegistry.injectCustomEntity(CustomEntity.CustomEntityType.ROCKET_CREEPER, Version.Current.name());
     }
 
     @Override

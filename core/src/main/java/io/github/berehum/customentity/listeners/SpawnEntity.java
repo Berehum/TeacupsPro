@@ -19,7 +19,8 @@ public class SpawnEntity implements Listener {
 
     @EventHandler
     public void onSpawn(CreatureSpawnEvent event) {
-        if (!(event.getEntity() instanceof Animals) || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM) return;
+        if (!(event.getEntity() instanceof Animals) || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)
+            return;
         if (event.getLocation().getBlock().isLiquid()) return;
         if ((int) (Math.random() * 10) == 1) {
             event.setCancelled(true);

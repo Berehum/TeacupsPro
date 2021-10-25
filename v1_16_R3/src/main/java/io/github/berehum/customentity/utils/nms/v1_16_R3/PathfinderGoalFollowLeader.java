@@ -11,10 +11,8 @@ import java.util.EnumSet;
 //@todo make abstract pathfindergoal and entityinsentient to reduce code.
 public class PathfinderGoalFollowLeader extends PathfinderGoal {
     private final EntityInsentient a; // wolf member
-    private Entity b; // leader
-
     private final double f; // following speed
-
+    private Entity b; // leader
     private double c; // x
     private double d; // y
     private double e; // z
@@ -42,11 +40,9 @@ public class PathfinderGoalFollowLeader extends PathfinderGoal {
                 loc.getWorld().spawnParticle(Particle.CLOUD, loc.getX(), loc.getY(), loc.getZ(), 0);
             }
             return false;
-        }
-        else if (this.b.getLocation().distance(new Location(this.a.getWorld().getWorld(), this.a.locX(), this.a.locY(), this.a.locZ())) < 6) {
+        } else if (this.b.getLocation().distance(new Location(this.a.getWorld().getWorld(), this.a.locX(), this.a.locY(), this.a.locZ())) < 6) {
             return false;
-        }
-        else {
+        } else {
 
             this.c = this.b.getLocation().getX(); // x
             this.d = this.b.getLocation().getY(); // y

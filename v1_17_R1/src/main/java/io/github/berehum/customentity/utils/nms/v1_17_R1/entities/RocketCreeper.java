@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 public class RocketCreeper extends EntityCreeper implements CustomEntity {
 
     public RocketCreeper(Location loc) {
-        this(((CraftWorld)loc.getWorld()).getHandle());
+        this(((CraftWorld) loc.getWorld()).getHandle());
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 

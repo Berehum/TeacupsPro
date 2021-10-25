@@ -13,7 +13,7 @@ import java.util.List;
 
 public class WolfAlpha extends EntityWolf implements IWolfAlpha {
     public WolfAlpha(Location loc) {
-        this(((CraftWorld)loc.getWorld()).getHandle());
+        this(((CraftWorld) loc.getWorld()).getHandle());
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 

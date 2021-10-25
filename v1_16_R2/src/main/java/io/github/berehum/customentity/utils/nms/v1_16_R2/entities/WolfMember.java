@@ -15,7 +15,7 @@ public class WolfMember extends EntityWolf implements CustomEntity {
     }
 
     public WolfMember(Location loc, String name) {
-        this(((CraftWorld)loc.getWorld()).getHandle(), name);
+        this(((CraftWorld) loc.getWorld()).getHandle(), name);
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 

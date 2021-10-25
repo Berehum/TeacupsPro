@@ -2,25 +2,47 @@ package io.github.berehum.customentity.utils.nms.v1_16_R3;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.IEntityRegistry;
-import io.github.berehum.customentity.utils.nms.INMSUtils;
-import io.github.berehum.customentity.utils.nms.v1_16_R3.entities.RocketCreeper;
-import io.github.berehum.customentity.utils.nms.v1_16_R3.entities.WolfAlpha;
-import io.github.berehum.customentity.utils.nms.v1_16_R3.entities.WolfMember;
 import net.minecraft.server.v1_16_R3.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 public class EntityRegistry implements IEntityRegistry {
-    public static EntityTypes ALPHA_WOLF;
-    public static EntityTypes WOLF_MEMBER;
-    public static EntityTypes ROCKET_CREEPER;
+    public static Map<CustomEntity.CustomEntityType, EntityTypes> ENTITIY_TYPES = new HashMap<>();
 
-    public void registerEntities() {
-        ALPHA_WOLF =  injectNewEntity("alpha_wolf", "wolf", EntityTypes.Builder.<Entity>a(WolfAlpha::new, EnumCreatureType.CREATURE));
-        WOLF_MEMBER =  injectNewEntity("wolf_member", "wolf", EntityTypes.Builder.<Entity>a(WolfMember::new, EnumCreatureType.CREATURE));
-        ROCKET_CREEPER =  injectNewEntity("rocket_creeper", "creeper", EntityTypes.Builder.<Entity>a(RocketCreeper::new, EnumCreatureType.CREATURE));
+    public void injectCustomEntity(CustomEntity.CustomEntityType type, Class<?> clazz) {
+        //Check if it is an instance of the right super classes
+        if (!CustomEntity.class.isAssignableFrom(clazz) || !Entity.class.isAssignableFrom(clazz)) {
+            return;
+        }
+
+        //Determining CreatureType
+        EnumCreatureType creatureType = EnumCreatureType.a(type.getCreatureType());
+        if (creatureType == null) return;
+
+        //Gets the default constructor that every CustomEntity class MUST have.
+        Constructor<?> constructor;
+        try {
+            constructor = clazz.getConstructor(EntityTypes.class, World.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        EntityTypes entityTypes = injectNewEntity(type.getName(), type.getExtendFrom(), EntityTypes.Builder.<Entity>a(((entitytypes, world) -> {
+            try {
+                return (Entity) constructor.newInstance(entitytypes, world);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }), creatureType));
+        ENTITIY_TYPES.put(type, entityTypes);
     }
 
     private EntityTypes injectNewEntity(String name, String extend_from, EntityTypes.Builder<Entity> entitytypes_builder) {

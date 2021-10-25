@@ -2,7 +2,6 @@ package io.github.berehum.customentity.utils.nms.v1_17_R1.entities;
 
 import io.github.berehum.customentity.utils.nms.CustomEntity;
 import io.github.berehum.customentity.utils.nms.IWolfAlpha;
-import io.github.berehum.customentity.utils.nms.INMSUtils;
 import net.minecraft.network.chat.ChatComponentText;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalLookAtPlayer;
@@ -22,7 +21,7 @@ import java.util.List;
 public class WolfAlpha extends EntityWolf implements IWolfAlpha {
 
     public WolfAlpha(Location loc) {
-        this(((CraftWorld)loc.getWorld()).getHandle());
+        this(((CraftWorld) loc.getWorld()).getHandle());
         this.setPosition(loc.getX(), loc.getY(), loc.getZ());
     }
 
