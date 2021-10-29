@@ -3,7 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>customentity-parent</artifactId>
+        <artifactId>teacups-parent</artifactId>
         <groupId>io.github.berehum</groupId>
         <version>1.0</version>
     </parent>
@@ -14,7 +14,7 @@
 
     <build>
         <directory>../target</directory>
-        <finalName>customentity-${project.version}</finalName>
+        <finalName>teacups-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -41,35 +41,21 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>customentity-core</artifactId>
+            <artifactId>teacups-core</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>customentity-v1_16_R1</artifactId>
+            <artifactId>teacups-v1_17_R1</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>customentity-v1_16_R2</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>customentity-v1_16_R3</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>customentity-v1_17_R1</artifactId>
+            <artifactId>teacups-abstract</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
             <scope>compile</scope>
