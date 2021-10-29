@@ -1,6 +1,10 @@
-name: Teacups
+name: CustomEntity
 version: '${project.version}'
-main: io.github.berehum.teacups.TeacupsMain
+main: io.github.berehum.customentity.CustomEntityMain
 api-version: 1.13
 authors: [ Berehum ]
-description: Adds teacups attractions to your server
+description: Experimenting with custom entities using NMS.
+
+commands:
+  spawnalpha:
+    description: Spawns an alpha wolf with its pack.
