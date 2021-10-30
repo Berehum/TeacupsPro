@@ -1,0 +1,48 @@
+settings:
+  location:
+    world: World
+    x: -173.5
+    y: 5
+    z: -60.5
+  radius: 10
+
+#add model support.
+cartgroups:
+  #automatically spaces them out evenly
+  cartgroup1:
+    radius: 3.5
+    #automatically spaces them out evenly
+    carts:
+      cart1:
+        radius: 2
+        seats: 3
+      cart2:
+        radius: 2
+        seats: 3
+      cart3:
+        radius: 2
+        seats: 3
+  cartgroup2:
+    radius: 3.5
+    carts:
+      cart1:
+        radius: 2
+        seats: 3
+      cart2:
+        radius: 2
+        seats: 3
+      cart3:
+        radius: 2
+        seats: 3
+  cartgroup3:
+    radius: 3.5
+    carts:
+      cart1:
+        radius: 2
+        seats: 3
+      cart2:
+        radius: 2
+        seats: 3
+      cart3:
+        radius: 2
+        seats: 3
