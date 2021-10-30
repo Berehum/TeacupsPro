@@ -3,12 +3,11 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>customentity-abstract</artifactId>
+    <artifactId>teacups-abstract</artifactId>
     <packaging>jar</packaging>
 
     <parent>
-        <artifactId>customentity-parent</artifactId>
+        <artifactId>teacups-parent</artifactId>
         <groupId>io.github.berehum</groupId>
         <version>1.0</version>
     </parent>
@@ -20,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <artifactId>spigot</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

@@ -3,11 +3,11 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>customentity-v1_17_R1</artifactId>
+    <artifactId>teacups-v1_17_R1</artifactId>
     <packaging>jar</packaging>
 
     <parent>
-        <artifactId>customentity-parent</artifactId>
+        <artifactId>teacups-parent</artifactId>
         <groupId>io.github.berehum</groupId>
         <version>1.0</version>
     </parent>
@@ -25,9 +25,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.berehum</groupId>
-            <artifactId>customentity-abstract</artifactId>
+            <artifactId>teacups-abstract</artifactId>
             <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.berehum</groupId>
-    <artifactId>customentity-parent</artifactId>
+    <artifactId>teacups-parent</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
@@ -19,9 +19,6 @@
     <modules>
         <module>core</module>
         <module>abstract</module>
-        <module>v1_16_R1</module>
-        <module>v1_16_R2</module>
-        <module>v1_16_R3</module>
         <module>v1_17_R1</module>
         <module>dist</module>
     </modules>
