@@ -30,6 +30,15 @@ public class WrapperPlayClientUseEntity extends AbstractPacket {
     }
 
     /**
+     * Set entity ID of the target.
+     *
+     * @param value - new value.
+     */
+    public void setTargetID(int value) {
+        handle.getIntegers().write(0, value);
+    }
+
+    /**
      * Retrieve the entity that was targeted.
      *
      * @param world - the current world of the entity.
@@ -47,15 +56,6 @@ public class WrapperPlayClientUseEntity extends AbstractPacket {
      */
     public Entity getTarget(PacketEvent event) {
         return getTarget(event.getPlayer().getWorld());
-    }
-
-    /**
-     * Set entity ID of the target.
-     *
-     * @param value - new value.
-     */
-    public void setTargetID(int value) {
-        handle.getIntegers().write(0, value);
     }
 
     /**

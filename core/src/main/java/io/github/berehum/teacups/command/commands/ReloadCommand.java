@@ -41,8 +41,9 @@ public class ReloadCommand extends TeacupCommand {
             return;
         }
 
+        teacupManager.getTeacups().values().forEach(Teacup::disable);
         teacupManager.getTeacups().clear();
-        teacupManager.loadTeacups(plugin.getDataFolder()+"/teacups");
+        teacupManager.loadTeacups(plugin.getDataFolder() + "/teacups");
         sender.sendMessage(ChatColor.GREEN + "All teacups have been reloaded.");
     }
 }

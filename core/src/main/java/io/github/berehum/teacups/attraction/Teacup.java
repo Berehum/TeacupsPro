@@ -23,7 +23,7 @@ public class Teacup {
     private final Location location;
     private final Map<String, CartGroup> cartGroups = new HashMap<>();
 
-    private float rpm = 0.0F;
+    private int rpm = 0;
     private double rotation = 0.0;
     private boolean locked = false;
 
@@ -122,11 +122,11 @@ public class Teacup {
         this.rotation = rotation % (2 * Math.PI);
     }
 
-    public float getRpm() {
+    public int getRpm() {
         return rpm;
     }
 
-    public void setRpm(float rpm) {
+    public void setRpm(int rpm) {
         this.rpm = rpm;
     }
 

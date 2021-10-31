@@ -44,6 +44,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
                 new SpawnCommand(plugin, this),
                 new ReloadCommand(plugin, this),
                 new LockCommand(plugin, this),
+                new KickCommand(plugin, this),
                 new SetTeacupRpmCommand(plugin, this),
                 new SetCartGroupRpmCommand(plugin, this),
                 new SetCartRpmCommand(plugin, this)

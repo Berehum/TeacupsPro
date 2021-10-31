@@ -2,6 +2,7 @@ package io.github.berehum.teacups.command.commands;
 
 import cloud.commandframework.arguments.standard.BooleanArgument;
 import cloud.commandframework.arguments.standard.FloatArgument;
+import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.context.CommandContext;
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.Teacup;
@@ -31,7 +32,7 @@ public class SetCartRpmCommand extends TeacupCommand {
                         .argument(TeacupArgument.of("teacup"))
                         .argument(CartGroupArgument.of("cartgroup"))
                         .argument(CartArgument.of("cart"))
-                        .argument(FloatArgument.of("rpm"))
+                        .argument(IntegerArgument.of("rpm"))
                         .argument(BooleanArgument.optional("add to existing"))
                         .handler(this::setRpm)
         );
@@ -41,11 +42,11 @@ public class SetCartRpmCommand extends TeacupCommand {
         final Teacup teacup = context.get("teacup");
         final CartGroup cartgroup = context.get("cartgroup");
         final Cart cart = context.get("cart");
-        final float rpm = context.get("rpm");
+        final int rpm = context.get("rpm");
         final Optional<Boolean> addToExisting = context.getOptional("add to existing");
 
         if (addToExisting.isPresent() && addToExisting.get()) {
-            cart.setRpm(cart.getRpm()+rpm);
+            cart.setRpm(cart.getRpm() + rpm);
         } else {
             cart.setRpm(rpm);
         }

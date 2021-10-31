@@ -3,9 +3,6 @@ package io.github.berehum.teacups;
 import io.github.berehum.teacups.attraction.TeacupManager;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.listeners.PlayerListener;
-import io.github.berehum.teacups.utils.Version;
-import io.github.berehum.teacups.utils.nms.INMSHandler;
-import io.github.berehum.teacups.utils.nms.v1_17_R1.NMSHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,7 +14,6 @@ public final class TeacupsMain extends JavaPlugin {
 
     private TeacupManager teacupManager;
 
-    private INMSHandler nmsHandler;
     private PacketHandler packetHandler;
 
     public static TeacupsMain getInstance() {
@@ -25,21 +21,14 @@ public final class TeacupsMain extends JavaPlugin {
     }
 
     public static void setInstance(TeacupsMain instance) {
-        if (TeacupsMain.INSTANCE != null) throw new UnsupportedOperationException("Instance already exists");
+        if (TeacupsMain.INSTANCE != null)
+            throw new UnsupportedOperationException("Instance already exists");
         TeacupsMain.INSTANCE = instance;
     }
 
     @Override
-    public void onLoad() {
-        setInstance(this);
-        if (!setupNMS(Version.Current)) {
-            getLogger().severe("Your server version is not compatible with this plugin!");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
-    }
-
-    @Override
     public void onEnable() {
+        setInstance(this);
         teacupManager = new TeacupManager(this);
         teacupManager.init();
         packetHandler = new PacketHandler(this);
@@ -59,20 +48,6 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onDisable() {
         teacupManager.shutdown();
-    }
-
-    public boolean setupNMS(Version version) {
-        switch (version) {
-            case v1_17_R1:
-                nmsHandler = new NMSHandler();
-                break;
-        }
-
-        return nmsHandler != null;
-    }
-
-    public INMSHandler getNmsHandler() {
-        return nmsHandler;
     }
 
     public TeacupManager getTeacupManager() {

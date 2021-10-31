@@ -3,6 +3,7 @@ package io.github.berehum.teacups.utils.nms.v1_17_R1;
 import io.github.berehum.teacups.utils.nms.INMSHandler;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EnumMoveType;
+import net.minecraft.world.entity.decoration.EntityArmorStand;
 import net.minecraft.world.phys.Vec3D;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;

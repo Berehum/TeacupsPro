@@ -17,7 +17,7 @@ public class CartGroup {
 
     //Location of the center of the cartgroup
     private Location location;
-    private float rpm = 0.0F;
+    private int rpm = 0;
     private double rotation = 0.0;
 
     public CartGroup(String id, Location location, double radius, Map<String, Cart> carts) {
@@ -76,11 +76,11 @@ public class CartGroup {
         return carts;
     }
 
-    public float getRpm() {
+    public int getRpm() {
         return rpm;
     }
 
-    public void setRpm(float rpm) {
+    public void setRpm(int rpm) {
         this.rpm = rpm;
     }
 

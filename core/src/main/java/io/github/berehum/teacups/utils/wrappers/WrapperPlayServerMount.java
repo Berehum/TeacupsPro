@@ -36,6 +36,15 @@ public class WrapperPlayServerMount extends AbstractPacket {
     }
 
     /**
+     * Set Entity ID.
+     *
+     * @param value - new value.
+     */
+    public void setEntityID(int value) {
+        handle.getIntegers().write(0, value);
+    }
+
+    /**
      * Retrieve the entity involved in this event.
      *
      * @param world - the current world of the entity.
@@ -53,15 +62,6 @@ public class WrapperPlayServerMount extends AbstractPacket {
      */
     public Entity getEntity(PacketEvent event) {
         return getEntity(event.getPlayer().getWorld());
-    }
-
-    /**
-     * Set Entity ID.
-     *
-     * @param value - new value.
-     */
-    public void setEntityID(int value) {
-        handle.getIntegers().write(0, value);
     }
 
     public int[] getPassengerIds() {

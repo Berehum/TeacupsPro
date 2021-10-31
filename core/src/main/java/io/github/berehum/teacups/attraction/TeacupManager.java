@@ -44,7 +44,7 @@ public class TeacupManager {
     public void loadTeacup(CustomConfig config) {
 
         String name = config.getFile().getName();
-        String finalName = name.substring(0, name.length()-4);
+        String finalName = name.substring(0, name.length() - 4);
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             Teacup oldTeacup = teacupsAttractions.get(finalName);

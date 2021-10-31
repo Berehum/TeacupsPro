@@ -1,7 +1,7 @@
 package io.github.berehum.teacups.command.commands;
 
 import cloud.commandframework.arguments.standard.BooleanArgument;
-import cloud.commandframework.arguments.standard.FloatArgument;
+import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.context.CommandContext;
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.Teacup;
@@ -25,7 +25,7 @@ public class SetTeacupRpmCommand extends TeacupCommand {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("setrpm").literal("teacup")
                         .argument(TeacupArgument.of("teacup"))
-                        .argument(FloatArgument.of("rpm"))
+                        .argument(IntegerArgument.of("rpm"))
                         .argument(BooleanArgument.optional("add to existing"))
                         .handler(this::setRpm)
         );
@@ -33,11 +33,11 @@ public class SetTeacupRpmCommand extends TeacupCommand {
 
     private void setRpm(final @NonNull CommandContext<CommandSender> context) {
         final Teacup teacup = context.get("teacup");
-        final float rpm = context.get("rpm");
+        final int rpm = context.get("rpm");
         final Optional<Boolean> addToExisting = context.getOptional("add to existing");
 
         if (addToExisting.isPresent() && addToExisting.get()) {
-            teacup.setRpm(teacup.getRpm()+rpm);
+            teacup.setRpm(teacup.getRpm() + rpm);
         } else {
             teacup.setRpm(rpm);
         }

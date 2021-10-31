@@ -73,9 +73,9 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
     /**
      * Create a new required command component with a default value
      *
-     * @param name             Component name
+     * @param name        Component name
      * @param defaultCart Default cart
-     * @param <C>              Command sender type
+     * @param <C>         Command sender type
      * @return Created component
      */
     public static <C> @NonNull CommandArgument<C, Cart> optional(

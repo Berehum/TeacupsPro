@@ -11,8 +11,8 @@ import org.bukkit.util.Vector;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-//packets :D
 public class Seat {
 
     private final int entityId;
@@ -23,7 +23,7 @@ public class Seat {
     private boolean locked = false;
 
     public Seat(Location location) {
-        this((int)(Math.random() * Integer.MAX_VALUE), location);
+        this((int) (Math.random() * Integer.MAX_VALUE), location);
     }
 
     public Seat(int entityId, Location location) {
@@ -49,25 +49,27 @@ public class Seat {
         recipients.remove(player);
     }
 
-    public void teleport(Location location) {
-        if (this.location.equals(location)) return;
-
-        if (this.location.distance(location) > 8) {
-            this.location = location.clone();
-            recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
-            return;
-        }
-        Vector deltaVector = location.toVector().subtract(this.location.toVector());
-        this.location = location.clone();
-        recipients.forEach(player -> sendMovePacket(player, deltaVector, entityId));
-    }
-
     public Location getLocation() {
         return location;
     }
 
+    public void teleport(Location location) {
+        if (this.location.equals(location)) return;
+
+        if (this.location.distance(location) > 8) {
+            recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
+        } else {
+            Vector deltaVector = location.toVector().subtract(this.location.toVector());
+            recipients.forEach(player -> sendMovePacket(player, deltaVector, entityId));
+        }
+        if (mountedPlayer != null) {
+            sendVehicleMovePacket(mountedPlayer, location);
+        }
+        this.location = location.clone();
+    }
+
     public void mount(Player mountedPlayer) {
-        if (this.mountedPlayer != null) {
+        if (this.mountedPlayer != null && this.mountedPlayer != mountedPlayer) {
             dismount();
         }
         this.mountedPlayer = mountedPlayer;
@@ -107,6 +109,7 @@ public class Seat {
         packet.setX(location.getX());
         packet.setY(location.getY());
         packet.setZ(location.getZ());
+        packet.setUniqueId(UUID.randomUUID());
         packet.sendPacket(player);
 
         WrapperPlayServerEntityMetadata packet2 = new WrapperPlayServerEntityMetadata();
@@ -142,6 +145,16 @@ public class Seat {
         packet.setEntityID(entityId);
         packet.setVector(delta);
         packet.sendPacket(player);
+    }
+
+    private void sendVehicleMovePacket(Player player, Location location) {
+        WrapperPlayClientVehicleMove packet = new WrapperPlayClientVehicleMove();
+        packet.setX(location.getX());
+        packet.setY(location.getY());
+        packet.setZ(location.getZ());
+        packet.setPitch(location.getPitch());
+        packet.setYaw(location.getYaw());
+        packet.receivePacket(player);
     }
 
     private void sendMountPacket(Player player, int entityId, int passengerId) {

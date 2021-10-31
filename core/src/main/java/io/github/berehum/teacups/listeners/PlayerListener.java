@@ -18,7 +18,6 @@ public class PlayerListener implements Listener {
     private void onJoin(PlayerJoinEvent event) {
         final TeacupManager teacupManager = plugin.getTeacupManager();
         teacupManager.getSeats().forEach(seat -> seat.spawn(event.getPlayer()));
-
     }
 
     @EventHandler

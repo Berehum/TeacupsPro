@@ -18,7 +18,7 @@ public class Cart {
     //Location of the middle of the cart.
 
     private Location location;
-    private float rpm = 0.0F;
+    private int rpm = 0;
     private double rotation = 0.0;
 
     public Cart(String id, Location location, double radius, List<Seat> seats) {
@@ -58,11 +58,11 @@ public class Cart {
         return seats;
     }
 
-    public float getRpm() {
+    public int getRpm() {
         return rpm;
     }
 
-    public void setRpm(float rpm) {
+    public void setRpm(int rpm) {
         this.rpm = rpm;
     }
 

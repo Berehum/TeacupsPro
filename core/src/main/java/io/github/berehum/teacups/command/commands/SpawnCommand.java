@@ -41,7 +41,7 @@ public class SpawnCommand extends TeacupCommand {
             return;
         }
 
-        CustomConfig config = new CustomConfig(plugin, new File(plugin.getDataFolder().getAbsolutePath()+"/teacups", name+".yml"));
+        CustomConfig config = new CustomConfig(plugin, new File(plugin.getDataFolder().getAbsolutePath() + "/teacups", name + ".yml"));
         config.saveDefaultConfig("teacuptemplate.yml");
         ConfigurationSection section = config.getConfig().getConfigurationSection("settings.location");
         if (section == null) {
