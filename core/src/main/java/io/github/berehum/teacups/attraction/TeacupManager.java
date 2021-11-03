@@ -2,10 +2,13 @@ package io.github.berehum.teacups.attraction;
 
 import io.github.berehum.teacups.attraction.components.Cart;
 import io.github.berehum.teacups.attraction.components.CartGroup;
-import io.github.berehum.teacups.attraction.components.Seat;
+import io.github.berehum.teacups.attraction.components.Teacup;
+import io.github.berehum.teacups.attraction.components.armorstands.Model;
+import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.CustomConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -62,6 +65,14 @@ public class TeacupManager {
         teacupsAttractions.clear();
     }
 
+    public void revealAll(Player player) {
+        teacupsAttractions.values().forEach(teacup -> teacup.reveal(player));
+    }
+
+    public void hideAll(Player player) {
+        teacupsAttractions.values().forEach(teacup -> teacup.hide(player));
+    }
+
     public Optional<Teacup> getTeacup(String id) {
         return Optional.ofNullable(teacupsAttractions.get(id));
     }
@@ -74,6 +85,12 @@ public class TeacupManager {
         List<Seat> seats = new ArrayList<>();
         teacupsAttractions.values().forEach(teacup -> seats.addAll(teacup.getSeats()));
         return seats;
+    }
+
+    public List<Model> getModels() {
+        List<Model> models = new ArrayList<>();
+        teacupsAttractions.values().forEach(teacup -> models.addAll(teacup.getModels()));
+        return models;
     }
 
     //O(n^3)

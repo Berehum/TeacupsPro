@@ -1,7 +1,6 @@
 package io.github.berehum.teacups.listeners;
 
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.attraction.TeacupManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,14 +15,12 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     private void onJoin(PlayerJoinEvent event) {
-        final TeacupManager teacupManager = plugin.getTeacupManager();
-        teacupManager.getSeats().forEach(seat -> seat.spawn(event.getPlayer()));
+        plugin.getTeacupManager().revealAll(event.getPlayer());
     }
 
     @EventHandler
     private void onLeave(PlayerQuitEvent event) {
-        final TeacupManager teacupManager = plugin.getTeacupManager();
-        teacupManager.getSeats().forEach(seat -> seat.remove(event.getPlayer()));
+        plugin.getTeacupManager().hideAll(event.getPlayer());
     }
 
 }

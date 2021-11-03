@@ -1,5 +1,6 @@
-package io.github.berehum.teacups.attraction.components;
+package io.github.berehum.teacups.attraction.components.armorstands;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import io.github.berehum.teacups.utils.wrappers.*;
 import org.bukkit.GameMode;
@@ -13,27 +14,29 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Seat {
+public class PacketArmorStand {
 
     private final int entityId;
+    private final UUID uuid;
     private final Set<Player> recipients = new HashSet<>();
 
     private Location location;
     private Player mountedPlayer;
-    private boolean locked = false;
 
-    public Seat(Location location) {
-        this((int) (Math.random() * Integer.MAX_VALUE), location);
+    public PacketArmorStand(Location location) {
+        this((int) (Math.random() * Integer.MAX_VALUE), UUID.randomUUID(), location);
     }
 
-    public Seat(int entityId, Location location) {
+    public PacketArmorStand(int entityId, UUID uuid, Location location) {
         this.entityId = entityId;
+        this.uuid = uuid;
         this.location = location;
     }
 
     public void spawn(Player player) {
         if (recipients.contains(player)) return;
         sendSpawnPacket(player, location, entityId);
+        sendMetaDataPacket(player, entityId);
         if (mountedPlayer != null) {
             sendMountPacket(player, entityId, mountedPlayer.getEntityId());
         }
@@ -102,6 +105,10 @@ public class Seat {
         return entityId;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     private void sendSpawnPacket(Player player, Location location, int entityId) {
         WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity();
         packet.setEntityID(entityId);
@@ -109,9 +116,11 @@ public class Seat {
         packet.setX(location.getX());
         packet.setY(location.getY());
         packet.setZ(location.getZ());
-        packet.setUniqueId(UUID.randomUUID());
+        packet.setUniqueId(uuid);
         packet.sendPacket(player);
+    }
 
+    public void sendMetaDataPacket(Player player, int entityId) {
         WrapperPlayServerEntityMetadata packet2 = new WrapperPlayServerEntityMetadata();
         //Set the entity to associate the packet with
         packet2.setEntityID(entityId);
@@ -164,11 +173,4 @@ public class Seat {
         packet.sendPacket(player);
     }
 
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
 }

@@ -2,7 +2,7 @@ package io.github.berehum.teacups.command.commands;
 
 import cloud.commandframework.context.CommandContext;
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.attraction.Teacup;
+import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.TeacupManager;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.command.TeacupCommand;

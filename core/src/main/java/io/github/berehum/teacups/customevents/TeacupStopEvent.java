@@ -1,6 +1,6 @@
 package io.github.berehum.teacups.customevents;
 
-import io.github.berehum.teacups.attraction.Teacup;
+import io.github.berehum.teacups.attraction.components.Teacup;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

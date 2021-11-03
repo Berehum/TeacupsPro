@@ -8,7 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import io.github.berehum.teacups.attraction.TeacupManager;
-import io.github.berehum.teacups.attraction.components.Seat;
+import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayClientSteerVehicle;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayClientUseEntity;
 import org.bukkit.Bukkit;

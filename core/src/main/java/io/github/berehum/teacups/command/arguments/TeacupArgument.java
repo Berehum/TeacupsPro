@@ -11,7 +11,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.attraction.Teacup;
+import io.github.berehum.teacups.attraction.components.Teacup;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -22,7 +22,7 @@ import java.util.Queue;
 import java.util.function.BiFunction;
 
 /**
- * Argument that parses into a {@link io.github.berehum.teacups.attraction.Teacup}
+ * Argument that parses into a {@link Teacup}
  *
  * @param <C> Command sender type
  */
