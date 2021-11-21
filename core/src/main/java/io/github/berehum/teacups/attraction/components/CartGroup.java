@@ -11,8 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-// A cartgroup exists of multiple carts and is basically the plate where the carts are on
-// https://stackoverflow.com/questions/24273990/calculating-evenly-spaced-points-on-the-perimeter-of-a-circle
 public class CartGroup {
 
     private final String id;
@@ -65,7 +63,7 @@ public class CartGroup {
         List<Cart> carts = new ArrayList<>(this.carts.values());
         for (int i = 0; i < carts.size(); i++) {
             Cart cart = carts.get(i);
-            cart.setLocation(MathUtils.drawPoint(location, radius, i, carts.size(), rotation));
+            cart.setLocation(MathUtils.drawPoint(location, radius, i, carts.size(), rotation, (float) rotation));
             cart.updateChildLocations();
         }
         if (model != null && model.getItemStack() != null) model.teleport(location);

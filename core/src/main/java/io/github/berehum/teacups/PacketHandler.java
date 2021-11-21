@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import io.github.berehum.teacups.attraction.TeacupManager;
+import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayClientSteerVehicle;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayClientUseEntity;
@@ -34,12 +35,18 @@ public class PacketHandler {
                 Player player = event.getPlayer();
                 if (player.isSneaking()) return;
 
-                for (Seat seat : teacupManager.getSeats()) {
-                    if (seat == null || seat.getEntityId() != packet.getTargetID()) continue;
-                    if (seat.isLocked() || seat.getPlayer() != null) return;
-                    Bukkit.getScheduler().runTask(plugin, () -> seat.mount(player));
-                    return;
+                for (Teacup teacup : teacupManager.getTeacups().values()) {
+                    for (Seat seat : teacup.getSeats()) {
+                        if (seat == null || seat.getEntityId() != packet.getTargetID()) continue;
+                        if (seat.isLocked() || seat.getPlayer() != null) return;
+                        Bukkit.getScheduler().runTask(plugin, () -> {
+                            seat.mount(player);
+                            teacup.autoStart(PacketHandler.this.plugin);
+                        });
+                        return;
+                    }
                 }
+
             }
         });
 

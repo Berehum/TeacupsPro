@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.util.*;
@@ -17,6 +18,7 @@ import java.util.*;
 public class TeacupManager {
     private final JavaPlugin plugin;
     private final Map<String, Teacup> teacupsAttractions = new HashMap<>();
+    private BukkitTask updateTeacups;
 
     public TeacupManager(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -24,7 +26,7 @@ public class TeacupManager {
 
     public void init() {
         loadTeacups(plugin.getDataFolder().getAbsolutePath() + "/teacups");
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> updateTeacups(1), 0L, 1L);
+        updateTeacups = updateTeacups(1);
     }
 
     //Recurring method
@@ -61,6 +63,7 @@ public class TeacupManager {
     }
 
     public void shutdown() {
+        if (updateTeacups != null) updateTeacups.cancel();
         teacupsAttractions.values().forEach(Teacup::disable);
         teacupsAttractions.clear();
     }
@@ -94,31 +97,33 @@ public class TeacupManager {
     }
 
     //O(n^3)
-    public void updateTeacups(int tickDelay) {
-        for (Teacup teacup : teacupsAttractions.values()) {
-            float tcRpm = teacup.getRpm();
-            if (tcRpm != 0) {
-                teacup.setRotation(teacup.getRotation() + getDeltaRotation(tickDelay, tcRpm));
-            }
-            for (CartGroup cartGroup : teacup.getCartGroups().values()) {
-                float cgRpm = cartGroup.getRpm();
-                if (cgRpm != 0) {
-                    cartGroup.setRotation(cartGroup.getRotation() + getDeltaRotation(tickDelay, cgRpm));
+    public BukkitTask updateTeacups(int tickDelay) {
+        return Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            for (Teacup teacup : teacupsAttractions.values()) {
+                int tcRpm = teacup.getRpm();
+                if (tcRpm != 0) {
+                    teacup.setRotation(teacup.getRotation() + getDeltaRotation(tickDelay, tcRpm));
                 }
+                for (CartGroup cartGroup : teacup.getCartGroups().values()) {
+                    int cgRpm = cartGroup.getRpm();
+                    if (cgRpm != 0) {
+                        cartGroup.setRotation(cartGroup.getRotation() + getDeltaRotation(tickDelay, cgRpm));
+                    }
 
-                for (Cart cart : cartGroup.getCarts().values()) {
-                    float cRpm = cart.getRpm();
-                    if (cRpm != 0) {
-                        cart.setRotation(cart.getRotation() + getDeltaRotation(tickDelay, cRpm));
+                    for (Cart cart : cartGroup.getCarts().values()) {
+                        int cRpm = cart.getRpm();
+                        if (cRpm != 0) {
+                            cart.setRotation(cart.getRotation() + getDeltaRotation(tickDelay, cRpm));
+                        }
                     }
                 }
+                teacup.updateChildLocations();
             }
-            teacup.updateChildLocations();
-        }
+        }, 0L, tickDelay);
     }
 
-    private double getDeltaRotation(int tickdelay, float rpm) {
-        return rpm / (1200.0 / tickdelay);
+    private double getDeltaRotation(int tickdelay, int rpm) {
+        return (2*Math.PI) * (rpm / (1200.0 / tickdelay));
     }
 
 

@@ -8,10 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 // Actual teacup with multiple chair slots.
 public class Cart {
@@ -60,7 +57,11 @@ public class Cart {
 
     public Set<Player> getPlayersInCart() {
         Set<Player> players = new HashSet<>();
-        seats.forEach(seat -> players.add(seat.getPlayer()));
+        for (Seat seat : seats) {
+            Optional<Player> player = Optional.ofNullable(seat.getPlayer());
+            if (!player.isPresent()) continue;
+            players.add(player.get());
+        }
         return players;
     }
 
@@ -86,7 +87,7 @@ public class Cart {
 
     public void updateChildLocations() {
         for (int i = 0; i < seats.size(); i++) {
-            seats.get(i).teleport(MathUtils.drawPoint(location, radius, i + 1, seats.size() + 1, rotation));
+            seats.get(i).teleport(MathUtils.drawPoint(location, radius, i + 1, seats.size() + 1, rotation, (float) rotation));
         }
         if (model != null && model.getItemStack() != null) model.teleport(location);
     }

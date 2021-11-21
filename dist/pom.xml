@@ -47,17 +47,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>teacups-v1_17_R1</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>teacups-abstract</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

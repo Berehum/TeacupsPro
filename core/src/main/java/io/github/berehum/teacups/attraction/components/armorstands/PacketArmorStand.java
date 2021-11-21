@@ -1,6 +1,5 @@
 package io.github.berehum.teacups.attraction.components.armorstands;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import io.github.berehum.teacups.utils.wrappers.*;
 import org.bukkit.GameMode;
@@ -63,7 +62,7 @@ public class PacketArmorStand {
             recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
         } else {
             Vector deltaVector = location.toVector().subtract(this.location.toVector());
-            recipients.forEach(player -> sendMovePacket(player, deltaVector, entityId));
+            recipients.forEach(player -> sendMovePacket(player, deltaVector, location.getPitch(), location.getYaw(), entityId));
         }
         if (mountedPlayer != null) {
             sendVehicleMovePacket(mountedPlayer, location);
@@ -116,6 +115,8 @@ public class PacketArmorStand {
         packet.setX(location.getX());
         packet.setY(location.getY());
         packet.setZ(location.getZ());
+        packet.setYaw(location.getYaw());
+        packet.setPitch(location.getPitch());
         packet.setUniqueId(uuid);
         packet.sendPacket(player);
     }
@@ -146,13 +147,17 @@ public class PacketArmorStand {
         packet.setX(location.getX());
         packet.setY(location.getY());
         packet.setZ(location.getZ());
+        packet.setPitch(location.getPitch());
+        packet.setYaw(location.getYaw());
         packet.sendPacket(player);
     }
 
-    private void sendMovePacket(Player player, Vector delta, int entityId) {
+    private void sendMovePacket(Player player, Vector delta, float pitch, float yaw, int entityId) {
         WrapperPlayServerRelEntityMove packet = new WrapperPlayServerRelEntityMove();
         packet.setEntityID(entityId);
         packet.setVector(delta);
+        packet.setPitch(pitch);
+        packet.setYaw(yaw);
         packet.sendPacket(player);
     }
 
