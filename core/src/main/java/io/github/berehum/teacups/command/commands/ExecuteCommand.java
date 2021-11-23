@@ -44,14 +44,14 @@ public class ExecuteCommand extends TeacupCommand {
         for (String arg : commandArray) {
             builder.append(arg).append(" ");
         }
-        final String command = builder.substring(0, builder.length()-1);
+        final String command = builder.substring(0, builder.length() - 1);
 
         final CommandSender commandExecutor = Bukkit.getConsoleSender();
 
         if (executeType == ExecuteType.CONSOLE) {
             Bukkit.dispatchCommand(commandExecutor, command);
             return;
-        }else {
+        } else {
             for (Player player : teacup.getPlayersOnRide()) {
                 if (player == null) continue;
                 if (executeType == ExecuteType.CONSOLE_FOR_EVERY_PLAYER) {

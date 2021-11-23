@@ -97,24 +97,30 @@ public class TeacupManager {
     }
 
     //O(n^3)
+    //This method basically controls the teacup
     public BukkitTask updateTeacups(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (Teacup teacup : teacupsAttractions.values()) {
                 int tcRpm = teacup.getRpm();
                 if (tcRpm != 0) {
-                    teacup.setRotation(teacup.getRotation() + getDeltaRotation(tickDelay, tcRpm));
+                    teacup.setCircleOffset(teacup.getCircleOffset() + getDeltaCircleOffset(tickDelay, tcRpm));
                 }
                 for (CartGroup cartGroup : teacup.getCartGroups().values()) {
                     int cgRpm = cartGroup.getRpm();
-                    if (cgRpm != 0) {
-                        cartGroup.setRotation(cartGroup.getRotation() + getDeltaRotation(tickDelay, cgRpm));
-                    }
+
+                    //setting cumulative offset and rotation since the components must stick together.
+                    cartGroup.changeCircleOffset(getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm));
+                    cartGroup.changeRotation(getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm));
 
                     for (Cart cart : cartGroup.getCarts().values()) {
                         int cRpm = cart.getRpm();
-                        if (cRpm != 0) {
-                            cart.setRotation(cart.getRotation() + getDeltaRotation(tickDelay, cRpm));
-                        }
+
+                        //setting cumulative offset and rotation since the components must stick together.
+                        cart.changeCircleOffset(getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm)
+                                + getDeltaCircleOffset(tickDelay, cRpm));
+
+                        cart.changeRotation(getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm)
+                                + getDeltaRotation(tickDelay, cRpm));
                     }
                 }
                 teacup.updateChildLocations();
@@ -122,8 +128,12 @@ public class TeacupManager {
         }, 0L, tickDelay);
     }
 
-    private double getDeltaRotation(int tickdelay, int rpm) {
-        return (2*Math.PI) * (rpm / (1200.0 / tickdelay));
+    private double getDeltaCircleOffset(int tickDelay, int rpm) {
+        return (2 * Math.PI) * (rpm / (1200.0 / tickDelay));
+    }
+
+    private float getDeltaRotation(int tickDelay, int rpm) {
+        return (float) ((360) * (rpm / (1200.0 / tickDelay)));
     }
 
 

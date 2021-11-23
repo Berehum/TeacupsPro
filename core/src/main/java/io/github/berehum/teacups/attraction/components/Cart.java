@@ -21,7 +21,10 @@ public class Cart {
 
     private Location location;
     private int rpm = 0;
-    private double rotation = 0.0;
+    //how the offset in the calculations
+    private double circleOffset = 0.0;
+    //the rotation of the cart itself
+    private float rotation = 0.0F;
 
     public Cart(String id, Location location, double radius, Model model, List<Seat> seats) {
         this.id = id;
@@ -52,7 +55,7 @@ public class Cart {
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        this.location = location.clone();
     }
 
     public Set<Player> getPlayersInCart() {
@@ -85,22 +88,44 @@ public class Cart {
         this.rpm = rpm;
     }
 
+    /**
+     * @apiNote this method might change drastically, when the seat customization is implemented.
+     */
     public void updateChildLocations() {
+        location = MathUtils.setDirection(location, 0, rotation);
         for (int i = 0; i < seats.size(); i++) {
-            seats.get(i).teleport(MathUtils.drawPoint(location, radius, i + 1, seats.size() + 1, rotation, (float) rotation));
+            seats.get(i).teleport(MathUtils.drawPoint(location, radius, i + 1, seats.size() + 1, circleOffset));
         }
-        if (model != null && model.getItemStack() != null) model.teleport(location);
+        if (model != null && model.getItemStack() != null) {
+            model.teleport(location);
+        }
     }
 
-    public double getRotation() {
-        return rotation;
+    public double getCircleOffset() {
+        return circleOffset;
     }
 
-    public void setRotation(double rotation) {
-        this.rotation = rotation % (2 * Math.PI);
+    public void setCircleOffset(double circleOffset) {
+        this.circleOffset = circleOffset % (2 * Math.PI);
+    }
+
+    public void changeCircleOffset(double circleOffset) {
+        setCircleOffset(this.circleOffset + circleOffset);
     }
 
     public String getId() {
         return id;
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation % 360;
+    }
+
+    public void changeRotation(float rotation) {
+        setRotation(this.rotation + rotation);
     }
 }

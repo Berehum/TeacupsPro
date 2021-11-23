@@ -10,9 +10,9 @@ import cloud.commandframework.captions.CaptionVariable;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
-import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.Cart;
 import io.github.berehum.teacups.attraction.components.CartGroup;
+import io.github.berehum.teacups.attraction.components.Teacup;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

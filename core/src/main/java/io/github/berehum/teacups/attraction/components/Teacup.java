@@ -35,7 +35,7 @@ public class Teacup {
     private final List<String> stopCommands;
 
     private int rpm = 0;
-    private double rotation = 0.0;
+    private double circleOffset = 0.0;
     private boolean locked = false;
     private boolean commenceStart = false;
     private boolean active = false;
@@ -61,9 +61,9 @@ public class Teacup {
             Map<String, Cart> carts = new HashMap<>();
 
             Model groupModel = null;
-            if (groupSection.getString(groupKey+".model.type") != null) {
-                Material groupModelMaterial = Material.matchMaterial(groupSection.getString(groupKey+".model.type"));
-                int groupModelData = groupSection.getInt(groupKey+".model.modeldata");
+            if (groupSection.getString(groupKey + ".model.type") != null) {
+                Material groupModelMaterial = Material.matchMaterial(groupSection.getString(groupKey + ".model.type"));
+                int groupModelData = groupSection.getInt(groupKey + ".model.modeldata");
                 groupModel = new Model(location, new ItemBuilder(groupModelMaterial).setModelData(groupModelData).toItemStack());
             }
 
@@ -71,9 +71,9 @@ public class Teacup {
                 List<Seat> seats = new ArrayList<>();
 
                 Model cartModel = null;
-                if (cartsSection.getString(cartKeys+".model.type") != null) {
-                    Material cartModelMaterial = Material.matchMaterial(Objects.requireNonNull(cartsSection.getString(cartKeys+".model.type")));
-                    int cartModelData = groupSection.getInt(cartKeys+".model.modeldata");
+                if (cartsSection.getString(cartKeys + ".model.type") != null) {
+                    Material cartModelMaterial = Material.matchMaterial(Objects.requireNonNull(cartsSection.getString(cartKeys + ".model.type")));
+                    int cartModelData = groupSection.getInt(cartKeys + ".model.modeldata");
                     cartModel = new Model(location, new ItemBuilder(cartModelMaterial).setModelData(cartModelData).toItemStack());
                 }
 
@@ -95,7 +95,7 @@ public class Teacup {
         List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
         for (int i = 0; i < cartGroups.size(); i++) {
             CartGroup group = cartGroups.get(i);
-            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), rotation, 0f));
+            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
             group.init();
         }
         updateChildLocations();
@@ -121,6 +121,7 @@ public class Teacup {
         commenceStart = true;
         new BukkitRunnable() {
             int index = autoStartDelay;
+
             @Override
             public void run() {
                 Set<Player> players = getPlayersOnRide();
@@ -196,7 +197,7 @@ public class Teacup {
         List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
         for (int i = 0; i < cartGroups.size(); i++) {
             CartGroup group = cartGroups.get(i);
-            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), rotation, 0f));
+            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
             group.updateChildLocations();
         }
     }
@@ -205,12 +206,12 @@ public class Teacup {
         return radius;
     }
 
-    public double getRotation() {
-        return rotation;
+    public double getCircleOffset() {
+        return circleOffset;
     }
 
-    public void setRotation(double rotation) {
-        this.rotation = rotation % (2 * Math.PI);
+    public void setCircleOffset(double circleOffset) {
+        this.circleOffset = circleOffset % (2 * Math.PI);
     }
 
     public int getRpm() {

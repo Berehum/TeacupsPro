@@ -6,7 +6,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -58,12 +57,8 @@ public class PacketArmorStand {
     public void teleport(Location location) {
         if (this.location.equals(location)) return;
 
-        if (this.location.distance(location) > 8) {
-            recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
-        } else {
-            Vector deltaVector = location.toVector().subtract(this.location.toVector());
-            recipients.forEach(player -> sendMovePacket(player, deltaVector, location.getPitch(), location.getYaw(), entityId));
-        }
+        recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
+
         if (mountedPlayer != null) {
             sendVehicleMovePacket(mountedPlayer, location);
         }
@@ -149,15 +144,6 @@ public class PacketArmorStand {
         packet.setZ(location.getZ());
         packet.setPitch(location.getPitch());
         packet.setYaw(location.getYaw());
-        packet.sendPacket(player);
-    }
-
-    private void sendMovePacket(Player player, Vector delta, float pitch, float yaw, int entityId) {
-        WrapperPlayServerRelEntityMove packet = new WrapperPlayServerRelEntityMove();
-        packet.setEntityID(entityId);
-        packet.setVector(delta);
-        packet.setPitch(pitch);
-        packet.setYaw(yaw);
         packet.sendPacket(player);
     }
 

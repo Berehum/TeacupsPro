@@ -46,7 +46,7 @@ public class ActionCommand extends TeacupCommand {
 
         CommandSender sender = context.getSender();
         if (!succeeded) {
-            sender.sendMessage(ChatColor.RED + "Sorry, but the "+actionType.name()+" action couldn't be executed on " + teacup.getId());
+            sender.sendMessage(ChatColor.RED + "Sorry, but the " + actionType.name() + " action couldn't be executed on " + teacup.getId());
             return;
         }
         sender.sendMessage(ChatColor.GREEN + actionType.name() + " action was successfully executed on " + teacup.getId());

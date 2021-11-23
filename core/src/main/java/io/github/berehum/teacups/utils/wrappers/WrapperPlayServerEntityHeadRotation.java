@@ -1,26 +1,22 @@
 package io.github.berehum.teacups.utils.wrappers;
 
+
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
-import com.comphenix.protocol.wrappers.Pair;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.List;
+public class WrapperPlayServerEntityHeadRotation extends AbstractPacket {
+    public static final PacketType TYPE =
+            PacketType.Play.Server.ENTITY_HEAD_ROTATION;
 
-public class WrapperPlayServerEntityEquipment extends AbstractPacket {
-    public static final PacketType TYPE = PacketType.Play.Server.ENTITY_EQUIPMENT;
-
-    public WrapperPlayServerEntityEquipment() {
+    public WrapperPlayServerEntityHeadRotation() {
         super(new PacketContainer(TYPE), TYPE);
         handle.getModifier().writeDefaults();
     }
 
-    public WrapperPlayServerEntityEquipment(PacketContainer packet) {
+    public WrapperPlayServerEntityHeadRotation(PacketContainer packet) {
         super(packet, TYPE);
     }
 
@@ -64,15 +60,23 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
         return getEntity(event.getPlayer().getWorld());
     }
 
-    public void setSlotStack(ItemSlot itemSlot, ItemStack itemStack) {
-        setSlotStackPairList(Collections.singletonList(new Pair<>(itemSlot, itemStack)));
+    /**
+     * Retrieve Head Yaw.
+     * <p>
+     * Notes: head yaw in steps of 2p/256
+     *
+     * @return The current Head Yaw
+     */
+    public byte getHeadYaw() {
+        return handle.getBytes().read(0);
     }
 
-    public List<Pair<ItemSlot, ItemStack>> getSlotStackPairList() {
-        return handle.getSlotStackPairLists().read(0);
-    }
-
-    public void setSlotStackPairList(List<Pair<ItemSlot, ItemStack>> listPair) {
-        handle.getSlotStackPairLists().write(0, listPair);
+    /**
+     * Set Head Yaw.
+     *
+     * @param value - new value.
+     */
+    public void setHeadYaw(byte value) {
+        handle.getBytes().write(0, value);
     }
 }
