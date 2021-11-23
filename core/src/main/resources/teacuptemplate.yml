@@ -33,7 +33,13 @@ cartgroups:
         seats: 3
       cart2:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart3:
         radius: 2
         seats: 3

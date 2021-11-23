@@ -1,7 +1,7 @@
 package io.github.berehum.teacups.attraction;
 
-import io.github.berehum.teacups.attraction.components.Cart;
 import io.github.berehum.teacups.attraction.components.CartGroup;
+import io.github.berehum.teacups.attraction.components.Component;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
@@ -96,7 +96,6 @@ public class TeacupManager {
         return models;
     }
 
-    //O(n^3)
     //This method basically controls the teacup
     public BukkitTask updateTeacups(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin, () -> {
@@ -112,7 +111,7 @@ public class TeacupManager {
                     cartGroup.changeCircleOffset(getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm));
                     cartGroup.changeRotation(getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm));
 
-                    for (Cart cart : cartGroup.getCarts().values()) {
+                    for (Component cart : cartGroup.getSubComponents().values()) {
                         int cRpm = cart.getRpm();
 
                         //setting cumulative offset and rotation since the components must stick together.

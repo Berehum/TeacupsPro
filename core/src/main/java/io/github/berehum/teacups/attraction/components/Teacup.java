@@ -5,6 +5,7 @@ import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.CustomConfig;
 import io.github.berehum.teacups.utils.ItemBuilder;
 import io.github.berehum.teacups.utils.MathUtils;
+import io.github.berehum.teacups.utils.SeatLayout;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -61,27 +63,24 @@ public class Teacup {
             Map<String, Cart> carts = new HashMap<>();
 
             Model groupModel = null;
-            if (groupSection.getString(groupKey + ".model.type") != null) {
-                Material groupModelMaterial = Material.matchMaterial(groupSection.getString(groupKey + ".model.type"));
-                int groupModelData = groupSection.getInt(groupKey + ".model.modeldata");
-                groupModel = new Model(location, new ItemBuilder(groupModelMaterial).setModelData(groupModelData).toItemStack());
+            ItemBuilder groupModelItem = ItemBuilder.fromConfig(groupSection.getConfigurationSection(groupKey + ".model"));
+            if (groupModelItem != null) {
+                groupModel = new Model(location, groupModelItem.toItemStack());
             }
 
             for (String cartKeys : cartsSection.getKeys(false)) {
-                List<Seat> seats = new ArrayList<>();
 
                 Model cartModel = null;
-                if (cartsSection.getString(cartKeys + ".model.type") != null) {
-                    Material cartModelMaterial = Material.matchMaterial(Objects.requireNonNull(cartsSection.getString(cartKeys + ".model.type")));
-                    int cartModelData = groupSection.getInt(cartKeys + ".model.modeldata");
-                    cartModel = new Model(location, new ItemBuilder(cartModelMaterial).setModelData(cartModelData).toItemStack());
+
+                ItemBuilder cartModelItem = ItemBuilder.fromConfig(cartsSection.getConfigurationSection(cartKeys + ".model"));
+                if (cartModelItem != null) {
+                    cartModel = new Model(location, cartModelItem.toItemStack());
                 }
 
-                for (int i = 0; i < cartsSection.getInt(cartKeys + ".seats"); i++) {
-                    seats.add(new Seat(location));
-                }
+                SeatLayout layout = SeatLayout.readFromConfig(cartsSection.getConfigurationSection(cartKeys+".seats"));
+                if (layout == null) layout = SeatLayout.getDefault();
 
-                carts.put(cartKeys, new Cart(cartKeys, location, cartsSection.getDouble(cartKeys + ".radius"), cartModel, seats));
+                carts.put(cartKeys, new Cart(cartKeys, location, cartsSection.getDouble(cartKeys + ".radius"), cartModel, layout));
             }
 
             cartGroups.put(groupKey, new CartGroup(groupKey, location, groupSection.getDouble(groupKey + ".radius"), groupModel, carts));
@@ -169,7 +168,7 @@ public class Teacup {
 
     public Set<Player> getPlayersOnRide() {
         Set<Player> players = new HashSet<>();
-        cartGroups.values().forEach(cartGroup -> players.addAll(cartGroup.getPlayersInCartGroup()));
+        cartGroups.values().forEach(cartGroup -> players.addAll(cartGroup.getPlayers()));
         return players;
     }
 

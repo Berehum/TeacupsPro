@@ -5,22 +5,21 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityEquipment;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityMetadata;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class Seat extends PacketArmorStand {
+public class Seat extends Model {
 
     private boolean locked = false;
 
-    public Seat(Location location) {
-        super(location);
+    public Seat(Location location, ItemStack itemStack) {
+        super(location, itemStack);
     }
 
-    public Seat(int entityId, UUID uuid, Location location) {
-        super(entityId, uuid, location);
+    public Seat(int entityId, UUID uuid, Location location, ItemStack itemStack) {
+        super(entityId, uuid, location, itemStack);
     }
 
     public boolean isLocked() {
@@ -30,6 +29,7 @@ public class Seat extends PacketArmorStand {
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
+
 
     @Override
     public void sendMetaDataPacket(Player player, int entityId) {
@@ -50,7 +50,7 @@ public class Seat extends PacketArmorStand {
         WrapperPlayServerEntityEquipment packet2 = new WrapperPlayServerEntityEquipment();
         packet2.setEntityID(entityId);
         //model here
-        packet2.setSlotStack(EnumWrappers.ItemSlot.HEAD, new ItemStack(Material.OAK_TRAPDOOR, 1));
+        packet2.setSlotStack(EnumWrappers.ItemSlot.HEAD, getItemStack());
         packet2.sendPacket(player);
     }
 

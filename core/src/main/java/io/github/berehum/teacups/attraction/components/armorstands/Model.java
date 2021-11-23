@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public class Model extends PacketArmorStand {
 
+    private final boolean isSmall = false;
     private final ItemStack itemStack;
 
     public Model(Location location, ItemStack model) {

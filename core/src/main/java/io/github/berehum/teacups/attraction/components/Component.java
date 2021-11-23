@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+//@todo perhaps use a parameter here for better support?
 public abstract class Component {
 
     private final String id;
@@ -76,6 +77,10 @@ public abstract class Component {
         return seats;
     }
 
+    public Model getModel() {
+        return model;
+    }
+
     public List<Model> getModels() {
         List<Model> models = new ArrayList<>();
         if (model != null && model.getItemStack() != null) {
@@ -87,6 +92,10 @@ public abstract class Component {
 
     public Map<String, Component> getSubComponents() {
         return subComponents;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 
     public int getRpm() {

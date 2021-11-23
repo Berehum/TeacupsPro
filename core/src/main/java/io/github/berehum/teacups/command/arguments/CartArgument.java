@@ -12,6 +12,7 @@ import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.attraction.components.Cart;
 import io.github.berehum.teacups.attraction.components.CartGroup;
+import io.github.berehum.teacups.attraction.components.Component;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -109,7 +110,6 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
         }
 
     }
-
 
     public static final class CartParser<C> implements ArgumentParser<C, Cart> {
 

@@ -3,6 +3,8 @@ package io.github.berehum.teacups.utils;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.util.Map;
+
 public class MathUtils {
 
     /**

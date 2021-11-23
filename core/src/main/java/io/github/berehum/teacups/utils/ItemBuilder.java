@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -254,4 +255,22 @@ public class ItemBuilder {
     public ItemStack toItemStack() {
         return is;
     }
+
+
+    public static ItemBuilder fromConfig(ConfigurationSection section) {
+        if (section == null) return null;
+        //retrieval
+        String type = section.getString("type");
+        if (type == null) type = "GRASS_BLOCK";
+        Material material = Material.matchMaterial(type);
+        int amount = section.getInt("amount");
+        int modelData = section.getInt("modeldata");
+
+        //applying
+        if (material == null || material.isAir()) material = Material.GRASS_BLOCK;
+        if (amount == 0) amount = 1;
+
+        return new ItemBuilder(material, amount).setModelData(modelData);
+    }
+
 }
