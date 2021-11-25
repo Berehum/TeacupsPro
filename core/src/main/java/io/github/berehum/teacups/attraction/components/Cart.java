@@ -2,7 +2,7 @@ package io.github.berehum.teacups.attraction.components;
 
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
-import io.github.berehum.teacups.utils.MathUtils;
+import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class Cart extends Component{
+public class Cart extends Component {
 
     private final SeatLayout seatLayout;
     private final List<Seat> seats;
@@ -64,14 +64,14 @@ public class Cart extends Component{
         double radius = super.getRadius();
         double circleOffset = super.getCircleOffset();
 
-        location = MathUtils.setDirection(location, 0, rotation);
+        location = LocationUtils.setDirection(location, 0, rotation);
         super.setLocation(location);
 
         Iterator<Seat> iterator = seats.listIterator();
         for (int i = 0; i < seatLayout.size(); i++) {
             if (seatLayout.isEmpty(i)) continue;
             Seat seat = iterator.next();
-            seat.teleport(MathUtils.drawPoint(location, radius, i, seatLayout.size(), circleOffset));
+            seat.teleport(LocationUtils.drawPoint(location, radius, i, seatLayout.size(), circleOffset));
         }
 
         Model model = super.getModel();

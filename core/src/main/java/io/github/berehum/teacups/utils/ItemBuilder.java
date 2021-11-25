@@ -32,6 +32,22 @@ public class ItemBuilder {
         is = new ItemStack(m, amount);
     }
 
+    public static ItemBuilder fromConfig(ConfigurationSection section) {
+        if (section == null) return null;
+        //retrieval
+        String type = section.getString("type");
+        if (type == null) type = "GRASS_BLOCK";
+        Material material = Material.matchMaterial(type);
+        int amount = section.getInt("amount");
+        int modelData = section.getInt("modeldata");
+
+        //applying
+        if (material == null || material.isAir()) material = Material.GRASS_BLOCK;
+        if (amount == 0) amount = 1;
+
+        return new ItemBuilder(material, amount).setModelData(modelData);
+    }
+
     /**
      * Clone the ItemBuilder into a new one.
      *
@@ -246,7 +262,6 @@ public class ItemBuilder {
         return this;
     }
 
-
     /**
      * Retrieves the itemstack from the ItemBuilder.
      *
@@ -254,23 +269,6 @@ public class ItemBuilder {
      */
     public ItemStack toItemStack() {
         return is;
-    }
-
-
-    public static ItemBuilder fromConfig(ConfigurationSection section) {
-        if (section == null) return null;
-        //retrieval
-        String type = section.getString("type");
-        if (type == null) type = "GRASS_BLOCK";
-        Material material = Material.matchMaterial(type);
-        int amount = section.getInt("amount");
-        int modelData = section.getInt("modeldata");
-
-        //applying
-        if (material == null || material.isAir()) material = Material.GRASS_BLOCK;
-        if (amount == 0) amount = 1;
-
-        return new ItemBuilder(material, amount).setModelData(modelData);
     }
 
 }

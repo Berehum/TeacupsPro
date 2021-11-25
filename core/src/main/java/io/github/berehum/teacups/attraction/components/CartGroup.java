@@ -4,7 +4,8 @@ package io.github.berehum.teacups.attraction.components;
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import org.bukkit.Location;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartGroup extends Component {
 

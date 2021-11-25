@@ -27,9 +27,6 @@ cartgroups:
     carts:
       cart1:
         radius: 2
-        #add custom seats support
-        #seats: 0101 -> this would result in a cart with two opposing seats.
-        #might make it like bukkit recipes to add support for different seat models
         seats: 3
       cart2:
         radius: 2

@@ -156,7 +156,7 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
             super(
                     TeacupParser.class,
                     context,
-                    Caption.of("No teacup attraction found for '%s'"),
+                    Caption.of("No teacup attraction found for '{input}'"),
                     CaptionVariable.of("input", input)
             );
             this.input = input;

@@ -2,6 +2,7 @@ package io.github.berehum.teacups.attraction.components.armorstands;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import io.github.berehum.teacups.utils.wrappers.WrappedDataWatcherBuilder;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityEquipment;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityMetadata;
 import org.bukkit.Location;
@@ -12,16 +13,16 @@ import java.util.UUID;
 
 public class Model extends PacketArmorStand {
 
-    private final boolean isSmall = false;
     private final ItemStack itemStack;
 
     public Model(Location location, ItemStack model) {
-        super(location);
-        this.itemStack = model;
+        this((int) (Math.random() * Integer.MAX_VALUE), UUID.randomUUID(),
+                new WrappedDataWatcherBuilder().setInvisible(true).toWrappedDataWatcher(),
+                location, model);
     }
 
-    public Model(int entityId, UUID uuid, Location location, ItemStack model) {
-        super(entityId, uuid, location);
+    public Model(int entityId, UUID uuid, WrappedDataWatcher dataWatcher, Location location, ItemStack model) {
+        super(entityId, uuid, dataWatcher, location);
         this.itemStack = model;
     }
 
@@ -31,21 +32,11 @@ public class Model extends PacketArmorStand {
 
     @Override
     public void sendMetaDataPacket(Player player, int entityId) {
-        WrapperPlayServerEntityMetadata packet = new WrapperPlayServerEntityMetadata();
-        //Set the entity to associate the packet with
-        packet.setEntityID(entityId);
-        //Create a ProtocolLib WrappedDataWatcher
-        WrappedDataWatcher dataWatcher = new WrappedDataWatcher();
-
-        WrappedDataWatcher.WrappedDataWatcherObject isInvisible = new WrappedDataWatcher.WrappedDataWatcherObject(0, WrappedDataWatcher.Registry.get(Byte.class));
-        dataWatcher.setObject(isInvisible, (byte) 0x20);
-
-        packet.setMetadata(dataWatcher.getWatchableObjects());
-        packet.sendPacket(player);
-
+        super.sendMetaDataPacket(player, entityId);
         WrapperPlayServerEntityEquipment packet2 = new WrapperPlayServerEntityEquipment();
         packet2.setEntityID(entityId);
-        packet2.setSlotStack(EnumWrappers.ItemSlot.HEAD, itemStack);
+        //model here
+        packet2.setSlotStack(EnumWrappers.ItemSlot.HEAD, getItemStack());
         packet2.sendPacket(player);
     }
 }

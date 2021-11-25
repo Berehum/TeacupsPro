@@ -7,7 +7,7 @@ import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.CustomConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -19,14 +19,17 @@ public class TeacupManager {
     private final JavaPlugin plugin;
     private final Map<String, Teacup> teacupsAttractions = new HashMap<>();
     private BukkitTask updateTeacups;
+    private BukkitTask packetRecipientUpdater;
 
     public TeacupManager(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void init() {
+        FileConfiguration config = plugin.getConfig();
         loadTeacups(plugin.getDataFolder().getAbsolutePath() + "/teacups");
-        updateTeacups = updateTeacups(1);
+        updateTeacups = updateTeacups(config.getInt("teacup.update-delay"));
+        packetRecipientUpdater = updatePacketRecipients(config.getInt("packet-recipient-update-delay"));
     }
 
     //Recurring method
@@ -38,9 +41,10 @@ public class TeacupManager {
                 Arrays.stream(foundDirectories).forEach(d -> loadTeacups(d.getAbsolutePath()));
             if (!directory.exists())
                 directory.mkdir();
-            Iterator<File> iterator = FileUtils.iterateFiles(directory, new String[]{"yml"}, false);
-            while (iterator.hasNext()) {
-                File currentFile = iterator.next();
+
+            File[] files = directory.listFiles((dir, name) -> name.endsWith(".yml"));
+            if (files == null) return;
+            for (File currentFile : files) {
                 loadTeacup(new CustomConfig(plugin, currentFile));
             }
         });
@@ -64,6 +68,7 @@ public class TeacupManager {
 
     public void shutdown() {
         if (updateTeacups != null) updateTeacups.cancel();
+        if (packetRecipientUpdater != null) packetRecipientUpdater.cancel();
         teacupsAttractions.values().forEach(Teacup::disable);
         teacupsAttractions.clear();
     }
@@ -125,6 +130,22 @@ public class TeacupManager {
                 teacup.updateChildLocations();
             }
         }, 0L, tickDelay);
+    }
+
+    //This method basically controls the teacup
+    public BukkitTask updatePacketRecipients(int tickDelay) {
+        return Bukkit.getScheduler().runTaskTimer(plugin, () -> Bukkit.getOnlinePlayers().forEach(this::updatePacketRecipient)
+        , 0L, tickDelay);
+    }
+
+    public void updatePacketRecipient(Player player) {
+        for (Teacup teacup : teacupsAttractions.values()) {
+            if (player.getLocation().distance(teacup.getLocation()) < plugin.getConfig().getInt("teacup.visibility-distance")) {
+                teacup.reveal(player);
+                continue;
+            }
+            teacup.hide(player);
+        }
     }
 
     private double getDeltaCircleOffset(int tickDelay, int rpm) {

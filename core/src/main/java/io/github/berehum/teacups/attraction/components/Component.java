@@ -2,7 +2,7 @@ package io.github.berehum.teacups.attraction.components;
 
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
-import io.github.berehum.teacups.utils.MathUtils;
+import io.github.berehum.teacups.utils.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
@@ -53,11 +53,11 @@ public abstract class Component {
     }
 
     public void updateChildLocations() {
-        location = MathUtils.setDirection(location, 0, rotation);
+        location = LocationUtils.setDirection(location, 0, rotation);
         List<Component> components = new ArrayList<>(this.subComponents.values());
         for (int i = 0; i < components.size(); i++) {
             Component component = components.get(i);
-            component.setLocation(MathUtils.drawPoint(location, radius, i, components.size(), circleOffset));
+            component.setLocation(LocationUtils.drawPoint(location, radius, i, components.size(), circleOffset));
             component.updateChildLocations();
         }
         if (model != null && model.getItemStack() != null) {

@@ -19,6 +19,29 @@ public class SeatLayout {
         this.layout = layout;
     }
 
+    public static SeatLayout getDefault() {
+        SeatLayout seatLayout = new SeatLayout("aaaaaa");
+        seatLayout.setMaterial('c', new ItemBuilder(Material.OAK_TRAPDOOR).toItemStack());
+        return seatLayout;
+    }
+
+    public static SeatLayout readFromConfig(ConfigurationSection section) {
+        if (section == null) return null;
+        String layout = section.getString("seatlayout");
+        if (layout == null || layout.isEmpty()) layout = "aaaa";
+        SeatLayout seatLayout = new SeatLayout(layout);
+        ConfigurationSection models = section.getConfigurationSection("models");
+        if (models == null) {
+            return seatLayout;
+        }
+        for (String character : models.getKeys(false)) {
+            ItemBuilder itemBuilder = ItemBuilder.fromConfig(models.getConfigurationSection(character));
+            if (itemBuilder == null) continue;
+            seatLayout.setMaterial(character.toCharArray()[0], itemBuilder.toItemStack());
+        }
+        return seatLayout;
+    }
+
     public void setMaterial(char c, ItemStack itemStack) {
         referenceMap.put(c, itemStack);
     }
@@ -41,29 +64,6 @@ public class SeatLayout {
 
     public int size() {
         return layout.length();
-    }
-
-    public static SeatLayout getDefault() {
-        SeatLayout seatLayout = new SeatLayout("aaaaaa");
-        seatLayout.setMaterial('c', new ItemBuilder(Material.OAK_TRAPDOOR).toItemStack());
-        return seatLayout;
-    }
-
-    public static SeatLayout readFromConfig(ConfigurationSection section) {
-        if (section == null) return null;
-        String layout = section.getString("seatlayout");
-        if (layout == null || layout.isEmpty()) layout = "aaaa";
-        SeatLayout seatLayout = new SeatLayout(layout);
-        ConfigurationSection models = section.getConfigurationSection("models");
-        if (models == null) {
-            return seatLayout;
-        }
-        for (String character : models.getKeys(false)) {
-            ItemBuilder itemBuilder = ItemBuilder.fromConfig(models.getConfigurationSection(character));
-            if (itemBuilder == null) continue;
-            seatLayout.setMaterial(character.toCharArray()[0], itemBuilder.toItemStack());
-        }
-        return seatLayout;
     }
 
 }

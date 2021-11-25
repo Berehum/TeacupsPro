@@ -4,19 +4,17 @@ import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.utils.CustomConfig;
 import io.github.berehum.teacups.utils.ItemBuilder;
-import io.github.berehum.teacups.utils.MathUtils;
+import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -77,7 +75,7 @@ public class Teacup {
                     cartModel = new Model(location, cartModelItem.toItemStack());
                 }
 
-                SeatLayout layout = SeatLayout.readFromConfig(cartsSection.getConfigurationSection(cartKeys+".seats"));
+                SeatLayout layout = SeatLayout.readFromConfig(cartsSection.getConfigurationSection(cartKeys + ".seats"));
                 if (layout == null) layout = SeatLayout.getDefault();
 
                 carts.put(cartKeys, new Cart(cartKeys, location, cartsSection.getDouble(cartKeys + ".radius"), cartModel, layout));
@@ -94,7 +92,7 @@ public class Teacup {
         List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
         for (int i = 0; i < cartGroups.size(); i++) {
             CartGroup group = cartGroups.get(i);
-            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
+            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
             group.init();
         }
         updateChildLocations();
@@ -196,7 +194,7 @@ public class Teacup {
         List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
         for (int i = 0; i < cartGroups.size(); i++) {
             CartGroup group = cartGroups.get(i);
-            group.setLocation(MathUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
+            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
             group.updateChildLocations();
         }
     }

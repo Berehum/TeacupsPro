@@ -13,7 +13,6 @@ public final class TeacupsMain extends JavaPlugin {
     private static TeacupsMain INSTANCE;
 
     private TeacupManager teacupManager;
-
     private PacketHandler packetHandler;
 
     public static TeacupsMain getInstance() {
@@ -29,6 +28,7 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onEnable() {
         setInstance(this);
+        loadConfig();
         teacupManager = new TeacupManager(this);
         teacupManager.init();
         packetHandler = new PacketHandler(this);
@@ -48,8 +48,15 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onDisable() {
         teacupManager.shutdown();
+        packetHandler.removePacketListeners();
+        loadConfig();
     }
 
+    public void loadConfig() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
+    }
     public TeacupManager getTeacupManager() {
         return teacupManager;
     }

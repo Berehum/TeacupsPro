@@ -3,9 +3,7 @@ package io.github.berehum.teacups.utils;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.Map;
-
-public class MathUtils {
+public class LocationUtils {
 
     /**
      * @param location     location of center
@@ -23,9 +21,7 @@ public class MathUtils {
         Location pointLocation = location.clone();
         pointLocation.add(r * Math.cos(angle + offset), 0, r * Math.sin(angle + offset));
 
-        pointLocation = faceLocation(pointLocation, location);
-
-        return pointLocation;
+        return faceLocation(pointLocation, location);
     }
 
     /**
@@ -51,8 +47,7 @@ public class MathUtils {
         Vector from = loc.toVector();
         Vector to = locationToFace.toVector();
 
-        Vector vector = to.subtract(from);
-        loc.setDirection(vector);
+        loc.setDirection(to.subtract(from));
 
         return changeDirection(loc, pitchOffset, yawOffset);
     }
@@ -66,6 +61,10 @@ public class MathUtils {
         loc.setPitch(numberRange(-90, 90, pitch));
         loc.setYaw(numberRange(-180, 180, yaw));
         return loc;
+    }
+
+    public static double yawAngle(float yaw1, float yaw2) {
+        return numberRange(-180, 180, yaw1-yaw2);
     }
 
     public static float numberRange(int min, int max, float input) {

@@ -7,10 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class PacketArmorStand {
 
@@ -18,16 +15,18 @@ public class PacketArmorStand {
     private final UUID uuid;
     private final Set<Player> recipients = new HashSet<>();
 
+    private WrappedDataWatcher dataWatcher;
     private Location location;
     private Player mountedPlayer;
 
     public PacketArmorStand(Location location) {
-        this((int) (Math.random() * Integer.MAX_VALUE), UUID.randomUUID(), location);
+        this((int) (Math.random() * Integer.MAX_VALUE), UUID.randomUUID(), new WrappedDataWatcher(), location);
     }
 
-    public PacketArmorStand(int entityId, UUID uuid, Location location) {
+    public PacketArmorStand(int entityId, UUID uuid, WrappedDataWatcher dataWatcher, Location location) {
         this.entityId = entityId;
         this.uuid = uuid;
+        this.dataWatcher = dataWatcher;
         this.location = location;
     }
 
@@ -54,6 +53,7 @@ public class PacketArmorStand {
         return location;
     }
 
+    //add usage of move packet in some instances
     public void teleport(Location location) {
         if (this.location.equals(location)) return;
 
@@ -118,14 +118,7 @@ public class PacketArmorStand {
 
     public void sendMetaDataPacket(Player player, int entityId) {
         WrapperPlayServerEntityMetadata packet2 = new WrapperPlayServerEntityMetadata();
-        //Set the entity to associate the packet with
         packet2.setEntityID(entityId);
-        //Create a ProtocolLib WrappedDataWatcher
-        WrappedDataWatcher dataWatcher = new WrappedDataWatcher();
-
-        WrappedDataWatcher.WrappedDataWatcherObject isSmall = new WrappedDataWatcher.WrappedDataWatcherObject(15, WrappedDataWatcher.Registry.get(Byte.class));
-        dataWatcher.setObject(isSmall, (byte) 0x01);
-
         packet2.setMetadata(dataWatcher.getWatchableObjects());
         packet2.sendPacket(player);
     }
@@ -162,6 +155,14 @@ public class PacketArmorStand {
         packet.setEntityID(entityId);
         packet.setPassengerIds(new int[]{passengerId});
         packet.sendPacket(player);
+    }
+
+    public WrappedDataWatcher getDataWatcher() {
+        return dataWatcher;
+    }
+
+    public void setDataWatcher(WrappedDataWatcher dataWatcher) {
+        this.dataWatcher = dataWatcher;
     }
 
 }
