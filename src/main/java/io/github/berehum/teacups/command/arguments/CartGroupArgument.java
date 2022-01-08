@@ -115,8 +115,8 @@ public final class CartGroupArgument<C> extends CommandArgument<C, CartGroup> {
         @Override
         public @NonNull ArgumentParseResult<CartGroup> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            final Teacup teacup = commandContext.get("teacup");
-            if (input == null) {
+            final Teacup teacup = commandContext.get(Teacup.name);
+            if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(CartGroupParser.class, commandContext));
             }
             inputQueue.remove();
@@ -154,7 +154,7 @@ public final class CartGroupArgument<C> extends CommandArgument<C, CartGroup> {
                     context,
                     Caption.of("No cartgroup found for 'input' in 'teacup'"),
                     CaptionVariable.of("input", input),
-                    CaptionVariable.of("teacup", (((Teacup) context.get("teacup")).getId()))
+                    CaptionVariable.of(Teacup.name, (((Teacup) context.get(Teacup.name)).getId()))
             );
             this.input = input;
         }

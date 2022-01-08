@@ -17,7 +17,6 @@
 Teacups has a [wiki](https://github.com/Berehum/teacups/wiki/) that contains the most important aspects of the plugin.
 Including the layout of the config files and developer API.
 
-
 #### 🌟 Highlighted Articles
 
 - [FAQs](https://github.com/Berehum/teacups/wiki)
@@ -25,11 +24,10 @@ Including the layout of the config files and developer API.
 - [Teacup File](https://github.com/Berehum/teacups/wiki/Teacup-File)
 - [Show File](https://github.com/Berehum/teacups/wiki/Show-File)
 
-
 ## 💡 Support
 
-For support, please open a [GitHub issue](https://github.com/Berehum/teacups/issues).
-Please follow the layout in [CONTRIBUTING.md](https://github.com/Berehum/teacups/blob/master/CONTRIBUTING.md).
+For support, please open a [GitHub issue](https://github.com/Berehum/teacups/issues). Please follow the layout
+in [CONTRIBUTING.md](https://github.com/Berehum/teacups/blob/master/CONTRIBUTING.md).
 
 #### 🌐 Language
 
@@ -38,11 +36,11 @@ mad at us, making demands, or just complaining in general will not achieve anyth
 
 ## 💾 Downloads / Building
 
-The latest release version of teacups can be found
-on [Spigot](https://www.spigotmc.org/resources/). The latest build of teacups (development version)
+The latest release version of teacups can be found on [Spigot](https://www.spigotmc.org/resources/). The latest build of
+teacups (development version)
 can be found on [GitHub](https://github.com/Berehum/teacups/actions).
 
-Alternatively, you can build Teacups  via Maven. Release versions of Teacups are built using **Java 8**, you can change
+Alternatively, you can build Teacups via Maven. Release versions of Teacups are built using **Java 8**, you can change
 the target version in ``pom.xml``.
 
 * ensure Java 8 is installed on your machine
@@ -51,18 +49,18 @@ the target version in ``pom.xml``.
 
 The final jar will be in the `target/` directory.
 
-####Dependencies
-Teacups has [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) as a dependency. 
-You **must** install ProtocolLib version **4.7.0 or higher**.
+#### Dependencies
+
+Teacups has [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) as a dependency. You **must** install
+ProtocolLib version **4.7.0 or higher**.
 
 #### 🧰 Developer API
 
-Unfortunately, there is not a fancy developer API yet.
-However, you are able to do some things with the current code, such as [creating new show actions](https://github.com/LMBishop/teacups/wiki/New-Show-Action).
+Unfortunately, there is not a fancy developer API yet. However, you are able to do some things with the current code,
+such as [creating new show actions](https://github.com/LMBishop/teacups/wiki/New-Show-Action).
 
-
-This project currently doesn't have a repository, so you'll have to download a copy of the plugin and add it to your package managing software yourself. Sorry :(
-
+This project currently doesn't have a repository, so you'll have to download a copy of the plugin and add it to your
+package managing software yourself. Sorry :(
 
 ## 👫 Contributors
 
@@ -77,6 +75,6 @@ Please read  [CONTRIBUTING.md](https://github.com/Berehum/teacups/blob/master/CO
 The **source code** for Teacups is licensed under the GNU General Public License v3.0, to view the license
 click [here](https://github.com/Berehum/teacups/blob/master/LICENSE.txt).
 
-The **artwork** for Teacups is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-License ![](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png), to learn more
+The **artwork** for Teacups is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International License ![](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png), to learn more
 click [here](https://creativecommons.org/licenses/by-nc-sa/4.0/).

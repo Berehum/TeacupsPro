@@ -8,18 +8,18 @@ public abstract class IShowFileLine {
 
     private final int line;
     private final String filename;
-    private final ShowActionType<?> type;
+    private final ShowActionType type;
     private final String[] args;
     private IShowAction action;
 
-    protected IShowFileLine(ShowActionType<?> type, String filename, int line, String[] args) {
+    protected IShowFileLine(ShowActionType type, String filename, int line, String[] args) {
         this.type = type;
         this.line = line;
         this.filename = filename;
         this.args = args;
     }
 
-    public ShowActionType<?> getType() {
+    public ShowActionType getType() {
         return type;
     }
 

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LockShowAction implements IShowAction {
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("lock");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("lock");
 
     private boolean loaded = false;
 
@@ -42,7 +42,7 @@ public class LockShowAction implements IShowAction {
     }
 
     @Override
-    public @NotNull ShowActionType<?> getType() {
+    public @NotNull ShowActionType getType() {
         return type;
     }
 }

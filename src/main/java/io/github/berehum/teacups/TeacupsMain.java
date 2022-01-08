@@ -17,9 +17,8 @@ import java.util.regex.Pattern;
 
 public final class TeacupsMain extends JavaPlugin {
 
+    private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
     private static TeacupsMain INSTANCE;
-    private final static Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
-
     private ShowActionTypes showActionTypes;
 
     private ShowManager showManager;
@@ -63,7 +62,6 @@ public final class TeacupsMain extends JavaPlugin {
         } catch (Exception e) {
             this.getLogger().log(Level.WARNING, "Failed to initialize command manager", e);
             this.setEnabled(false);
-            return;
         }
     }
 
@@ -87,7 +85,7 @@ public final class TeacupsMain extends JavaPlugin {
     }
 
     public String color(String input) {
-        if (Version.v1_16_R1.isLower(Version.Current)) {
+        if (Version.V1_16_R1.isLower(Version.Current)) {
             Matcher match = pattern.matcher(input);
             while (match.find()) {
                 String color = input.substring(match.start(), match.end());

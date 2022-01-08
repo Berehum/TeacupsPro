@@ -18,6 +18,8 @@ import java.util.Arrays;
 
 public class ExecuteCommand extends TeacupCommand {
 
+    private static final String commandString = "command";
+
     public ExecuteCommand(final @NonNull TeacupsMain plugin, final @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
     }
@@ -28,8 +30,8 @@ public class ExecuteCommand extends TeacupCommand {
                 builder.literal("execute", "command", "cmd")
                         .permission("teacups.command.execute")
                         .argument(EnumArgument.of(ExecuteType.class, "execute type"))
-                        .argument(TeacupArgument.of("teacup"))
-                        .argument(StringArrayArgument.of("command",
+                        .argument(TeacupArgument.of(Teacup.name))
+                        .argument(StringArrayArgument.of(commandString,
                                 (commandSenderCommandContext, s) -> Arrays.asList("Command (without /)", "%player% for the player's name", "Example: eco give %player% 20")))
                         .handler(this::setRpm)
         );
@@ -37,9 +39,9 @@ public class ExecuteCommand extends TeacupCommand {
 
     private void setRpm(final @NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
-        final Teacup teacup = context.get("teacup");
+        final Teacup teacup = context.get(Teacup.name);
         final ExecuteType executeType = context.get("execute type");
-        final String[] commandArray = context.get("command");
+        final String[] commandArray = context.get(commandString);
 
         StringBuilder builder = new StringBuilder();
         for (String arg : commandArray) {
@@ -56,10 +58,10 @@ public class ExecuteCommand extends TeacupCommand {
             for (Player player : teacup.getPlayers()) {
                 if (player == null) continue;
                 if (executeType == ExecuteType.CONSOLE_FOR_EVERY_PLAYER) {
-                    Bukkit.dispatchCommand(commandExecutor, command.replaceAll("%player%", player.getName()));
+                    Bukkit.dispatchCommand(commandExecutor, command.replace("%player%", player.getName()));
                     continue;
                 }
-                Bukkit.dispatchCommand(player, command.replaceAll("%player%", player.getName()));
+                Bukkit.dispatchCommand(player, command.replace("%player%", player.getName()));
             }
         }
         sender.sendMessage(ChatColor.GREEN + "Execute " + executeType.name().toLowerCase() + " command on " + teacup.getId());

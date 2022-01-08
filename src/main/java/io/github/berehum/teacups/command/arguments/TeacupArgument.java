@@ -118,7 +118,7 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
         @Override
         public @NonNull ArgumentParseResult<Teacup> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            if (input == null) {
+            if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(TeacupParser.class, commandContext));
             }
             inputQueue.remove();

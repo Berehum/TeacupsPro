@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RpmShowAction implements IShowAction {
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("rpm");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("rpm");
     private boolean loaded = false;
 
     private String affect;
@@ -126,7 +126,7 @@ public class RpmShowAction implements IShowAction {
     }
 
     @Override
-    public @NotNull ShowActionType<?> getType() {
+    public @NotNull ShowActionType getType() {
         return type;
     }
 }

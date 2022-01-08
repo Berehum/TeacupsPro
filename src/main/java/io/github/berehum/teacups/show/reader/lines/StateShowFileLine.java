@@ -6,7 +6,7 @@ public class StateShowFileLine extends IShowFileLine {
 
     private final State state;
 
-    public StateShowFileLine(State state, ShowActionType<?> type, String filename, int line, String[] args) {
+    public StateShowFileLine(State state, ShowActionType type, String filename, int line, String[] args) {
         super(type, filename, line, args);
         this.state = state;
     }

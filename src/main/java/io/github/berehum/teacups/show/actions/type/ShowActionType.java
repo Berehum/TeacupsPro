@@ -4,17 +4,16 @@ import io.github.berehum.teacups.show.actions.IShowAction;
 
 import java.util.function.Supplier;
 
-public class ShowActionType<T extends IShowAction> {
+public class ShowActionType {
     private final String name;
     private final String[] aliases;
-    private final Supplier<T> constructor;
+    private final Supplier<IShowAction> constructor;
 
-    public ShowActionType(String name, String[] aliases, Supplier<T> constructor) {
+    public ShowActionType(String name, String[] aliases, Supplier<IShowAction> constructor) {
         this.name = name;
         this.aliases = aliases;
         this.constructor = constructor;
     }
-
 
     public String getName() {
         return name;
@@ -24,7 +23,7 @@ public class ShowActionType<T extends IShowAction> {
         return aliases;
     }
 
-    public Supplier<T> getConstructor() {
+    public Supplier<IShowAction> getConstructor() {
         return constructor;
     }
 }

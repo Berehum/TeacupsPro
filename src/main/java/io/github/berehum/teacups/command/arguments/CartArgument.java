@@ -115,8 +115,8 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
         @Override
         public @NonNull ArgumentParseResult<Cart> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            final CartGroup cartgroup = commandContext.get("cartgroup");
-            if (input == null) {
+            final CartGroup cartgroup = commandContext.get(CartGroup.name);
+            if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(CartParser.class, commandContext));
             }
             inputQueue.remove();
@@ -127,7 +127,7 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
 
         @Override
         public @NonNull List<@NonNull String> suggestions(final @NonNull CommandContext<C> commandContext, final @NonNull String input) {
-            CartGroup cartgroup = commandContext.get("cartgroup");
+            CartGroup cartgroup = commandContext.get(CartGroup.name);
             Map<String, Cart> carts = cartgroup.getCarts();
             return (carts == null) ? new ArrayList<>() : new ArrayList<>(carts.keySet());
         }
@@ -154,8 +154,8 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
                     context,
                     Caption.of("No cart found for 'input' in 'cartgroup' in 'teacup'"),
                     CaptionVariable.of("input", input),
-                    CaptionVariable.of("cartgroup", ((CartGroup) context.get("cartgroup")).getId()),
-                    CaptionVariable.of("teacup", (((Teacup) context.get("teacup")).getId()))
+                    CaptionVariable.of(CartGroup.name, ((CartGroup) context.get(CartGroup.name)).getId()),
+                    CaptionVariable.of(Teacup.name, (((Teacup) context.get(Teacup.name)).getId()))
             );
             this.input = input;
         }

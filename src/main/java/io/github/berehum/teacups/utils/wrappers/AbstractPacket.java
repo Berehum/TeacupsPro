@@ -64,24 +64,6 @@ public abstract class AbstractPacket {
      * Simulate receiving the current packet from the given sender.
      *
      * @param sender - the sender.
-     * @throws RuntimeException If the packet cannot be received.
-     * @see #receivePacket(Player)
-     * @deprecated Misspelled. recieve to receive
-     */
-    @Deprecated
-    public void recievePacket(Player sender) {
-        try {
-            ProtocolLibrary.getProtocolManager().recieveClientPacket(sender,
-                    getHandle());
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot recieve packet.", e);
-        }
-    }
-
-    /**
-     * Simulate receiving the current packet from the given sender.
-     *
-     * @param sender - the sender.
      * @throws RuntimeException if the packet cannot be received.
      */
     public void receivePacket(Player sender) {

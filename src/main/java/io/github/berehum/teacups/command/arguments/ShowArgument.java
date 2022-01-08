@@ -74,9 +74,9 @@ public final class ShowArgument<C> extends CommandArgument<C, Show> {
     /**
      * Create a new required command component with a default value
      *
-     * @param name          Component name
+     * @param name        Component name
      * @param defaultShow Default teacup
-     * @param <C>           Command sender type
+     * @param <C>         Command sender type
      * @return Created component
      */
     public static <C> @NonNull CommandArgument<C, Show> optional(
@@ -117,7 +117,7 @@ public final class ShowArgument<C> extends CommandArgument<C, Show> {
         @Override
         public @NonNull ArgumentParseResult<Show> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            if (input == null) {
+            if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(ShowParser.class, commandContext));
             }
             inputQueue.remove();

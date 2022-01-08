@@ -5,6 +5,9 @@ import org.bukkit.util.Vector;
 
 public class LocationUtils {
 
+    private LocationUtils() {
+    }
+
     /**
      * @param location     location of center
      * @param r            radius of circle
@@ -64,11 +67,11 @@ public class LocationUtils {
     }
 
     public static double yawAngle(float yaw1, float yaw2) {
-        return numberRange(-180, 180, yaw1-yaw2);
+        return numberRange(-180, 180, yaw1 - yaw2);
     }
 
     public static float numberRange(int min, int max, float input) {
-        if (!(max > min)) throw new UnsupportedOperationException("Max number must be bigger than min number.");
+        if (max <= min) throw new UnsupportedOperationException("Max number must be bigger than min number.");
         if (input > max) input = min + (input % max);
         if (input < min) input = max + (input % min);
         return input;

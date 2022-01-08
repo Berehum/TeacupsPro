@@ -48,15 +48,6 @@ public class ItemBuilder {
         return new ItemBuilder(material, amount).setModelData(modelData);
     }
 
-    /**
-     * Clone the ItemBuilder into a new one.
-     *
-     * @return The cloned instance.
-     */
-    public ItemBuilder clone() {
-        return new ItemBuilder(is.clone());
-    }
-
     public ItemBuilder setDurability(int damage) {
         Damageable dim = (Damageable) is.getItemMeta();
         dim.setDamage(damage);

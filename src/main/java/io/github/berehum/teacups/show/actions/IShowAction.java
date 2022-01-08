@@ -9,6 +9,8 @@ public interface IShowAction {
     //stop rpm cartgroup cartgroup1 0
     //stop rpm cart cartgroup1 cart 1 0
     boolean load(String filename, int line, String[] args);
+
     void execute(Teacup teacup);
-    @NonNull ShowActionType<?> getType();
+
+    @NonNull ShowActionType getType();
 }

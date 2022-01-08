@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerShowAction implements IShowAction {
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("player");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("player");
 
     private boolean loaded = false;
 
@@ -23,7 +23,7 @@ public class PlayerShowAction implements IShowAction {
         for (String arg : args) {
             builder.append(arg).append(" ");
         }
-        command = builder.substring(0, builder.length()-1);
+        command = builder.substring(0, builder.length() - 1);
 
         if (command.isEmpty()) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
@@ -42,7 +42,7 @@ public class PlayerShowAction implements IShowAction {
     }
 
     @Override
-    public @NotNull ShowActionType<?> getType() {
+    public @NotNull ShowActionType getType() {
         return type;
     }
 }

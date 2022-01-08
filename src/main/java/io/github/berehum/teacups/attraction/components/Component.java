@@ -16,7 +16,8 @@ public abstract class Component {
     private final String id;
     private final Map<String, Component> subComponents;
     private final double radius;
-    private final @Nullable Model model;
+    private final @Nullable
+    Model model;
 
     //Location of the center of the component
     private Location location;
@@ -24,7 +25,7 @@ public abstract class Component {
     private double circleOffset = 0.0;
     private float rotation = 0.0F;
 
-    public Component(String id, Location location, double radius, Model model, Map<String, Component> subComponents) {
+    protected Component(String id, Location location, double radius, Model model, Map<String, Component> subComponents) {
         this.id = id;
         this.location = location;
         this.radius = radius;

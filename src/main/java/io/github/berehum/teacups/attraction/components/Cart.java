@@ -12,6 +12,8 @@ import java.util.*;
 
 public class Cart extends Component {
 
+    public static final String name = "cart";
+
     private final SeatLayout seatLayout;
     private final List<Seat> seats;
 

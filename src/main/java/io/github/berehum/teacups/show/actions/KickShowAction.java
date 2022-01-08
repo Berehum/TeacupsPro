@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class KickShowAction implements IShowAction {
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("kick");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("kick");
 
     @Override
     public boolean load(String filename, int line, String[] args) {
@@ -20,7 +20,7 @@ public class KickShowAction implements IShowAction {
     }
 
     @Override
-    public @NotNull ShowActionType<?> getType() {
+    public @NotNull ShowActionType getType() {
         return type;
     }
 }

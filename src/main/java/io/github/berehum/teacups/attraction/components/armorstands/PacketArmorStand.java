@@ -7,7 +7,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class PacketArmorStand {
 
@@ -75,9 +78,7 @@ public class PacketArmorStand {
         this.mountedPlayer = mountedPlayer;
         mountedPlayer.setAllowFlight(true);
         mountedPlayer.setFlying(true);
-        recipients.forEach(player -> {
-            sendMountPacket(player, entityId, mountedPlayer.getEntityId());
-        });
+        recipients.forEach(player -> sendMountPacket(player, entityId, mountedPlayer.getEntityId()));
     }
 
     public void dismount() {

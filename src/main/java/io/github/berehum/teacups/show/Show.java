@@ -2,8 +2,8 @@ package io.github.berehum.teacups.show;
 
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.show.actions.IShowAction;
-import io.github.berehum.teacups.show.reader.lines.IShowFileLine;
 import io.github.berehum.teacups.show.reader.ShowFileReader;
+import io.github.berehum.teacups.show.reader.lines.IShowFileLine;
 import io.github.berehum.teacups.show.reader.lines.StateShowFileLine;
 import io.github.berehum.teacups.show.reader.lines.TickShowFileLine;
 import org.bukkit.plugin.java.JavaPlugin;

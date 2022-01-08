@@ -135,7 +135,7 @@ public class TeacupManager {
     //This method basically controls the teacup
     public BukkitTask updatePacketRecipients(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin, () -> Bukkit.getOnlinePlayers().forEach(this::updatePacketRecipient)
-        , 0L, tickDelay);
+                , 0L, tickDelay);
     }
 
     public void updatePacketRecipient(Player player) {

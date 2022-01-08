@@ -1,24 +1,26 @@
-package io.github.berehum.teacups.show.actions;
+package io.github.berehum.teacups.show.actions.messageactions;
 
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.Teacup;
-import io.github.berehum.teacups.show.actions.type.ShowActionType;
+import io.github.berehum.teacups.show.actions.IShowAction;
 import io.github.berehum.teacups.show.reader.ShowFileReader;
 import io.github.berehum.teacups.utils.config.ConfigProblem;
 import io.github.berehum.teacups.utils.config.ConfigProblemDescriptions;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-public class ActionBarShowAction implements IShowAction {
+import java.util.function.BiConsumer;
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("actionbar");
+public abstract class MessageShowAction implements IShowAction {
+
+    private final BiConsumer<Player, String> consumer;
 
     private boolean loaded = false;
-
     private String message;
+
+
+    public MessageShowAction(BiConsumer<Player, String> consumer) {
+        this.consumer = consumer;
+    }
 
     @Override
     public boolean load(String filename, int line, String[] args) {
@@ -26,7 +28,7 @@ public class ActionBarShowAction implements IShowAction {
         for (String arg : args) {
             builder.append(arg).append(" ");
         }
-        message = builder.substring(0, builder.length()-1);
+        message = builder.substring(0, builder.length() - 1);
 
         if (message.isEmpty()) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
@@ -35,7 +37,7 @@ public class ActionBarShowAction implements IShowAction {
         }
 
         loaded = true;
-        return loaded;
+        return true;
     }
 
     @Override
@@ -43,12 +45,9 @@ public class ActionBarShowAction implements IShowAction {
         if (!loaded) return;
         TeacupsMain plugin = TeacupsMain.getInstance();
         for (Player player : teacup.getPlayers()) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(plugin.format(player, message)));
+            consumer.accept(player, plugin.format(player, message));
         }
     }
 
-    @Override
-    public @NotNull ShowActionType<?> getType() {
-        return type;
-    }
 }
+

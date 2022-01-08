@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.logging.Level;
 
 public class CustomConfig {
@@ -43,8 +44,8 @@ public class CustomConfig {
         if (configuration == null || file == null) return;
         try {
             getConfig().save(file);
-        } catch (IOException exception) {
-            // Error
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, String.format("Could not save %s", file.getName()), e);
         }
     }
 
@@ -61,37 +62,44 @@ public class CustomConfig {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
         resourcePath = resourcePath.replace('\\', '/');
+
         InputStream in = plugin.getResource(resourcePath);
         if (in == null) {
             throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + this.file);
         }
-        if (!file.getParentFile().exists()) {
-            file.mkdirs();
-        }
-        try {
-            file.createNewFile();
-            OutputStream out = new FileOutputStream(file);
+
+        createNewFile(false);
+
+        try (OutputStream out = new FileOutputStream(file)) {
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
-            out.close();
-            in.close();
-        } catch (IOException var10) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save " + resourcePath + " to " + file, var10);
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, String.format("Could not save %s to %s", resourcePath, file), e);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ignored) {
+            }
         }
-
     }
 
-    public void createNewFile(boolean replaceExisting) {
+    public boolean createNewFile(boolean replaceExisting) {
+        boolean success = true;
         try {
-            if (file.exists() && replaceExisting) {
-                file.delete();
+            if (!file.getParentFile().exists()) {
+                if (!file.mkdirs()) success = false;
             }
-            file.createNewFile();
+            if (file.exists() && replaceExisting) {
+                Files.delete(file.toPath());
+            }
+            if (!file.createNewFile()) success = false;
         } catch (IOException exception) {
+            success = false;
             exception.printStackTrace();
         }
+        return success;
     }
 }

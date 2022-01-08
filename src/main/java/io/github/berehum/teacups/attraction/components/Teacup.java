@@ -5,10 +5,10 @@ import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.PacketArmorStand;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
 import io.github.berehum.teacups.show.Show;
-import io.github.berehum.teacups.utils.config.CustomConfig;
 import io.github.berehum.teacups.utils.ItemBuilder;
 import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
+import io.github.berehum.teacups.utils.config.CustomConfig;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -23,6 +23,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class Teacup {
+
+    public static final String name = "teacup";
 
     private final CustomConfig customConfig;
 
@@ -93,10 +95,10 @@ public class Teacup {
 
     public boolean init() {
         if (cartGroups.isEmpty() || location == null) return false;
-        List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
-        for (int i = 0; i < cartGroups.size(); i++) {
-            CartGroup group = cartGroups.get(i);
-            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
+        List<CartGroup> cartGroupsList = new ArrayList<>(this.cartGroups.values());
+        for (int i = 0; i < cartGroupsList.size(); i++) {
+            CartGroup group = cartGroupsList.get(i);
+            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroupsList.size(), circleOffset));
             group.init();
         }
         updateChildLocations();
@@ -127,7 +129,7 @@ public class Teacup {
     }
 
     public void autoStart(TeacupsMain plugin) {
-        if (commenceStart || active) return;
+        if (commenceStart || active || autoStartDelay < 0) return;
         commenceStart = true;
         new BukkitRunnable() {
             int index = autoStartDelay;
@@ -135,7 +137,7 @@ public class Teacup {
             @Override
             public void run() {
                 Set<Player> players = getPlayers();
-                if (players.size() == 0 || isActive()) {
+                if (players.isEmpty() || isActive()) {
                     commenceStart = false;
                     this.cancel();
                 }
@@ -202,10 +204,10 @@ public class Teacup {
     }
 
     public void updateChildLocations() {
-        List<CartGroup> cartGroups = new ArrayList<>(this.cartGroups.values());
-        for (int i = 0; i < cartGroups.size(); i++) {
-            CartGroup group = cartGroups.get(i);
-            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroups.size(), circleOffset));
+        List<CartGroup> cartGroupsList = new ArrayList<>(this.cartGroups.values());
+        for (int i = 0; i < cartGroupsList.size(); i++) {
+            CartGroup group = cartGroupsList.get(i);
+            group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroupsList.size(), circleOffset));
             group.updateChildLocations();
         }
     }
@@ -256,12 +258,12 @@ public class Teacup {
         return autoStartDelay;
     }
 
-    public void setActiveShow(Show activeShow) {
-        this.activeShow = activeShow;
-    }
-
     public Show getActiveShow() {
         return activeShow;
+    }
+
+    public void setActiveShow(Show activeShow) {
+        this.activeShow = activeShow;
     }
 
 }

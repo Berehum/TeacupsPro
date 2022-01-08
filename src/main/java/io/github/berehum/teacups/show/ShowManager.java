@@ -5,7 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class ShowManager {
     private final JavaPlugin plugin;
@@ -52,15 +55,9 @@ public class ShowManager {
         String name = file.getName();
         String finalName = name.substring(0, name.length() - 4);
 
-        //Bukkit.getScheduler().runTask(plugin, () -> {
-            Show show = (showMap.containsKey(finalName) ? showMap.get(finalName) : new Show());
-            try {
-                show.load(file);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            showMap.put(finalName, show);
-        //});
+        Show show = (showMap.containsKey(finalName) ? showMap.get(finalName) : new Show());
+        if (!show.load(file)) return;
+        showMap.put(finalName, show);
     }
 
     public Optional<Show> getShow(String name) {

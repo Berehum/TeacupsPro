@@ -1,7 +1,6 @@
 package io.github.berehum.teacups.command.commands;
 
 import cloud.commandframework.arguments.standard.BooleanArgument;
-import cloud.commandframework.arguments.standard.EnumArgument;
 import cloud.commandframework.context.CommandContext;
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.Teacup;
@@ -28,7 +27,7 @@ public class ActionCommand extends TeacupCommand {
                 builder.literal("action")
                         .permission("teacups.command.action")
                         .literal("start")
-                        .argument(TeacupArgument.of("teacup"))
+                        .argument(TeacupArgument.of(Teacup.name))
                         .argument(BooleanArgument.optional("override"))
                         .argument(ShowArgument.optional("show"))
                         .handler(this::start)
@@ -37,7 +36,7 @@ public class ActionCommand extends TeacupCommand {
                 builder.literal("action")
                         .permission("teacups.command.action")
                         .literal("stop")
-                        .argument(TeacupArgument.of("teacup"))
+                        .argument(TeacupArgument.of(Teacup.name))
                         .argument(BooleanArgument.optional("override"))
                         .handler(this::stop)
         );
@@ -45,7 +44,7 @@ public class ActionCommand extends TeacupCommand {
 
     private void start(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        final Teacup teacup = context.get("teacup");
+        final Teacup teacup = context.get(Teacup.name);
         final Optional<Boolean> override = context.getOptional("override");
         final Optional<Show> show = context.getOptional("show");
 
@@ -65,7 +64,7 @@ public class ActionCommand extends TeacupCommand {
 
     private void stop(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        final Teacup teacup = context.get("teacup");
+        final Teacup teacup = context.get(Teacup.name);
         final Optional<Boolean> override = context.getOptional("override");
 
         if (!teacup.stop(override.orElse(Boolean.FALSE))) {

@@ -19,6 +19,8 @@ import java.util.stream.Stream;
 
 public class ShowFileReader {
 
+    private ShowFileReader() {}
+
     private static final Map<String, List<ConfigProblem>> configProblems = new HashMap<>();
 
     public static List<IShowFileLine> getShowFileLines(File file) {
@@ -29,7 +31,7 @@ public class ShowFileReader {
 
         try (Stream<String> stream = Files.lines((file.toPath()))) {
             int lineNo = 1;
-            for (String line: stream.collect(Collectors.toList())) {
+            for (String line : stream.collect(Collectors.toList())) {
                 IShowFileLine showFileLine = getShowFileLine(fileName, lineNo, line);
                 if (showFileLine != null) {
                     lines.add(showFileLine);
@@ -57,7 +59,7 @@ public class ShowFileReader {
         }
 
         boolean isTickLine = true;
-        
+
         int tick = -1;
         StateShowFileLine.State state = null;
         try {
@@ -81,7 +83,7 @@ public class ShowFileReader {
             }
         }
 
-        ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get(args[1]);
+        ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get(args[1]);
         if (type == null) {
             addConfigProblem(fileName, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
                     ConfigProblemDescriptions.INVALID_ACTION.getDescription(args[1]), String.valueOf(lineNo)));
@@ -98,7 +100,7 @@ public class ShowFileReader {
         } else {
             showFileLine = new StateShowFileLine(state, type, fileName, lineNo, newArgs);
         }
-        
+
         if (showFileLine.toAction() == null) return null;
         return showFileLine;
     }
@@ -127,11 +129,10 @@ public class ShowFileReader {
             return;
         }
 
-        //sender.sendMessage(ChatColor.DARK_GRAY.toString() + "----");
         sender.sendMessage(ChatColor.GRAY + "Detected problems and potential issues:");
         Set<ConfigProblem.ConfigProblemType> problemTypes = new HashSet<>();
         int count = 0;
-        Map<ConfigProblem.ConfigProblemType, List<ConfigProblem>> sortedProblems = new HashMap<>();
+        Map<ConfigProblem.ConfigProblemType, List<ConfigProblem>> sortedProblems = new EnumMap<>(ConfigProblem.ConfigProblemType.class);
         for (ConfigProblem problem : problems) {
             ConfigProblem.ConfigProblemType problemType = problem.getType();
             problemTypes.add(problemType);
@@ -161,7 +162,6 @@ public class ShowFileReader {
             }
         }
 
-        //sender.sendMessage(ChatColor.DARK_GRAY.toString() + "----");
         List<String> legend = new ArrayList<>();
         for (ConfigProblem.ConfigProblemType type : ConfigProblem.ConfigProblemType.values()) {
             if (!problemTypes.contains(type)) continue;
@@ -180,12 +180,11 @@ public class ShowFileReader {
             return;
         }
 
-        //sender.sendMessage(ChatColor.DARK_GRAY.toString() + "----");
         sender.sendMessage(ChatColor.GRAY + "Detected problems and potential issues:");
         Set<ConfigProblem.ConfigProblemType> problemTypes = new HashSet<>();
         int count = 0;
         for (Map.Entry<String, List<ConfigProblem>> entry : problems.entrySet()) {
-            HashMap<ConfigProblem.ConfigProblemType, List<ConfigProblem>> sortedProblems = new HashMap<>();
+            Map<ConfigProblem.ConfigProblemType, List<ConfigProblem>> sortedProblems = new EnumMap<>(ConfigProblem.ConfigProblemType.class);
             for (ConfigProblem problem : entry.getValue()) {
                 if (sortedProblems.containsKey(problem.getType())) {
                     sortedProblems.get(problem.getType()).add(problem);
@@ -217,7 +216,6 @@ public class ShowFileReader {
                 }
             }
         }
-//                            sender.sendMessage(ChatColor.DARK_GRAY.toString() + "----");
         List<String> legend = new ArrayList<>();
         for (ConfigProblem.ConfigProblemType type : ConfigProblem.ConfigProblemType.values()) {
             if (problemTypes.contains(type)) {

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ConsoleShowAction implements IShowAction {
 
-    private static final ShowActionType<?> type = TeacupsMain.getInstance().getShowActionTypes().get("console");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("console");
     private boolean loaded = false;
 
     private ConsoleCommandSender sender;
@@ -27,7 +27,7 @@ public class ConsoleShowAction implements IShowAction {
         for (String arg : args) {
             builder.append(arg).append(" ");
         }
-        command = builder.substring(0, builder.length()-1);
+        command = builder.substring(0, builder.length() - 1);
 
         if (command.isEmpty()) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
@@ -46,7 +46,7 @@ public class ConsoleShowAction implements IShowAction {
     }
 
     @Override
-    public @NotNull ShowActionType<?> getType() {
+    public @NotNull ShowActionType getType() {
         return type;
     }
 }
