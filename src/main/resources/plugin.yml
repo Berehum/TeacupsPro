@@ -5,4 +5,4 @@ api-version: 1.13
 depend:
   - ProtocolLib
 authors: [ Berehum ]
-description: Adds teacups attractions to your server
+description: An extensive plugin that adds teacups to your minecraft server.

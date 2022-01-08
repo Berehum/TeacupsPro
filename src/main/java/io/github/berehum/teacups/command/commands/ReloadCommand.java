@@ -28,13 +28,15 @@ public class ReloadCommand extends TeacupCommand {
     public void register() {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("reload")
-                        .literal("teacups")
+                        .permission("teacups.command.reload")
+                        .literal("teacups", "teacup")
                         .argument(TeacupArgument.optional("teacup"))
                         .handler(this::reloadTeacup)
         );
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("reload")
-                        .literal("shows")
+                        .permission("teacups.command.reload")
+                        .literal("shows", "show")
                         .argument(ShowArgument.optional("show"))
                         .handler(this::reloadShow)
         );

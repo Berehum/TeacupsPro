@@ -26,6 +26,7 @@ public class ExecuteCommand extends TeacupCommand {
     public void register() {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("execute", "command", "cmd")
+                        .permission("teacups.command.execute")
                         .argument(EnumArgument.of(ExecuteType.class, "execute type"))
                         .argument(TeacupArgument.of("teacup"))
                         .argument(StringArrayArgument.of("command",
@@ -52,7 +53,7 @@ public class ExecuteCommand extends TeacupCommand {
             Bukkit.dispatchCommand(commandExecutor, command);
             return;
         } else {
-            for (Player player : teacup.getPlayersOnRide()) {
+            for (Player player : teacup.getPlayers()) {
                 if (player == null) continue;
                 if (executeType == ExecuteType.CONSOLE_FOR_EVERY_PLAYER) {
                     Bukkit.dispatchCommand(commandExecutor, command.replaceAll("%player%", player.getName()));

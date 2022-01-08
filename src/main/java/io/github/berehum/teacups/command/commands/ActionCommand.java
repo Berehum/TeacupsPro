@@ -7,7 +7,9 @@ import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.command.TeacupCommand;
+import io.github.berehum.teacups.command.arguments.ShowArgument;
 import io.github.berehum.teacups.command.arguments.TeacupArgument;
+import io.github.berehum.teacups.show.Show;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -24,13 +26,16 @@ public class ActionCommand extends TeacupCommand {
     public void register() {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("action")
+                        .permission("teacups.command.action")
                         .literal("start")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(BooleanArgument.optional("override"))
+                        .argument(ShowArgument.optional("show"))
                         .handler(this::start)
         );
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("action")
+                        .permission("teacups.command.action")
                         .literal("stop")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(BooleanArgument.optional("override"))
@@ -42,10 +47,18 @@ public class ActionCommand extends TeacupCommand {
         CommandSender sender = context.getSender();
         final Teacup teacup = context.get("teacup");
         final Optional<Boolean> override = context.getOptional("override");
+        final Optional<Show> show = context.getOptional("show");
 
-        if (!teacup.start(plugin, override.orElse(Boolean.FALSE))) {
-            sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
-            return;
+        if (!show.isPresent()) {
+            if (!teacup.start(plugin, override.orElse(Boolean.FALSE))) {
+                sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
+                return;
+            }
+        } else {
+            if (!teacup.start(plugin, show.get(), override.orElse(Boolean.FALSE))) {
+                sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
+                return;
+            }
         }
         sender.sendMessage(ChatColor.GREEN + String.format("Successfully started teacup '%s'.", teacup.getId()));
     }

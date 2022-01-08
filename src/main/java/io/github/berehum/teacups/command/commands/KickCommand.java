@@ -25,13 +25,14 @@ public class KickCommand extends TeacupCommand {
     public void register() {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("kick")
+                        .permission("teacups.command.kick")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(PlayerArgument.optional("player"))
-                        .handler(this::setRpm)
+                        .handler(this::kick)
         );
     }
 
-    private void setRpm(final @NonNull CommandContext<CommandSender> context) {
+    private void kick(final @NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
         final Teacup teacup = context.get("teacup");
         final Optional<Player> optionalPlayer = context.getOptional("player");

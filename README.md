@@ -1,5 +1,4 @@
 <p align="center">
-<img src="https://leonardobishop.com/artwork/questcompass2-256.png" width="200" height="200"><br>
 <img src="https://isitmaintained.com/badge/resolution/Berehum/teacups.svg">
 <img src="https://isitmaintained.com/badge/open/Berehum/teacups.svg">
 <h1 align="center">Teacups</h1>
@@ -13,7 +12,7 @@
 - [License](#-license)
 - [Wiki](#-wiki)
 
-## 📖 Wiki
+## 📖 Documentation / Wiki
 
 Teacups has a [wiki](https://github.com/Berehum/teacups/wiki/) that contains the most important aspects of the plugin.
 Including the layout of the config files and developer API.

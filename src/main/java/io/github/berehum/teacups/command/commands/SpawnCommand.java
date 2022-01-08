@@ -24,7 +24,8 @@ public class SpawnCommand extends TeacupCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("spawn")
+                builder.literal("spawn", "create")
+                        .permission("teacups.command.spawn")
                         .argument(StringArgument.of("name"))
                         .argument(LocationArgument.of("location"))
                         .handler(this::spawnTeacup)

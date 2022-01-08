@@ -27,7 +27,10 @@ public class SetRpmCommand extends TeacupCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("setrpm").literal("cart")
+                builder.literal("setrpm")
+                        .permission("teacups.command.setrpm")
+                        .literal("cart")
+                        .permission("teacups.command.setrpm")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(CartGroupArgument.of("cartgroup"))
                         .argument(CartArgument.of("cart"))
@@ -36,7 +39,9 @@ public class SetRpmCommand extends TeacupCommand {
                         .handler(this::setRpmCart)
         );
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("setrpm").literal("cartgroup", "group")
+                builder.literal("setrpm")
+                        .permission("teacups.command.setrpm")
+                        .literal("cartgroup", "group")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(CartGroupArgument.of("cartgroup"))
                         .argument(IntegerArgument.of("rpm"))
@@ -44,7 +49,9 @@ public class SetRpmCommand extends TeacupCommand {
                         .handler(this::setRpmCartGroup)
         );
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("setrpm").literal("teacup", "cup", "main")
+                builder.literal("setrpm")
+                        .permission("teacups.command.setrpm")
+                        .literal("teacup", "cup", "main")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(IntegerArgument.of("rpm"))
                         .argument(BooleanArgument.optional("add to existing"))

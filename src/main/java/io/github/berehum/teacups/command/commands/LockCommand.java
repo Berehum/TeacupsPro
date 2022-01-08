@@ -22,7 +22,8 @@ public class LockCommand extends TeacupCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("lock")
+                builder.literal("lock", "setlock")
+                        .permission("teacups.command.lock")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(BooleanArgument.optional("set locked"))
                         .handler(this::setRpm)

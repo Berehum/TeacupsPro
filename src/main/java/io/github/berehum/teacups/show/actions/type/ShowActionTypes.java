@@ -1,7 +1,7 @@
 package io.github.berehum.teacups.show.actions.type;
 
 import io.github.berehum.teacups.show.actions.*;
-import io.github.berehum.teacups.exceptions.ClashingActionsTypesException;
+import io.github.berehum.teacups.exceptions.ClashingActionTypesException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,15 +22,15 @@ public class ShowActionTypes {
         } catch (Exception ignored) {}
     }
 
-    public boolean registerType(ShowActionType<?> type) throws ClashingActionsTypesException {
+    public boolean registerType(ShowActionType<?> type) throws ClashingActionTypesException {
         String name = type.getName();
         String[] aliases = type.getAliases();
 
         if (get(name) != null) {
-            throw new ClashingActionsTypesException(get(name), type);
+            throw new ClashingActionTypesException(get(name), type);
         }
         for (String alias : aliases) {
-            if (get(alias) != null) throw new ClashingActionsTypesException(get(name), type);
+            if (get(alias) != null) throw new ClashingActionTypesException(get(name), type);
         }
 
         showActionTypes.add(type);
