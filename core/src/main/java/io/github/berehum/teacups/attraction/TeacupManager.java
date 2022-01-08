@@ -5,7 +5,7 @@ import io.github.berehum.teacups.attraction.components.Component;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
-import io.github.berehum.teacups.utils.CustomConfig;
+import io.github.berehum.teacups.utils.config.CustomConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -101,7 +101,7 @@ public class TeacupManager {
         return models;
     }
 
-    //This method basically controls the teacup
+    //This method basically controls the teacup's movement
     public BukkitTask updateTeacups(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (Teacup teacup : teacupsAttractions.values()) {

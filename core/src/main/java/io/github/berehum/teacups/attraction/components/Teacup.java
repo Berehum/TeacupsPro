@@ -1,8 +1,11 @@
 package io.github.berehum.teacups.attraction.components;
 
+import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
+import io.github.berehum.teacups.attraction.components.armorstands.PacketArmorStand;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;
-import io.github.berehum.teacups.utils.CustomConfig;
+import io.github.berehum.teacups.show.Show;
+import io.github.berehum.teacups.utils.config.CustomConfig;
 import io.github.berehum.teacups.utils.ItemBuilder;
 import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
@@ -11,7 +14,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -31,8 +33,9 @@ public class Teacup {
     private final Map<String, CartGroup> cartGroups = new HashMap<>();
 
     private final int autoStartDelay;
-    private final List<String> startCommands;
-    private final List<String> stopCommands;
+    private final String defaultShow;
+
+    private Show activeShow;
 
     private int rpm = 0;
     private double circleOffset = 0.0;
@@ -48,9 +51,10 @@ public class Teacup {
                 config.getDouble("settings.location.x"), config.getDouble("settings.location.y"), config.getDouble("settings.location.z"));
 
         this.radius = config.getDouble("settings.radius");
-        this.autoStartDelay = config.getInt("settings.auto-start-delay");
-        this.startCommands = config.getStringList("settings.commands.start");
-        this.stopCommands = config.getStringList("settings.commands.stop");
+
+        this.autoStartDelay = config.getInt("show.auto-start-delay");
+
+        this.defaultShow = config.getString("show.default-show");
 
         ConfigurationSection groupSection = config.getConfigurationSection("cartgroups");
         if (groupSection == null) return;
@@ -103,17 +107,26 @@ public class Teacup {
         cartGroups.values().forEach(CartGroup::disable);
     }
 
-    public boolean start(boolean override) {
+    public boolean start(TeacupsMain plugin, boolean override) {
+        Show show = plugin.getShowManager().getShowMap().get(defaultShow);
+        return start(plugin, show, override);
+    }
+
+    public boolean start(JavaPlugin plugin, Show show, boolean override) {
+        if (show == null) {
+            plugin.getLogger().warning(String.format("Started (default)show for teacup %s does not exist.", id));
+            return false;
+        }
+
         if (!override && active) {
             return false;
         }
         active = true;
-        final ConsoleCommandSender sender = Bukkit.getConsoleSender();
-        startCommands.forEach(command -> Bukkit.dispatchCommand(sender, command));
+        show.startShow(plugin, this);
         return true;
     }
 
-    public void autoStart(JavaPlugin plugin) {
+    public void autoStart(TeacupsMain plugin) {
         if (commenceStart || active) return;
         commenceStart = true;
         new BukkitRunnable() {
@@ -121,13 +134,13 @@ public class Teacup {
 
             @Override
             public void run() {
-                Set<Player> players = getPlayersOnRide();
-                if (players.size() == 0) {
+                Set<Player> players = getPlayers();
+                if (players.size() == 0 || isActive()) {
                     commenceStart = false;
                     this.cancel();
                 }
                 if (index <= 0) {
-                    start(false);
+                    start(plugin, false);
                     commenceStart = false;
                     this.cancel();
                 }
@@ -144,8 +157,7 @@ public class Teacup {
             return false;
         }
         active = false;
-        final ConsoleCommandSender sender = Bukkit.getConsoleSender();
-        stopCommands.forEach(command -> Bukkit.dispatchCommand(sender, command));
+        activeShow.stopShow(this);
         return true;
     }
 
@@ -163,8 +175,7 @@ public class Teacup {
         return id;
     }
 
-
-    public Set<Player> getPlayersOnRide() {
+    public Set<Player> getPlayers() {
         Set<Player> players = new HashSet<>();
         cartGroups.values().forEach(cartGroup -> players.addAll(cartGroup.getPlayers()));
         return players;
@@ -233,6 +244,10 @@ public class Teacup {
         getSeats().forEach(seat -> seat.setLocked(locked));
     }
 
+    public void kickAll() {
+        getSeats().forEach(PacketArmorStand::dismount);
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -240,4 +255,13 @@ public class Teacup {
     public int getAutoStartDelay() {
         return autoStartDelay;
     }
+
+    public void setActiveShow(Show activeShow) {
+        this.activeShow = activeShow;
+    }
+
+    public Show getActiveShow() {
+        return activeShow;
+    }
+
 }

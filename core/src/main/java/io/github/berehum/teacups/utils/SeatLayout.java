@@ -21,7 +21,7 @@ public class SeatLayout {
 
     public static SeatLayout getDefault() {
         SeatLayout seatLayout = new SeatLayout("aaaaaa");
-        seatLayout.setMaterial('c', new ItemBuilder(Material.OAK_TRAPDOOR).toItemStack());
+        seatLayout.setMaterial('a', new ItemBuilder(Material.OAK_TRAPDOOR).toItemStack());
         return seatLayout;
     }
 

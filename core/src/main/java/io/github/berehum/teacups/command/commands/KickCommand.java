@@ -46,9 +46,7 @@ public class KickCommand extends TeacupCommand {
             sender.sendMessage(ChatColor.GREEN + "Kicked " + player.getName() + " from all seats of " + teacup.getId());
             return;
         }
-        for (Seat seat : teacup.getSeats()) {
-            seat.dismount();
-        }
+        teacup.kickAll();
         sender.sendMessage(ChatColor.GREEN + "Kicked all player from all seats of " + teacup.getId());
     }
 }

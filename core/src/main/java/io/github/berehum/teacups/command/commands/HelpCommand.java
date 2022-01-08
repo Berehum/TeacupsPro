@@ -54,7 +54,6 @@ public class HelpCommand extends TeacupCommand {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("help")
                         .argument(helpQueryArgument)
-                        //.argument(StringArgument.optional("query", StringArgument.StringMode.GREEDY))
                         .permission("teacups.command.help")
                         .handler(this::executeHelp));
     }

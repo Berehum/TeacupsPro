@@ -24,35 +24,42 @@ public class ActionCommand extends TeacupCommand {
     public void register() {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("action")
-                        .argument(EnumArgument.of(ActionType.class, "action"))
+                        .literal("start")
                         .argument(TeacupArgument.of("teacup"))
                         .argument(BooleanArgument.optional("override"))
-                        .handler(this::setRpm)
+                        .handler(this::start)
+        );
+        this.commandManager.registerSubcommand(builder ->
+                builder.literal("action")
+                        .literal("stop")
+                        .argument(TeacupArgument.of("teacup"))
+                        .argument(BooleanArgument.optional("override"))
+                        .handler(this::stop)
         );
     }
 
-    private void setRpm(final @NonNull CommandContext<CommandSender> context) {
+    private void start(final @NonNull CommandContext<CommandSender> context) {
+        CommandSender sender = context.getSender();
         final Teacup teacup = context.get("teacup");
-        final ActionType actionType = context.get("action");
         final Optional<Boolean> override = context.getOptional("override");
 
-        boolean succeeded = false;
-
-        if (actionType == ActionType.START) {
-            succeeded = teacup.start(override.orElse(Boolean.FALSE));
-        } else if (actionType == ActionType.STOP) {
-            succeeded = teacup.stop(override.orElse(Boolean.FALSE));
-        }
-
-        CommandSender sender = context.getSender();
-        if (!succeeded) {
-            sender.sendMessage(ChatColor.RED + "Sorry, but the " + actionType.name() + " action couldn't be executed on " + teacup.getId());
+        if (!teacup.start(plugin, override.orElse(Boolean.FALSE))) {
+            sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
             return;
         }
-        sender.sendMessage(ChatColor.GREEN + actionType.name() + " action was successfully executed on " + teacup.getId());
+        sender.sendMessage(ChatColor.GREEN + String.format("Successfully started teacup '%s'.", teacup.getId()));
     }
 
-    private enum ActionType {
-        START, STOP;
+    private void stop(final @NonNull CommandContext<CommandSender> context) {
+        CommandSender sender = context.getSender();
+        final Teacup teacup = context.get("teacup");
+        final Optional<Boolean> override = context.getOptional("override");
+
+        if (!teacup.stop(override.orElse(Boolean.FALSE))) {
+            sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't stop teacup '%s'.", teacup.getId()));
+            return;
+        }
+        sender.sendMessage(ChatColor.GREEN + String.format("Successfully stopped teacup '%s'.", teacup.getId()));
     }
+
 }

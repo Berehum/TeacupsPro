@@ -7,7 +7,6 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import io.github.berehum.teacups.attraction.TeacupManager;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;

@@ -1,6 +1,5 @@
 package io.github.berehum.teacups.command.arguments;
 
-
 import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
@@ -11,7 +10,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.attraction.components.Teacup;
+import io.github.berehum.teacups.show.Show;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -22,13 +21,13 @@ import java.util.Queue;
 import java.util.function.BiFunction;
 
 /**
- * Argument that parses into a {@link Teacup}
+ * Argument that parses into a {@link Show}
  *
  * @param <C> Command sender type
  */
-public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
+public final class ShowArgument<C> extends CommandArgument<C, Show> {
 
-    private TeacupArgument(
+    private ShowArgument(
             final boolean required,
             final @NonNull String name,
             final @NonNull String defaultValue,
@@ -36,7 +35,7 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
                     @NonNull List<@NonNull String>> suggestionsProvider,
             final @NonNull ArgumentDescription defaultDescription
     ) {
-        super(required, name, new TeacupParser<>(), defaultValue, Teacup.class, suggestionsProvider, defaultDescription);
+        super(required, name, new ShowParser<>(), defaultValue, Show.class, suggestionsProvider, defaultDescription);
     }
 
     /**
@@ -57,8 +56,8 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
      * @param <C>  Command sender type
      * @return Created component
      */
-    public static <C> @NonNull CommandArgument<C, Teacup> of(final @NonNull String name) {
-        return TeacupArgument.<C>newBuilder(name).asRequired().build();
+    public static <C> @NonNull CommandArgument<C, Show> of(final @NonNull String name) {
+        return ShowArgument.<C>newBuilder(name).asRequired().build();
     }
 
     /**
@@ -68,30 +67,30 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
      * @param <C>  Command sender type
      * @return Created component
      */
-    public static <C> @NonNull CommandArgument<C, Teacup> optional(final @NonNull String name) {
-        return TeacupArgument.<C>newBuilder(name).asOptional().build();
+    public static <C> @NonNull CommandArgument<C, Show> optional(final @NonNull String name) {
+        return ShowArgument.<C>newBuilder(name).asOptional().build();
     }
 
     /**
      * Create a new required command component with a default value
      *
      * @param name          Component name
-     * @param defaultTeacup Default teacup
+     * @param defaultShow Default teacup
      * @param <C>           Command sender type
      * @return Created component
      */
-    public static <C> @NonNull CommandArgument<C, Teacup> optional(
+    public static <C> @NonNull CommandArgument<C, Show> optional(
             final @NonNull String name,
-            final @NonNull String defaultTeacup
+            final @NonNull String defaultShow
     ) {
-        return TeacupArgument.<C>newBuilder(name).asOptionalWithDefault(defaultTeacup).build();
+        return ShowArgument.<C>newBuilder(name).asOptionalWithDefault(defaultShow).build();
     }
 
 
-    public static final class Builder<C> extends CommandArgument.Builder<C, Teacup> {
+    public static final class Builder<C> extends CommandArgument.Builder<C, Show> {
 
         private Builder(final @NonNull String name) {
-            super(Teacup.class, name);
+            super(Show.class, name);
         }
 
         /**
@@ -100,8 +99,8 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
          * @return Constructed component
          */
         @Override
-        public @NonNull TeacupArgument<C> build() {
-            return new TeacupArgument<>(
+        public @NonNull ShowArgument<C> build() {
+            return new ShowArgument<>(
                     this.isRequired(),
                     this.getName(),
                     this.getDefaultValue(),
@@ -113,50 +112,50 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
     }
 
 
-    public static final class TeacupParser<C> implements ArgumentParser<C, Teacup> {
+    public static final class ShowParser<C> implements ArgumentParser<C, Show> {
 
         @Override
-        public @NonNull ArgumentParseResult<Teacup> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
+        public @NonNull ArgumentParseResult<Show> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
             if (input == null) {
-                return ArgumentParseResult.failure(new NoInputProvidedException(TeacupParser.class, commandContext));
+                return ArgumentParseResult.failure(new NoInputProvidedException(ShowParser.class, commandContext));
             }
             inputQueue.remove();
 
-            Optional<Teacup> teacup = TeacupsMain.getInstance().getTeacupManager().getTeacup(input);
-            return teacup.map(ArgumentParseResult::success).orElseGet(() -> ArgumentParseResult.failure(new TeacupParseException(input, commandContext)));
+            Optional<Show> show = TeacupsMain.getInstance().getShowManager().getShow(input);
+            return show.map(ArgumentParseResult::success).orElseGet(() -> ArgumentParseResult.failure(new ShowParseException(input, commandContext)));
         }
 
         @Override
         public @NonNull List<@NonNull String> suggestions(final @NonNull CommandContext<C> commandContext, final @NonNull String input) {
-            return new ArrayList<>(TeacupsMain.getInstance().getTeacupManager().getTeacups().keySet());
+            return new ArrayList<>(TeacupsMain.getInstance().getShowManager().getShowMap().keySet());
         }
 
     }
 
 
     /**
-     * Teacup parse exception
+     * Show parse exception
      */
-    public static final class TeacupParseException extends ParserException {
+    public static final class ShowParseException extends ParserException {
 
         private static final long serialVersionUID = 927476591631527552L;
         private final String input;
 
         /**
-         * Construct a new Teacup parse exception
+         * Construct a new Show parse exception
          *
          * @param input   String input
          * @param context Command context
          */
-        public TeacupParseException(
+        public ShowParseException(
                 final @NonNull String input,
                 final @NonNull CommandContext<?> context
         ) {
             super(
-                    TeacupParser.class,
+                    ShowParser.class,
                     context,
-                    Caption.of("No teacup attraction found for '{input}'"),
+                    Caption.of("No show found for '{input}'"),
                     CaptionVariable.of("input", input)
             );
             this.input = input;

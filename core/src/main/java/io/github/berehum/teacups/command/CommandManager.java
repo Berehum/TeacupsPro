@@ -33,7 +33,9 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
             }
         }
 
-        this.registerExceptionHandlers(plugin);
+        new MinecraftExceptionHandler<CommandSender>()
+                .withDefaultHandlers()
+                .apply(this, this.bukkitAudiences::sender);
 
         if (this.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
             this.registerAsynchronousCompletions();
@@ -47,17 +49,9 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
                 new KickCommand(plugin, this),
                 new ActionCommand(plugin, this),
                 new ExecuteCommand(plugin, this),
-                new SetTeacupRpmCommand(plugin, this),
-                new SetCartGroupRpmCommand(plugin, this),
-                new SetCartRpmCommand(plugin, this)
+                new SetRpmCommand(plugin, this)
         ).forEach(TeacupCommand::register);
 
-    }
-
-    private void registerExceptionHandlers(final @NonNull TeacupsMain plugin) {
-        new MinecraftExceptionHandler<CommandSender>()
-                .withDefaultHandlers()
-                .apply(this, this.bukkitAudiences::sender);
     }
 
     public void registerSubcommand(UnaryOperator<Command.Builder<CommandSender>> builderModifier) {
@@ -66,8 +60,6 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
 
     private Command.@NonNull Builder<CommandSender> rootBuilder() {
         return this.commandBuilder("teacup", "Teacups")
-                /* MinecraftHelp uses the MinecraftExtrasMetaKeys.DESCRIPTION meta, this is just so we give Bukkit a description
-                 * for our commands in the Bukkit and EssentialsX '/help' command */
                 .meta(CommandMeta.DESCRIPTION, "Teacups command. '/teacup help'");
     }
 

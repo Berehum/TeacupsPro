@@ -73,6 +73,7 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     }
 
     public void setSlotStackPairList(List<Pair<ItemSlot, ItemStack>> listPair) {
+        //method was added in a development build of ProtocolLib.
         handle.getSlotStackPairLists().write(0, listPair);
     }
 }

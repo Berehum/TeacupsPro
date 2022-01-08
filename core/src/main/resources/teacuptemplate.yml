@@ -5,17 +5,13 @@ settings:
     y: 5
     z: -60.5
   radius: 10
+
+show:
   auto-start-delay: 15
-  #I would recommend using shows here (I might add an implemented show-system in the future)
-  #That system would also allow an e-stop, which it currently doesn't.
-  commands:
-    start:
-      - start command
-    #Don't worry I'll add an 'ALL' placeholder to affect all the teacups/cartgroups/carts in the setrpm command
-    stop:
-      - teacup kick teacup
-      - teacup setrpm teacup test 0
-      - teacup setrpm cartgroup test cartgroup1 0
+  default-show: defaultshow
+  #allow-all-shows: false
+  #allow-shows:
+  # - your-show
 
 cartgroups:
   #automatically spaces them out evenly
@@ -27,7 +23,13 @@ cartgroups:
     carts:
       cart1:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart2:
         radius: 2
         seats:
@@ -39,7 +41,13 @@ cartgroups:
               type: BIRCH_TRAPDOOR
       cart3:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
   cartgroup2:
     radius: 3.5
     model:
@@ -48,13 +56,31 @@ cartgroups:
     carts:
       cart1:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart2:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart3:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
   cartgroup3:
     radius: 3.5
     model:
@@ -63,10 +89,28 @@ cartgroups:
     carts:
       cart1:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart2:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR
       cart3:
         radius: 2
-        seats: 3
+        seats:
+          seatlayout: 'a b a b '
+          models:
+            a:
+              type: OAK_TRAPDOOR
+            b:
+              type: BIRCH_TRAPDOOR

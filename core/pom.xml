@@ -10,7 +10,7 @@
     <parent>
         <artifactId>teacups-parent</artifactId>
         <groupId>io.github.berehum</groupId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
     <build>
         <plugins>
@@ -39,8 +39,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml
-                    </dependencyReducedPomLocation>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <relocations>
                         <relocation>
                             <pattern>cloud.commandframework</pattern>
@@ -89,27 +88,27 @@
         <dependency>
             <groupId>cloud.commandframework</groupId>
             <artifactId>cloud-core</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
             <artifactId>cloud-paper</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
             <artifactId>cloud-minecraft-extras</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
             <artifactId>cloud-annotations</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

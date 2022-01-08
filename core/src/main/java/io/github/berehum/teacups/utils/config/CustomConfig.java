@@ -1,4 +1,4 @@
-package io.github.berehum.teacups.utils;
+package io.github.berehum.teacups.utils.config;
 
 
 import org.bukkit.configuration.file.FileConfiguration;

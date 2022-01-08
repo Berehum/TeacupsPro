@@ -6,7 +6,7 @@ import cloud.commandframework.context.CommandContext;
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.command.TeacupCommand;
-import io.github.berehum.teacups.utils.CustomConfig;
+import io.github.berehum.teacups.utils.config.CustomConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

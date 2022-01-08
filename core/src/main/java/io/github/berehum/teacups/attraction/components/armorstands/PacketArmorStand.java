@@ -53,7 +53,6 @@ public class PacketArmorStand {
         return location;
     }
 
-    //add usage of move packet in some instances
     public void teleport(Location location) {
         if (this.location.equals(location)) return;
 
@@ -63,6 +62,10 @@ public class PacketArmorStand {
             sendVehicleMovePacket(mountedPlayer, location);
         }
         this.location = location.clone();
+    }
+
+    public void updateMetaData() {
+        recipients.forEach(player -> sendMetaDataPacket(player, entityId));
     }
 
     public void mount(Player mountedPlayer) {

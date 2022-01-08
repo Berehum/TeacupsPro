@@ -1,0 +1,7 @@
+#These always execute
+
+start console <start command>
+stop kick
+stop rpm teacup 0
+stop rpm cartgroup cartgroup1 0
+

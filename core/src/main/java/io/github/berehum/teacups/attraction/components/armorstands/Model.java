@@ -4,7 +4,6 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import io.github.berehum.teacups.utils.wrappers.WrappedDataWatcherBuilder;
 import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityEquipment;
-import io.github.berehum.teacups.utils.wrappers.WrapperPlayServerEntityMetadata;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
