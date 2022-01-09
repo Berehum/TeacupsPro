@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public final class TeacupsMain extends JavaPlugin {
 
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
-    private static TeacupsMain INSTANCE;
+    private static TeacupsMain instance;
     private ShowActionTypes showActionTypes;
 
     private ShowManager showManager;
@@ -26,13 +26,13 @@ public final class TeacupsMain extends JavaPlugin {
     private PacketHandler packetHandler;
 
     public static TeacupsMain getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     public static void setInstance(TeacupsMain instance) {
-        if (TeacupsMain.INSTANCE != null)
+        if (TeacupsMain.instance != null)
             throw new UnsupportedOperationException("Instance already exists");
-        TeacupsMain.INSTANCE = instance;
+        TeacupsMain.instance = instance;
     }
 
     @Override

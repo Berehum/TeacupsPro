@@ -18,7 +18,7 @@ public abstract class MessageShowAction implements IShowAction {
     private String message;
 
 
-    public MessageShowAction(BiConsumer<Player, String> consumer) {
+    protected MessageShowAction(BiConsumer<Player, String> consumer) {
         this.consumer = consumer;
     }
 

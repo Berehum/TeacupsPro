@@ -23,7 +23,6 @@ public class Show {
     private final List<IShowAction> startActions = new ArrayList<>();
     private final List<IShowAction> stopActions = new ArrayList<>();
     private final Map<Integer, List<IShowAction>> showActionMap = new HashMap<>();
-    //@todo determine behaviour when there are no tick show actions
 
     private File loadedFile;
     private int highestTick = 0;
@@ -103,13 +102,8 @@ public class Show {
                 } else {
                     stopActions.add(stateLine.toAction());
                 }
-                continue;
             }
         }
-        if (showActionMap.isEmpty()) {
-
-        }
-
 
         loadedFile = file;
         return true;

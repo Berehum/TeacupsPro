@@ -5,13 +5,9 @@ settings:
     y: 5
     z: -60.5
   radius: 10
-
-show:
-  auto-start-delay: 15
-  default-show: defaultshow
-  #allow-all-shows: false
-  #allow-shows:
-  # - your-show
+  show:
+    auto-start-delay: 15
+    default-show: defaultshow
 
 cartgroups:
   #automatically spaces them out evenly

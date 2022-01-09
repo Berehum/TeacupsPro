@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class ExecuteCommand extends TeacupCommand {
 
-    private static final String commandString = "command";
+    private static final String COMMAND = "command";
 
     public ExecuteCommand(final @NonNull TeacupsMain plugin, final @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
@@ -27,11 +27,11 @@ public class ExecuteCommand extends TeacupCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("execute", "command", "cmd")
+                builder.literal("execute", COMMAND, "cmd")
                         .permission("teacups.command.execute")
                         .argument(EnumArgument.of(ExecuteType.class, "execute type"))
                         .argument(TeacupArgument.of(Teacup.NAME))
-                        .argument(StringArrayArgument.of(commandString,
+                        .argument(StringArrayArgument.of(COMMAND,
                                 (commandSenderCommandContext, s) -> Arrays.asList("Command (without /)", "%player% for the player's name", "Example: eco give %player% 20")))
                         .handler(this::execute)
         );
@@ -41,7 +41,7 @@ public class ExecuteCommand extends TeacupCommand {
         final CommandSender sender = context.getSender();
         final Teacup teacup = context.get(Teacup.NAME);
         final ExecuteType executeType = context.get("execute type");
-        final String[] commandArray = context.get(commandString);
+        final String[] commandArray = context.get(COMMAND);
 
         StringBuilder builder = new StringBuilder();
         for (String arg : commandArray) {

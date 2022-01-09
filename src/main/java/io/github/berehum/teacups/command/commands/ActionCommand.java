@@ -17,6 +17,8 @@ import java.util.Optional;
 
 public class ActionCommand extends TeacupCommand {
 
+    private static final String OVERRIDE = "override";
+
     public ActionCommand(final @NonNull TeacupsMain plugin, final @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
     }
@@ -28,7 +30,7 @@ public class ActionCommand extends TeacupCommand {
                         .permission("teacups.command.action")
                         .literal("start")
                         .argument(TeacupArgument.of(Teacup.NAME))
-                        .argument(BooleanArgument.optional("override"))
+                        .argument(BooleanArgument.optional(OVERRIDE))
                         .argument(ShowArgument.optional("show"))
                         .handler(this::start)
         );
@@ -37,7 +39,7 @@ public class ActionCommand extends TeacupCommand {
                         .permission("teacups.command.action")
                         .literal("stop")
                         .argument(TeacupArgument.of(Teacup.NAME))
-                        .argument(BooleanArgument.optional("override"))
+                        .argument(BooleanArgument.optional(OVERRIDE))
                         .handler(this::stop)
         );
     }
@@ -45,7 +47,7 @@ public class ActionCommand extends TeacupCommand {
     private void start(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
         final Teacup teacup = context.get(Teacup.NAME);
-        final Optional<Boolean> override = context.getOptional("override");
+        final Optional<Boolean> override = context.getOptional(OVERRIDE);
         final Optional<Show> show = context.getOptional("show");
 
         if (!show.isPresent()) {
@@ -65,7 +67,7 @@ public class ActionCommand extends TeacupCommand {
     private void stop(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
         final Teacup teacup = context.get(Teacup.NAME);
-        final Optional<Boolean> override = context.getOptional("override");
+        final Optional<Boolean> override = context.getOptional(OVERRIDE);
 
         if (!teacup.stop(override.orElse(Boolean.FALSE))) {
             sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't stop teacup '%s'.", teacup.getId()));

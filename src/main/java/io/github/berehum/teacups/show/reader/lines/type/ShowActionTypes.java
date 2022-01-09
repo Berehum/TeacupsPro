@@ -21,8 +21,9 @@ public class ShowActionTypes {
             registerType(new ShowActionType("player", new String[]{"playercmd", "playercommand"}, PlayerShowAction::new));
             registerType(new ShowActionType("actionbar", new String[]{"bar"}, ActionBarShowAction::new));
             registerType(new ShowActionType("chat", new String[]{"message, msg"}, ChatShowAction::new));
-            registerType(new ShowActionType("stop", new String[] {"end", "finish"}, StopShowAction::new));
-        } catch (Exception ignored) {}
+            registerType(new ShowActionType("stop", new String[]{"end", "finish"}, StopShowAction::new));
+        } catch (Exception ignored) {
+        }
     }
 
     public boolean registerType(ShowActionType type) throws ClashingActionTypesException {

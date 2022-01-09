@@ -82,6 +82,7 @@ public class CustomConfig {
             try {
                 in.close();
             } catch (IOException ignored) {
+                //won't do anything
             }
         }
     }
@@ -89,8 +90,8 @@ public class CustomConfig {
     public boolean createNewFile(boolean replaceExisting) {
         boolean success = true;
         try {
-            if (!file.getParentFile().exists()) {
-                if (!file.mkdirs()) success = false;
+            if (!file.getParentFile().exists() && !file.mkdirs()) {
+                success = false;
             }
             if (file.exists() && replaceExisting) {
                 Files.delete(file.toPath());

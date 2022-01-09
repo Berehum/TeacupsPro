@@ -2,8 +2,8 @@ package io.github.berehum.teacups.show.actions;
 
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.Teacup;
-import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import io.github.berehum.teacups.show.reader.ShowFileReader;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import io.github.berehum.teacups.utils.config.ConfigProblem;
 import io.github.berehum.teacups.utils.config.ConfigProblemDescriptions;
 import org.jetbrains.annotations.NotNull;

@@ -1,10 +1,10 @@
 package io.github.berehum.teacups.show.reader;
 
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import io.github.berehum.teacups.show.reader.lines.IShowFileLine;
 import io.github.berehum.teacups.show.reader.lines.StateShowFileLine;
 import io.github.berehum.teacups.show.reader.lines.TickShowFileLine;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import io.github.berehum.teacups.utils.config.ConfigProblem;
 import io.github.berehum.teacups.utils.config.ConfigProblemDescriptions;
 import org.bukkit.ChatColor;
@@ -19,9 +19,10 @@ import java.util.stream.Stream;
 
 public class ShowFileReader {
 
-    private ShowFileReader() {}
-
     private static final Map<String, List<ConfigProblem>> configProblems = new HashMap<>();
+
+    private ShowFileReader() {
+    }
 
     public static List<IShowFileLine> getShowFileLines(File file) {
         List<IShowFileLine> lines = new ArrayList<>();
