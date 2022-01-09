@@ -10,6 +10,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.TeacupsMain;
+import io.github.berehum.teacups.command.TeacupCaptionKeys;
 import io.github.berehum.teacups.show.Show;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -139,7 +140,7 @@ public final class ShowArgument<C> extends CommandArgument<C, Show> {
      */
     public static final class ShowParseException extends ParserException {
 
-        private static final long serialVersionUID = 927476591631527552L;
+        private static final long serialVersionUID = 2363200178503251736L;
         private final String input;
 
         /**
@@ -155,7 +156,7 @@ public final class ShowArgument<C> extends CommandArgument<C, Show> {
             super(
                     ShowParser.class,
                     context,
-                    Caption.of("No show found for '{input}'"),
+                    TeacupCaptionKeys.ARGUMENT_PARSE_FAILURE_SHOW,
                     CaptionVariable.of("input", input)
             );
             this.input = input;

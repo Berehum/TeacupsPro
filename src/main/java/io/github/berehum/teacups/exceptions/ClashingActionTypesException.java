@@ -1,6 +1,6 @@
 package io.github.berehum.teacups.exceptions;
 
-import io.github.berehum.teacups.show.actions.type.ShowActionType;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 
 public class ClashingActionTypesException extends Exception {
     public ClashingActionTypesException(ShowActionType type1, ShowActionType type2) {

@@ -4,7 +4,7 @@ import io.github.berehum.teacups.attraction.TeacupManager;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.listeners.PlayerListener;
 import io.github.berehum.teacups.show.ShowManager;
-import io.github.berehum.teacups.show.actions.type.ShowActionTypes;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionTypes;
 import io.github.berehum.teacups.utils.Version;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;

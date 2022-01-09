@@ -33,6 +33,8 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
             }
         }
 
+        new TeacupCaptionRegistry<>();
+
         new MinecraftExceptionHandler<CommandSender>()
                 .withDefaultHandlers()
                 .apply(this, this.bukkitAudiences::sender);

@@ -12,6 +12,7 @@ import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.components.Teacup;
+import io.github.berehum.teacups.command.TeacupCaptionKeys;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -122,7 +123,6 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
                 return ArgumentParseResult.failure(new NoInputProvidedException(TeacupParser.class, commandContext));
             }
             inputQueue.remove();
-
             Optional<Teacup> teacup = TeacupsMain.getInstance().getTeacupManager().getTeacup(input);
             return teacup.map(ArgumentParseResult::success).orElseGet(() -> ArgumentParseResult.failure(new TeacupParseException(input, commandContext)));
         }
@@ -140,7 +140,7 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
      */
     public static final class TeacupParseException extends ParserException {
 
-        private static final long serialVersionUID = 927476591631527552L;
+        private static final long serialVersionUID = 2448491509768905719L;
         private final String input;
 
         /**
@@ -156,7 +156,7 @@ public final class TeacupArgument<C> extends CommandArgument<C, Teacup> {
             super(
                     TeacupParser.class,
                     context,
-                    Caption.of("No teacup attraction found for '{input}'"),
+                    TeacupCaptionKeys.ARGUMENT_PARSE_FAILURE_TEACUP,
                     CaptionVariable.of("input", input)
             );
             this.input = input;

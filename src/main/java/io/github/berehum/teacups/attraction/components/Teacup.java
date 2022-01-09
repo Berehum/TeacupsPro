@@ -24,7 +24,7 @@ import java.util.*;
 
 public class Teacup {
 
-    public static final String name = "teacup";
+    public static final String NAME = "teacup";
 
     private final CustomConfig customConfig;
 
@@ -54,9 +54,9 @@ public class Teacup {
 
         this.radius = config.getDouble("settings.radius");
 
-        this.autoStartDelay = config.getInt("show.auto-start-delay");
+        this.autoStartDelay = config.getInt("settings.show.auto-start-delay");
 
-        this.defaultShow = config.getString("show.default-show");
+        this.defaultShow = config.getString("setting.show.default-show");
 
         ConfigurationSection groupSection = config.getConfigurationSection("cartgroups");
         if (groupSection == null) return;

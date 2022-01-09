@@ -20,10 +20,10 @@ import java.util.Optional;
 
 public class SetRpmCommand extends TeacupCommand {
 
-    private static final String setrpmString = "setrpm";
-    private static final String rpmString = "rpm";
-    private static final String permission = "teacups.command.setrpm";
-    private static final String addToExistingString = "add to existing";
+    private static final String SET_RPM = "setrpm";
+    private static final String RPM = "rpm";
+    private static final String PERMISSION = "teacups.command.setrpm";
+    private static final String ADD_TO_EXISTING = "add to existing";
 
     public SetRpmCommand(final @NonNull TeacupsMain plugin, final @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
@@ -32,43 +32,43 @@ public class SetRpmCommand extends TeacupCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal(setrpmString, rpmString)
-                        .permission(permission)
-                        .literal(Cart.name)
-                        .argument(TeacupArgument.of(Teacup.name))
-                        .argument(CartGroupArgument.of(CartGroup.name))
-                        .argument(CartArgument.of(Cart.name))
-                        .argument(IntegerArgument.of(rpmString))
-                        .argument(BooleanArgument.optional(addToExistingString))
+                builder.literal(SET_RPM, RPM)
+                        .permission(PERMISSION)
+                        .literal(Cart.NAME)
+                        .argument(TeacupArgument.of(Teacup.NAME))
+                        .argument(CartGroupArgument.of(CartGroup.NAME))
+                        .argument(CartArgument.of(Cart.NAME))
+                        .argument(IntegerArgument.of(RPM))
+                        .argument(BooleanArgument.optional(ADD_TO_EXISTING))
                         .handler(this::setRpmCart)
         );
         this.commandManager.registerSubcommand(builder ->
-                builder.literal(setrpmString, rpmString)
-                        .permission(permission)
-                        .literal(CartGroup.name, "group")
-                        .argument(TeacupArgument.of(Teacup.name))
-                        .argument(CartGroupArgument.of(CartGroup.name))
-                        .argument(IntegerArgument.of(rpmString))
-                        .argument(BooleanArgument.optional(addToExistingString))
+                builder.literal(SET_RPM, RPM)
+                        .permission(PERMISSION)
+                        .literal(CartGroup.NAME, "group")
+                        .argument(TeacupArgument.of(Teacup.NAME))
+                        .argument(CartGroupArgument.of(CartGroup.NAME))
+                        .argument(IntegerArgument.of(RPM))
+                        .argument(BooleanArgument.optional(ADD_TO_EXISTING))
                         .handler(this::setRpmCartGroup)
         );
         this.commandManager.registerSubcommand(builder ->
-                builder.literal(setrpmString, rpmString)
-                        .permission(permission)
-                        .literal(Teacup.name, "cup", "main")
-                        .argument(TeacupArgument.of(Teacup.name))
-                        .argument(IntegerArgument.of(rpmString))
-                        .argument(BooleanArgument.optional(addToExistingString))
+                builder.literal(SET_RPM, RPM)
+                        .permission(PERMISSION)
+                        .literal(Teacup.NAME, "cup", "main")
+                        .argument(TeacupArgument.of(Teacup.NAME))
+                        .argument(IntegerArgument.of(RPM))
+                        .argument(BooleanArgument.optional(ADD_TO_EXISTING))
                         .handler(this::setRpmTeacup)
         );
     }
 
     private void setRpmCart(final @NonNull CommandContext<CommandSender> context) {
-        final Teacup teacup = context.get(Teacup.name);
-        final CartGroup cartgroup = context.get(CartGroup.name);
-        final Cart cart = context.get(Cart.name);
-        final int rpm = context.get(rpmString);
-        final Optional<Boolean> addToExisting = context.getOptional(addToExistingString);
+        final Teacup teacup = context.get(Teacup.NAME);
+        final CartGroup cartgroup = context.get(CartGroup.NAME);
+        final Cart cart = context.get(Cart.NAME);
+        final int rpm = context.get(RPM);
+        final Optional<Boolean> addToExisting = context.getOptional(ADD_TO_EXISTING);
 
         if (addToExisting.orElse(Boolean.FALSE)) {
             cart.setRpm(cart.getRpm() + rpm);
@@ -81,10 +81,10 @@ public class SetRpmCommand extends TeacupCommand {
     }
 
     private void setRpmCartGroup(final @NonNull CommandContext<CommandSender> context) {
-        final Teacup teacup = context.get(Teacup.name);
-        final CartGroup cartgroup = context.get(CartGroup.name);
-        final int rpm = context.get(rpmString);
-        final Optional<Boolean> addToExisting = context.getOptional(addToExistingString);
+        final Teacup teacup = context.get(Teacup.NAME);
+        final CartGroup cartgroup = context.get(CartGroup.NAME);
+        final int rpm = context.get(RPM);
+        final Optional<Boolean> addToExisting = context.getOptional(ADD_TO_EXISTING);
 
         if (addToExisting.orElse(Boolean.FALSE)) {
             cartgroup.setRpm(cartgroup.getRpm() + rpm);
@@ -95,9 +95,9 @@ public class SetRpmCommand extends TeacupCommand {
     }
 
     private void setRpmTeacup(final @NonNull CommandContext<CommandSender> context) {
-        final Teacup teacup = context.get(Teacup.name);
-        final int rpm = context.get(rpmString);
-        final Optional<Boolean> addToExisting = context.getOptional(addToExistingString);
+        final Teacup teacup = context.get(Teacup.NAME);
+        final int rpm = context.get(RPM);
+        final Optional<Boolean> addToExisting = context.getOptional(ADD_TO_EXISTING);
 
         if (addToExisting.orElse(Boolean.FALSE)) {
             teacup.setRpm(teacup.getRpm() + rpm);

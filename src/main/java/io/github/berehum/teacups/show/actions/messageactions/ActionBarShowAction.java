@@ -1,7 +1,7 @@
 package io.github.berehum.teacups.show.actions.messageactions;
 
 import io.github.berehum.teacups.TeacupsMain;
-import io.github.berehum.teacups.show.actions.type.ShowActionType;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;

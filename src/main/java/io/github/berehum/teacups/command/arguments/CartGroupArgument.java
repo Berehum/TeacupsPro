@@ -12,6 +12,7 @@ import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.attraction.components.CartGroup;
 import io.github.berehum.teacups.attraction.components.Teacup;
+import io.github.berehum.teacups.command.TeacupCaptionKeys;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -115,7 +116,7 @@ public final class CartGroupArgument<C> extends CommandArgument<C, CartGroup> {
         @Override
         public @NonNull ArgumentParseResult<CartGroup> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            final Teacup teacup = commandContext.get(Teacup.name);
+            final Teacup teacup = commandContext.get(Teacup.NAME);
             if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(CartGroupParser.class, commandContext));
             }
@@ -136,7 +137,7 @@ public final class CartGroupArgument<C> extends CommandArgument<C, CartGroup> {
 
     public static final class CartGroupParseException extends ParserException {
 
-        private static final long serialVersionUID = 927476591631527552L;
+        private static final long serialVersionUID = 3065238321298579780L;
         private final String input;
 
         /**
@@ -152,9 +153,9 @@ public final class CartGroupArgument<C> extends CommandArgument<C, CartGroup> {
             super(
                     CartGroupParser.class,
                     context,
-                    Caption.of("No cartgroup found for 'input' in 'teacup'"),
+                    TeacupCaptionKeys.ARGUMENT_PARSE_FAILURE_CARTGROUP,
                     CaptionVariable.of("input", input),
-                    CaptionVariable.of(Teacup.name, (((Teacup) context.get(Teacup.name)).getId()))
+                    CaptionVariable.of(Teacup.NAME, (((Teacup) context.get(Teacup.NAME)).getId()))
             );
             this.input = input;
         }

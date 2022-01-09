@@ -1,4 +1,4 @@
-package io.github.berehum.teacups.show.actions.type;
+package io.github.berehum.teacups.show.reader.lines.type;
 
 import io.github.berehum.teacups.show.actions.IShowAction;
 

@@ -1,7 +1,7 @@
 package io.github.berehum.teacups.show.actions;
 
 import io.github.berehum.teacups.attraction.components.Teacup;
-import io.github.berehum.teacups.show.actions.type.ShowActionType;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface IShowAction {

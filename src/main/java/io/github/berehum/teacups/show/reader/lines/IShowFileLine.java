@@ -2,7 +2,7 @@ package io.github.berehum.teacups.show.reader.lines;
 
 
 import io.github.berehum.teacups.show.actions.IShowAction;
-import io.github.berehum.teacups.show.actions.type.ShowActionType;
+import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 
 public abstract class IShowFileLine {
 

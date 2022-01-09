@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-//@todo perhaps use a parameter here for better support?
 public abstract class Component {
 
     private final String id;

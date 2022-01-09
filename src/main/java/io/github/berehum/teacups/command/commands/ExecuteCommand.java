@@ -30,16 +30,16 @@ public class ExecuteCommand extends TeacupCommand {
                 builder.literal("execute", "command", "cmd")
                         .permission("teacups.command.execute")
                         .argument(EnumArgument.of(ExecuteType.class, "execute type"))
-                        .argument(TeacupArgument.of(Teacup.name))
+                        .argument(TeacupArgument.of(Teacup.NAME))
                         .argument(StringArrayArgument.of(commandString,
                                 (commandSenderCommandContext, s) -> Arrays.asList("Command (without /)", "%player% for the player's name", "Example: eco give %player% 20")))
-                        .handler(this::setRpm)
+                        .handler(this::execute)
         );
     }
 
-    private void setRpm(final @NonNull CommandContext<CommandSender> context) {
+    private void execute(final @NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
-        final Teacup teacup = context.get(Teacup.name);
+        final Teacup teacup = context.get(Teacup.NAME);
         final ExecuteType executeType = context.get("execute type");
         final String[] commandArray = context.get(commandString);
 

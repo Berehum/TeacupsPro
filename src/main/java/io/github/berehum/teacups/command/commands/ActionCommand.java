@@ -27,7 +27,7 @@ public class ActionCommand extends TeacupCommand {
                 builder.literal("action")
                         .permission("teacups.command.action")
                         .literal("start")
-                        .argument(TeacupArgument.of(Teacup.name))
+                        .argument(TeacupArgument.of(Teacup.NAME))
                         .argument(BooleanArgument.optional("override"))
                         .argument(ShowArgument.optional("show"))
                         .handler(this::start)
@@ -36,7 +36,7 @@ public class ActionCommand extends TeacupCommand {
                 builder.literal("action")
                         .permission("teacups.command.action")
                         .literal("stop")
-                        .argument(TeacupArgument.of(Teacup.name))
+                        .argument(TeacupArgument.of(Teacup.NAME))
                         .argument(BooleanArgument.optional("override"))
                         .handler(this::stop)
         );
@@ -44,7 +44,7 @@ public class ActionCommand extends TeacupCommand {
 
     private void start(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        final Teacup teacup = context.get(Teacup.name);
+        final Teacup teacup = context.get(Teacup.NAME);
         final Optional<Boolean> override = context.getOptional("override");
         final Optional<Show> show = context.getOptional("show");
 
@@ -64,7 +64,7 @@ public class ActionCommand extends TeacupCommand {
 
     private void stop(final @NonNull CommandContext<CommandSender> context) {
         CommandSender sender = context.getSender();
-        final Teacup teacup = context.get(Teacup.name);
+        final Teacup teacup = context.get(Teacup.NAME);
         final Optional<Boolean> override = context.getOptional("override");
 
         if (!teacup.stop(override.orElse(Boolean.FALSE))) {

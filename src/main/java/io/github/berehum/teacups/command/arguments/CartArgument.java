@@ -13,6 +13,7 @@ import cloud.commandframework.exceptions.parsing.ParserException;
 import io.github.berehum.teacups.attraction.components.Cart;
 import io.github.berehum.teacups.attraction.components.CartGroup;
 import io.github.berehum.teacups.attraction.components.Teacup;
+import io.github.berehum.teacups.command.TeacupCaptionKeys;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -115,7 +116,7 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
         @Override
         public @NonNull ArgumentParseResult<Cart> parse(final @NonNull CommandContext<C> commandContext, final @NonNull Queue<@NonNull String> inputQueue) {
             final String input = inputQueue.peek();
-            final CartGroup cartgroup = commandContext.get(CartGroup.name);
+            final CartGroup cartgroup = commandContext.get(CartGroup.NAME);
             if (input == null || input.isEmpty()) {
                 return ArgumentParseResult.failure(new NoInputProvidedException(CartParser.class, commandContext));
             }
@@ -127,7 +128,7 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
 
         @Override
         public @NonNull List<@NonNull String> suggestions(final @NonNull CommandContext<C> commandContext, final @NonNull String input) {
-            CartGroup cartgroup = commandContext.get(CartGroup.name);
+            CartGroup cartgroup = commandContext.get(CartGroup.NAME);
             Map<String, Cart> carts = cartgroup.getCarts();
             return (carts == null) ? new ArrayList<>() : new ArrayList<>(carts.keySet());
         }
@@ -136,7 +137,7 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
 
     public static final class CartParseException extends ParserException {
 
-        private static final long serialVersionUID = 927476591631527552L;
+        private static final long serialVersionUID = 1183576994817150597L;
         private final String input;
 
         /**
@@ -152,10 +153,10 @@ public final class CartArgument<C> extends CommandArgument<C, Cart> {
             super(
                     CartParser.class,
                     context,
-                    Caption.of("No cart found for 'input' in 'cartgroup' in 'teacup'"),
+                    TeacupCaptionKeys.ARGUMENT_PARSE_FAILURE_CART,
                     CaptionVariable.of("input", input),
-                    CaptionVariable.of(CartGroup.name, ((CartGroup) context.get(CartGroup.name)).getId()),
-                    CaptionVariable.of(Teacup.name, (((Teacup) context.get(Teacup.name)).getId()))
+                    CaptionVariable.of(CartGroup.NAME, ((CartGroup) context.get(CartGroup.NAME)).getId()),
+                    CaptionVariable.of(Teacup.NAME, (((Teacup) context.get(Teacup.NAME)).getId()))
             );
             this.input = input;
         }

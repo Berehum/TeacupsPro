@@ -36,6 +36,10 @@ public class Show {
         if (teacup.getActiveShow() != null) return;
         teacup.setActiveShow(this);
         executeStartActions(teacup);
+
+        //Teacups don't stop unless the command is executed.
+        if (showActionMap.isEmpty()) return;
+
         activeShows.put(teacup, new BukkitRunnable() {
 
             int currentTick = 0;
@@ -46,6 +50,8 @@ public class Show {
                     this.cancel();
                     return;
                 }
+
+                //Teacups stop whenever the latest tick show action is reached.
                 if (currentTick > highestTick) {
                     teacup.stop(true);
                 }
@@ -58,6 +64,7 @@ public class Show {
             }
 
         }.runTaskTimer(plugin, 0L, 1L));
+
     }
 
     public void stopShow(Teacup teacup) {

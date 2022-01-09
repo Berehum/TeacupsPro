@@ -5,9 +5,9 @@ import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.show.reader.lines.type.ShowActionType;
 import org.jetbrains.annotations.NotNull;
 
-public class KickShowAction implements IShowAction {
+public class StopShowAction implements IShowAction {
 
-    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("kick");
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("stop");
 
     @Override
     public boolean load(String filename, int line, String[] args) {
@@ -16,7 +16,7 @@ public class KickShowAction implements IShowAction {
 
     @Override
     public void execute(Teacup teacup) {
-        teacup.kickAll();
+        teacup.stop(false);
     }
 
     @Override

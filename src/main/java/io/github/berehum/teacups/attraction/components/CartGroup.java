@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class CartGroup extends Component {
 
-    public static final String name = "cartgroup";
+    public static final String NAME = "cartgroup";
 
     public CartGroup(String id, Location location, double radius, Model model, Map<String, Cart> carts) {
         super(id, location, radius, model, new HashMap<>(carts));

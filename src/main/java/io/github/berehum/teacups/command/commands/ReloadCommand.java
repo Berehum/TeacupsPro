@@ -29,7 +29,7 @@ public class ReloadCommand extends TeacupCommand {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("reload")
                         .permission("teacups.command.reload")
-                        .literal("teacups", Teacup.name)
+                        .literal("teacups", Teacup.NAME)
                         .argument(TeacupArgument.optional("teacup"))
                         .handler(this::reloadTeacup)
         );
@@ -46,7 +46,7 @@ public class ReloadCommand extends TeacupCommand {
         TeacupManager teacupManager = plugin.getTeacupManager();
 
         CommandSender sender = context.getSender();
-        Optional<Teacup> optionalTeacup = context.getOptional(Teacup.name);
+        Optional<Teacup> optionalTeacup = context.getOptional(Teacup.NAME);
 
         if (optionalTeacup.isPresent()) {
             Teacup teacup = optionalTeacup.get();
