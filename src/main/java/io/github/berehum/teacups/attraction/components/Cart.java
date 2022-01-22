@@ -6,7 +6,9 @@ import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -25,10 +27,17 @@ public class Cart extends Component {
 
     @Override
     public void init() {
-        Bukkit.getOnlinePlayers().forEach(player -> seats.forEach(seat -> seat.spawn(player)));
         Model model = super.getModel();
-        if (model == null) return;
-        Bukkit.getOnlinePlayers().forEach(model::spawn);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+
+            for (Seat seat : seats) {
+                seat.spawn(player);
+            }
+
+            if (model == null) continue;
+            model.spawn(player);
+        }
     }
 
     @Override
@@ -51,13 +60,15 @@ public class Cart extends Component {
     }
 
     @Override
+    public void setRotation(float rotation) {
+        super.setRotation(rotation);
+    }
+
+    @Override
     public List<Seat> getSeats() {
         return seats;
     }
 
-    /**
-     * @apiNote this method might change drastically, when the seat customization is implemented.
-     */
     @Override
     public void updateChildLocations() {
 
@@ -66,9 +77,6 @@ public class Cart extends Component {
         double radius = super.getRadius();
         double circleOffset = super.getCircleOffset();
 
-        location = LocationUtils.setDirection(location, 0, rotation);
-        super.setLocation(location);
-
         Iterator<Seat> iterator = seats.listIterator();
         for (int i = 0; i < seatLayout.size(); i++) {
             if (seatLayout.isEmpty(i)) continue;
@@ -76,9 +84,9 @@ public class Cart extends Component {
             seat.teleport(LocationUtils.drawPoint(location, radius, i, seatLayout.size(), circleOffset));
         }
 
-        Model model = super.getModel();
-        if (model != null && model.getItemStack() != null) {
-            model.teleport(location);
+        if (hasModel()) {
+            super.getModel().teleport(LocationUtils.setDirection(location, 0, rotation));
         }
     }
+
 }

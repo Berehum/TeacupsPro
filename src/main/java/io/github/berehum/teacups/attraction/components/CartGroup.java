@@ -1,11 +1,9 @@
 package io.github.berehum.teacups.attraction.components;
 
-
 import io.github.berehum.teacups.attraction.components.armorstands.Model;
 import org.bukkit.Location;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CartGroup extends Component {
 
@@ -23,7 +21,7 @@ public class CartGroup extends Component {
             if (!(component instanceof Cart)) continue;
             cartHashMap.put(entry.getKey(), (Cart) component);
         }
-        return cartHashMap;
+        return Collections.unmodifiableMap(cartHashMap);
     }
 
 }

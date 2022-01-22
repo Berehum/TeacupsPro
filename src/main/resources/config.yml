@@ -1,3 +1,4 @@
+check-protocollib-version: true
 packet-recipient-update-delay: 100
 teacup:
   update-delay: 1

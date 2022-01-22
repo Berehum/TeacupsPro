@@ -20,9 +20,10 @@ public class LocationUtils {
 
         double theta = (2 * Math.PI) / totalPoints;
         double angle = theta * currentPoint;
+        double fullAngle = angle + offset;
 
         Location pointLocation = location.clone();
-        pointLocation.add(r * Math.cos(angle + offset), 0, r * Math.sin(angle + offset));
+        pointLocation.add(r * Math.cos(fullAngle), 0, r * Math.sin(fullAngle));
 
         return faceLocation(pointLocation, location);
     }
@@ -64,10 +65,6 @@ public class LocationUtils {
         loc.setPitch(numberRange(-90, 90, pitch));
         loc.setYaw(numberRange(-180, 180, yaw));
         return loc;
-    }
-
-    public static double yawAngle(float yaw1, float yaw2) {
-        return numberRange(-180, 180, yaw1 - yaw2);
     }
 
     public static float numberRange(int min, int max, float input) {

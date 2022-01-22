@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Class created for easy access over an armorstand created by packets.
+ */
 public class PacketArmorStand {
 
     private final int entityId;

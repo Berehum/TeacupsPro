@@ -70,6 +70,14 @@ Click [here](https://github.com/Berehum/teacups/graphs/contributors) to see a li
 
 Please read  [CONTRIBUTING.md](https://github.com/Berehum/teacups/blob/master/CONTRIBUTING.md) for more information.
 
+## 🙌 Credits
+### Cloud command framework
+Credits to @Incendo for the Cloud command framework that is used in this project.
+
+### ProtocolLib (wrappers)
+Credits to @dmulloy2 and @aandk for ProtocolLib, the library that simplifies working with packets a lot. Also a big thanks to them for the wrappers of the packets.
+
+
 ## 📜 License
 
 The **source code** for Teacups is licensed under the GNU General Public License v3.0, to view the license

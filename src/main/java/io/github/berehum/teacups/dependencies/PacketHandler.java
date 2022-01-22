@@ -1,4 +1,4 @@
-package io.github.berehum.teacups;
+package io.github.berehum.teacups.dependencies;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import io.github.berehum.teacups.TeacupsMain;
 import io.github.berehum.teacups.attraction.TeacupManager;
 import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.attraction.components.armorstands.Seat;

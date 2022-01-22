@@ -4,5 +4,7 @@ main: io.github.berehum.teacups.TeacupsMain
 api-version: 1.13
 depend:
   - ProtocolLib
+softdepend:
+  - PlaceholderAPI
 authors: [ Berehum ]
 description: An extensive plugin that adds teacups to your minecraft server.

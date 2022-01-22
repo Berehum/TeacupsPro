@@ -8,6 +8,7 @@ import io.github.berehum.teacups.attraction.components.Teacup;
 import io.github.berehum.teacups.command.CommandManager;
 import io.github.berehum.teacups.command.TeacupCommand;
 import io.github.berehum.teacups.command.arguments.TeacupArgument;
+import io.github.berehum.teacups.dependencies.PlaceholderApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -57,17 +58,19 @@ public class ExecuteCommand extends TeacupCommand {
         } else {
             for (Player player : teacup.getPlayers()) {
                 if (player == null) continue;
+                String personalCommand = (TeacupsMain.getInstance().isPlaceholderApiEnabled())
+                        ? PlaceholderApi.setPlaceholders(player, command) : command;
                 if (executeType == ExecuteType.CONSOLE_FOR_EVERY_PLAYER) {
-                    Bukkit.dispatchCommand(commandExecutor, command.replace("%player%", player.getName()));
+                    Bukkit.dispatchCommand(commandExecutor, personalCommand);
                     continue;
                 }
-                Bukkit.dispatchCommand(player, command.replace("%player%", player.getName()));
+                Bukkit.dispatchCommand(player, personalCommand);
             }
         }
         sender.sendMessage(ChatColor.GREEN + "Execute " + executeType.name().toLowerCase() + " command on " + teacup.getId());
     }
 
     private enum ExecuteType {
-        PLAYER, CONSOLE, CONSOLE_FOR_EVERY_PLAYER;
+        PLAYER, CONSOLE, CONSOLE_FOR_EVERY_PLAYER
     }
 }

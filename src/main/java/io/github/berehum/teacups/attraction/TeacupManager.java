@@ -51,16 +51,16 @@ public class TeacupManager {
     }
 
     public void loadTeacup(CustomConfig config) {
-
+        config.reloadConfig();
         String name = config.getFile().getName();
         String finalName = name.substring(0, name.length() - 4);
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             Teacup oldTeacup = teacupsAttractions.get(finalName);
-            teacupsAttractions.remove(finalName);
             if (oldTeacup != null) {
                 oldTeacup.disable();
             }
+            teacupsAttractions.remove(finalName);
             Teacup teacup = new Teacup(finalName, config);
             if (teacup.init()) teacupsAttractions.put(finalName, teacup);
         });
@@ -111,20 +111,19 @@ public class TeacupManager {
                 }
                 for (CartGroup cartGroup : teacup.getCartGroups().values()) {
                     int cgRpm = cartGroup.getRpm();
+                    double cummulativeOffset = getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm);
+                    float cummulativeRotation = getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm);
 
                     //setting cumulative offset and rotation since the components must stick together.
-                    cartGroup.changeCircleOffset(getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm));
-                    cartGroup.changeRotation(getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm));
+                    cartGroup.changeCircleOffset(cummulativeOffset);
+                    cartGroup.changeRotation(cummulativeRotation);
 
                     for (Component cart : cartGroup.getSubComponents().values()) {
                         int cRpm = cart.getRpm();
 
                         //setting cumulative offset and rotation since the components must stick together.
-                        cart.changeCircleOffset(getDeltaCircleOffset(tickDelay, tcRpm) + getDeltaCircleOffset(tickDelay, cgRpm)
-                                + getDeltaCircleOffset(tickDelay, cRpm));
-
-                        cart.changeRotation(getDeltaRotation(tickDelay, tcRpm) + getDeltaRotation(tickDelay, cgRpm)
-                                + getDeltaRotation(tickDelay, cRpm));
+                        cart.changeCircleOffset(cummulativeOffset + getDeltaCircleOffset(tickDelay, cRpm));
+                        cart.changeRotation(cummulativeRotation + getDeltaRotation(tickDelay, cRpm));
                     }
                 }
                 teacup.updateChildLocations();
@@ -132,10 +131,9 @@ public class TeacupManager {
         }, 0L, tickDelay);
     }
 
-    //This method basically controls the teacup
     public BukkitTask updatePacketRecipients(int tickDelay) {
-        return Bukkit.getScheduler().runTaskTimer(plugin, () -> Bukkit.getOnlinePlayers().forEach(this::updatePacketRecipient)
-                , 0L, tickDelay);
+        return Bukkit.getScheduler().runTaskTimer(plugin,
+                () -> Bukkit.getOnlinePlayers().forEach(this::updatePacketRecipient), 0L, tickDelay);
     }
 
     public void updatePacketRecipient(Player player) {

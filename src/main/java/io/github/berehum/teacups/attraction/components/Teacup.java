@@ -49,14 +49,14 @@ public class Teacup {
         this.id = id;
         this.customConfig = customConfig;
         FileConfiguration config = customConfig.getConfig();
-        this.location = new Location(Bukkit.getWorld(config.getString("settings.location.world")),
-                config.getDouble("settings.location.x"), config.getDouble("settings.location.y"), config.getDouble("settings.location.z"));
+        this.location = new Location(
+                Bukkit.getWorld(config.getString("settings.location.world")),
+                config.getDouble("settings.location.x"), config.getDouble("settings.location.y"),
+                config.getDouble("settings.location.z"));
 
         this.radius = config.getDouble("settings.radius");
-
         this.autoStartDelay = config.getInt("settings.show.auto-start-delay");
-
-        this.defaultShow = config.getString("setting.show.default-show");
+        this.defaultShow = config.getString("settings.show.default-show");
 
         ConfigurationSection groupSection = config.getConfigurationSection("cartgroups");
         if (groupSection == null) return;
@@ -74,19 +74,14 @@ public class Teacup {
 
             for (String cartKeys : cartsSection.getKeys(false)) {
 
-                Model cartModel = null;
-
                 ItemBuilder cartModelItem = ItemBuilder.fromConfig(cartsSection.getConfigurationSection(cartKeys + ".model"));
-                if (cartModelItem != null) {
-                    cartModel = new Model(location, cartModelItem.toItemStack());
-                }
+                Model cartModel = (cartModelItem != null) ? new Model(location, cartModelItem.toItemStack()) : null;
 
                 SeatLayout layout = SeatLayout.readFromConfig(cartsSection.getConfigurationSection(cartKeys + ".seats"));
                 if (layout == null) layout = SeatLayout.getDefault();
 
                 carts.put(cartKeys, new Cart(cartKeys, location, cartsSection.getDouble(cartKeys + ".radius"), cartModel, layout));
             }
-
             cartGroups.put(groupKey, new CartGroup(groupKey, location, groupSection.getDouble(groupKey + ".radius"), groupModel, carts));
 
         }
@@ -96,8 +91,12 @@ public class Teacup {
     public boolean init() {
         if (cartGroups.isEmpty() || location == null) return false;
         List<CartGroup> cartGroupsList = new ArrayList<>(this.cartGroups.values());
+        double deltaRot = 360.0 / cartGroupsList.size();
         for (int i = 0; i < cartGroupsList.size(); i++) {
             CartGroup group = cartGroupsList.get(i);
+            //rotates the to face the middle of the circle
+            group.setRotation((float) (deltaRot*i) + 90);
+            //space the groups out over the circle of the teacup.
             group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroupsList.size(), circleOffset));
             group.init();
         }
@@ -116,7 +115,7 @@ public class Teacup {
 
     public boolean start(JavaPlugin plugin, Show show, boolean override) {
         if (show == null) {
-            plugin.getLogger().warning(String.format("Started (default)show for teacup %s does not exist.", id));
+            plugin.getLogger().warning(String.format("Started (default)show for teacup '%s' does not exist.", id));
             return false;
         }
 

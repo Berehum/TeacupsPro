@@ -10,15 +10,16 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+//@todo redo the whole component thing.
 public abstract class Component {
 
     private final String id;
     private final Map<String, Component> subComponents;
     private final double radius;
+    private final boolean hasModel;
     private final @Nullable
     Model model;
 
-    //Location of the center of the component
     private Location location;
     private int rpm = 0;
     private double circleOffset = 0.0;
@@ -30,10 +31,21 @@ public abstract class Component {
         this.radius = radius;
         this.model = model;
         this.subComponents = subComponents;
+        this.hasModel = model != null && model.getItemStack() != null;
     }
 
     public void init() {
-        subComponents.values().forEach(Component::init);
+        List<Component> componentList = new ArrayList<>(subComponents.values());
+        double deltaRot = 360.0 / componentList.size();
+        double deltaOffset = Math.PI * 2 / componentList.size();
+        for (int i = 0; i < componentList.size(); i++) {
+            Component component = componentList.get(i);
+            //rotates the to face the middle of the circle
+            //DON'T CHANGE IDK
+            component.setRotation((float) (deltaRot*i) + 90);
+            component.setCircleOffset((deltaOffset*i) + Math.PI);
+            component.init();
+        }
         if (model == null) return;
         Bukkit.getOnlinePlayers().forEach(model::spawn);
     }
@@ -53,15 +65,14 @@ public abstract class Component {
     }
 
     public void updateChildLocations() {
-        location = LocationUtils.setDirection(location, 0, rotation);
         List<Component> components = new ArrayList<>(this.subComponents.values());
         for (int i = 0; i < components.size(); i++) {
             Component component = components.get(i);
             component.setLocation(LocationUtils.drawPoint(location, radius, i, components.size(), circleOffset));
             component.updateChildLocations();
         }
-        if (model != null && model.getItemStack() != null) {
-            model.teleport(location);
+        if (hasModel()) {
+            model.teleport(LocationUtils.setDirection(location, 0, rotation));
         }
     }
 
@@ -132,5 +143,9 @@ public abstract class Component {
 
     public void changeRotation(float rotation) {
         setRotation(this.rotation + rotation);
+    }
+
+    public boolean hasModel() {
+        return hasModel;
     }
 }
