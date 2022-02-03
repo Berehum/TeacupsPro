@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-//@todo redo the whole component thing.
 public abstract class Component {
 
     private final String id;
@@ -42,8 +41,8 @@ public abstract class Component {
             Component component = componentList.get(i);
             //rotates the to face the middle of the circle
             //DON'T CHANGE IDK
-            component.setRotation((float) (deltaRot*i) + 90);
-            component.setCircleOffset((deltaOffset*i) + Math.PI);
+            component.setRotation((float) (deltaRot * i) + 90);
+            component.setCircleOffset((deltaOffset * i) + Math.PI);
             component.init();
         }
         if (model == null) return;

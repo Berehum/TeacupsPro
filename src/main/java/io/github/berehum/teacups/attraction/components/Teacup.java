@@ -95,7 +95,7 @@ public class Teacup {
         for (int i = 0; i < cartGroupsList.size(); i++) {
             CartGroup group = cartGroupsList.get(i);
             //rotates the to face the middle of the circle
-            group.setRotation((float) (deltaRot*i) + 90);
+            group.setRotation((float) (deltaRot * i) + 90);
             //space the groups out over the circle of the teacup.
             group.setLocation(LocationUtils.drawPoint(location, radius, i, cartGroupsList.size(), circleOffset));
             group.init();

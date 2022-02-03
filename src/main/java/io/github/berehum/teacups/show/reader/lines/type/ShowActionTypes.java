@@ -1,9 +1,11 @@
 package io.github.berehum.teacups.show.reader.lines.type;
 
+import io.github.berehum.teacups.events.RegisterShowActionTypesEvent;
 import io.github.berehum.teacups.exceptions.ClashingActionTypesException;
 import io.github.berehum.teacups.show.actions.*;
 import io.github.berehum.teacups.show.actions.messageactions.ActionBarShowAction;
 import io.github.berehum.teacups.show.actions.messageactions.ChatShowAction;
+import org.bukkit.Bukkit;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +13,8 @@ import java.util.Set;
 public class ShowActionTypes {
     private final Set<ShowActionType> typeSet = new HashSet<>();
 
-    //Perhaps call an event, so other plugins can easily register their actions
     public void registerTypes() {
+        Bukkit.getPluginManager().callEvent(new RegisterShowActionTypesEvent(this));
         try {
             registerType(new ShowActionType("rpm", new String[]{"setrpm"}, RpmShowAction::new));
             registerType(new ShowActionType("kick", new String[]{"kickall"}, KickShowAction::new));
@@ -26,7 +28,7 @@ public class ShowActionTypes {
         }
     }
 
-    public boolean registerType(ShowActionType type) throws ClashingActionTypesException {
+    public void registerType(ShowActionType type) throws ClashingActionTypesException {
         String name = type.getName();
         String[] aliases = type.getAliases();
 
@@ -38,7 +40,6 @@ public class ShowActionTypes {
         }
 
         typeSet.add(type);
-        return true;
     }
 
     public ShowActionType get(String string) {

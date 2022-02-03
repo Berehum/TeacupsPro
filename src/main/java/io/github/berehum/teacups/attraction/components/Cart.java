@@ -6,9 +6,7 @@ import io.github.berehum.teacups.utils.LocationUtils;
 import io.github.berehum.teacups.utils.SeatLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -57,11 +55,6 @@ public class Cart extends Component {
             players.add(player.get());
         }
         return players;
-    }
-
-    @Override
-    public void setRotation(float rotation) {
-        super.setRotation(rotation);
     }
 
     @Override

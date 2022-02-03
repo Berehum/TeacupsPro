@@ -126,6 +126,10 @@ public final class TeacupsMain extends JavaPlugin {
     }
 
     public String format(Player player, String input) {
+        return format(player, true, input);
+    }
+
+    public String format(Player player, boolean color, String input) {
         if (placeholderApiEnabled) {
             input = PlaceholderApi.setPlaceholders(player, input);
         }
