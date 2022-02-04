@@ -1,6 +1,6 @@
-name: Teacups
+name: TeacupsPro
 version: '${project.version}'
-main: io.github.berehum.teacups.TeacupsMain
+main: io.github.berehum.teacupspro.TeacupsMain
 api-version: 1.13
 depend:
   - ProtocolLib

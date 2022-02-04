@@ -1,0 +1,56 @@
+package io.github.berehum.teacupspro.show.reader.lines.type;
+
+import io.github.berehum.teacupspro.events.RegisterShowActionTypesEvent;
+import io.github.berehum.teacupspro.exceptions.ClashingActionTypesException;
+import io.github.berehum.teacupspro.show.actions.*;
+import io.github.berehum.teacupspro.show.actions.messageactions.ActionBarShowAction;
+import io.github.berehum.teacupspro.show.actions.messageactions.ChatShowAction;
+import org.bukkit.Bukkit;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class ShowActionTypeRegistry {
+    private final Set<ShowActionType> typeSet = new HashSet<>();
+
+    public void registerTypes() {
+        Bukkit.getPluginManager().callEvent(new RegisterShowActionTypesEvent(this));
+        try {
+            register(new ShowActionType("rpm", new String[]{"setrpm"}, RpmShowAction::new));
+            register(new ShowActionType("kick", new String[]{"kickall"}, KickShowAction::new));
+            register(new ShowActionType("lock", new String[0], LockShowAction::new));
+            register(new ShowActionType("console", new String[]{"cmd", "command"}, ConsoleShowAction::new));
+            register(new ShowActionType("player", new String[]{"playercmd", "playercommand"}, PlayerShowAction::new));
+            register(new ShowActionType("actionbar", new String[]{"bar"}, ActionBarShowAction::new));
+            register(new ShowActionType("chat", new String[]{"message, msg"}, ChatShowAction::new));
+            register(new ShowActionType("stop", new String[]{"end", "finish"}, StopShowAction::new));
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void register(ShowActionType type) throws ClashingActionTypesException {
+        String name = type.getName();
+        String[] aliases = type.getAliases();
+
+        if (get(name) != null) {
+            throw new ClashingActionTypesException(get(name), type);
+        }
+        for (String alias : aliases) {
+            if (get(alias) != null) throw new ClashingActionTypesException(get(name), type);
+        }
+
+        typeSet.add(type);
+    }
+
+    public ShowActionType get(String string) {
+        for (ShowActionType type : typeSet) {
+            if (type.getName().equalsIgnoreCase(string)) return type;
+            for (String alias : type.getAliases()) {
+                if (alias.equalsIgnoreCase(string)) return type;
+            }
+        }
+        return null;
+    }
+
+
+}
