@@ -34,9 +34,9 @@ in [CONTRIBUTING.md](https://github.com/Berehum/TeacupsPro/blob/master/CONTRIBUT
 
 ## 💾 Downloads / Building
 
-The latest release version of TeacupsPro can be found on [Spigot](https://www.spigotmc.org/resources/). The latest build of
+The latest release version of TeacupsPro can be found on [Spigot](https://www.spigotmc.org/resources/teacupspro.99766/). The latest build of
 TeacupsPro (development version)
-can be found on [GitHub](https://github.com/Berehum/TeacupsPro/actions).
+can be found on [GitHub](https://github.com/Berehum/TeacupsPro/releases/latest).
 
 Alternatively, you can build TeacupsPro via Maven. Release versions of TeacupsPro are built using **Java 8**, you can change
 the target version in ``pom.xml``.
