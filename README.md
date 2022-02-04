@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://isitmaintained.com/badge/resolution/Berehum/TeacupsPro.svg">
 <img src="https://isitmaintained.com/badge/open/Berehum/TeacupsPro.svg">
-<h1 align="center">TeacupsProPro</h1>
+<h1 align="center">TeacupsPro</h1>
 </p>
 
 Initially this plugin's name was 'TeacupsPro', but it was renamed to avoid confusion with another plugin.
@@ -17,7 +17,7 @@ That is why 'Teacups' might be referenced in the wiki.
 
 ## 📖 Documentation / Wiki
 
-TeacupsProPro has a [wiki](https://github.com/Berehum/TeacupsPro/wiki/) that contains the most important aspects of the plugin.
+TeacupsPro has a [wiki](https://github.com/Berehum/TeacupsPro/wiki/) that contains the most important aspects of the plugin.
 Including the layout of the config files and developer API.
 
 #### 🌟 Highlighted Articles
