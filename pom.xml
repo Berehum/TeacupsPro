@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.berehum</groupId>
-    <artifactId>teacups</artifactId>
-    <version>1.1</version>
+    <artifactId>teacupspro</artifactId>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <properties>

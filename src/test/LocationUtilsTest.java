@@ -1,4 +1,4 @@
-import io.github.berehum.teacups.utils.LocationUtils;
+import io.github.berehum.teacupspro.utils.LocationUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
