@@ -55,7 +55,7 @@ ProtocolLib version **4.7.0 or higher**.
 #### 🧰 Developer API
 
 Unfortunately, there is not a fancy developer API yet. However, you are able to do some things with the current code,
-such as [creating new show actions](https://github.com/LMBishop/TeacupsPro/wiki/New-Show-Action).
+such as [creating new show actions](https://github.com/Berehum/TeacupsPro/wiki/New-Show-Action).
 
 This project currently doesn't have a repository, so you'll have to download a copy of the plugin and add it to your
 package managing software yourself. Sorry :(
