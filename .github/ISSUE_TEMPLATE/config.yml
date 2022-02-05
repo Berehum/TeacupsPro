@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions
+    url: https://github.com/Berehum/TeacupsPro/discussions/new?category=q-a
+    about: "Open a new discussion if you have a question or need help. You may also propose a change to the existent documentation in an issue."
