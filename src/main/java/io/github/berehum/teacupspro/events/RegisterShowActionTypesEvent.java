@@ -16,7 +16,7 @@ public class RegisterShowActionTypesEvent extends Event {
     @NotNull
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return getHandlerList();
     }
 
     public static HandlerList getHandlerList() {

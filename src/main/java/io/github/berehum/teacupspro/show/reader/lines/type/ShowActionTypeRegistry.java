@@ -9,9 +9,17 @@ import org.bukkit.Bukkit;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ShowActionTypeRegistry {
+
+    private final Logger logger;
     private final Set<ShowActionType> typeSet = new HashSet<>();
+
+    public ShowActionTypeRegistry(Logger logger) {
+        this.logger = logger;
+    }
 
     public void registerTypes() {
         Bukkit.getPluginManager().callEvent(new RegisterShowActionTypesEvent(this));
@@ -24,7 +32,8 @@ public class ShowActionTypeRegistry {
             register(new ShowActionType("actionbar", new String[]{"bar"}, ActionBarShowAction::new));
             register(new ShowActionType("chat", new String[]{"message, msg"}, ChatShowAction::new));
             register(new ShowActionType("stop", new String[]{"end", "finish"}, StopShowAction::new));
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error whilst registering show action types.", e);
         }
     }
 
