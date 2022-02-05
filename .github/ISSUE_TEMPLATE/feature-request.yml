@@ -1,0 +1,38 @@
+name: Feature Request
+description: Suggest a feature
+labels: [ 'enhancement', 'needs investigating' ]
+assignees: [ 'Berehum' ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before requesting a new feature, please make sure you are using the latest version.
+  - type: textarea
+    attributes:
+      label: (OPTIONAL) Reason for Addition
+      description: |
+        Explain why you want your feature added.
+        Your answer may describe a problem you're having, or any context for this request.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Description of Feature
+      description: Discuss what you would like added to Quests. Please keep your description clear and concise.
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Agreements
+      description: Please agree to the following.
+      options:
+        - label: I am certain this issue is unique and a similar issue is not currently open
+          required: true
+  - type: textarea
+    attributes:
+      label: Other
+      description: |
+        Please include other helpful information below.
+        This field is not required.
+    validations:
+      required: false
