@@ -54,8 +54,10 @@ public class ShowFileReader {
         IShowFileLine showFileLine;
         String[] args = line.split(" ");
 
+        final String time = args[0];
+
         //allow comments with #
-        if (args[0].startsWith("#")) {
+        if (time.startsWith("#")) {
             return null;
         }
 
@@ -64,7 +66,7 @@ public class ShowFileReader {
         int tick = -1;
         StateShowFileLine.State state = null;
         try {
-            tick = Integer.parseInt(args[0]);
+            tick = Integer.parseInt(time);
         } catch (NumberFormatException e) {
             isTickLine = false;
         }
@@ -72,22 +74,24 @@ public class ShowFileReader {
         if (isTickLine) {
             if (tick < 0) {
                 addConfigProblem(fileName, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                        ConfigProblemDescriptions.INVALID_TIME.getDescription(args[0]), String.valueOf(lineNo)));
+                        ConfigProblemDescriptions.INVALID_TIME.getDescription(time), String.valueOf(lineNo)));
                 return null;
             }
         } else {
-            state = StateShowFileLine.State.get(args[0]);
+            state = StateShowFileLine.State.get(time);
             if (state == null) {
                 addConfigProblem(fileName, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                        ConfigProblemDescriptions.INVALID_TIME.getDescription(args[0]), String.valueOf(lineNo)));
+                        ConfigProblemDescriptions.INVALID_TIME.getDescription(time), String.valueOf(lineNo)));
                 return null;
             }
         }
 
-        ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get(args[1]);
+        final String command = args[0];
+
+        ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get(command);
         if (type == null) {
             addConfigProblem(fileName, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                    ConfigProblemDescriptions.INVALID_ACTION.getDescription(args[1]), String.valueOf(lineNo)));
+                    ConfigProblemDescriptions.INVALID_ACTION.getDescription(command), String.valueOf(lineNo)));
             return null;
         }
 

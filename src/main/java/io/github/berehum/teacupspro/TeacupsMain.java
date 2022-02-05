@@ -42,7 +42,7 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        showActionTypeRegistry = new ShowActionTypeRegistry();
+        showActionTypeRegistry = new ShowActionTypeRegistry(getLogger());
         showActionTypeRegistry.registerTypes();
     }
 
