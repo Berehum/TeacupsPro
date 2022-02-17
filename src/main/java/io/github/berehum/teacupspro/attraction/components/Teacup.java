@@ -260,7 +260,7 @@ public class Teacup {
     public void setAcceptPlayerInput(boolean acceptPlayerInput) {
         if (this.acceptPlayerInput == acceptPlayerInput) return;
         this.acceptPlayerInput = acceptPlayerInput;
-        for (CartGroup cartGroup :getCartGroups().values()) {
+        for (CartGroup cartGroup : getCartGroups().values()) {
             for (Cart cart : cartGroup.getCarts().values()) {
                 cart.setAcceptPlayerInput(acceptPlayerInput, playerInputRpmLimit);
             }

@@ -9,11 +9,11 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import io.github.berehum.teacupspro.TeacupsMain;
 import io.github.berehum.teacupspro.api.TeacupsAPI;
+import io.github.berehum.teacupspro.api.events.PlayerSeatEvent;
 import io.github.berehum.teacupspro.attraction.TeacupManager;
 import io.github.berehum.teacupspro.attraction.components.Cart;
 import io.github.berehum.teacupspro.attraction.components.Teacup;
 import io.github.berehum.teacupspro.attraction.components.armorstands.Seat;
-import io.github.berehum.teacupspro.api.events.PlayerSeatEvent;
 import io.github.berehum.teacupspro.utils.wrappers.WrapperPlayClientSteerVehicle;
 import io.github.berehum.teacupspro.utils.wrappers.WrapperPlayClientUseEntity;
 import org.bukkit.Bukkit;
@@ -92,7 +92,7 @@ public class PacketHandler {
                 if (packet.getSideways() != 0) {
                     Teacup teacup = teacupsAPI.getTeacup(player).get();
                     Cart cart = teacupsAPI.getCart(player).get();
-                    PlayerSeatEvent playerSeatEvent = new PlayerSeatEvent(PlayerSeatEvent.SeatAction.STEER, seat, player, packet.getSideways());
+                    PlayerSeatEvent playerSeatEvent = new PlayerSeatEvent(PlayerSeatEvent.SeatAction.STEER, seat, player, (int) packet.getSideways());
                     playerSeatEvent.setCancelled(!teacup.acceptsPlayerInput());
 
                     Bukkit.getScheduler().runTask(plugin, () -> {

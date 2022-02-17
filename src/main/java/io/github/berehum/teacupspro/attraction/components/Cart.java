@@ -75,7 +75,7 @@ public class Cart extends Component {
         if (this.acceptPlayerInput == acceptPlayerInput) return;
         this.acceptPlayerInput = acceptPlayerInput;
         super.setRpm(0);
-        if (acceptPlayerInput){
+        if (acceptPlayerInput) {
             this.playerInputRpmLimit = playerInputRpmLimit;
         }
     }

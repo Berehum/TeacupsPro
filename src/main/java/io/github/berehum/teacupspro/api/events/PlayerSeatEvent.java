@@ -13,10 +13,10 @@ public class PlayerSeatEvent extends Event implements Cancellable {
     private final SeatAction seatAction;
     private final Seat seat;
     private final Player player;
-    private float steerAmount;
+    private int steerAmount;
     private boolean cancelled = false;
 
-    public PlayerSeatEvent(SeatAction seatAction, Seat seat, Player player, float steerAmount) {
+    public PlayerSeatEvent(SeatAction seatAction, Seat seat, Player player, int steerAmount) {
         this.seatAction = seatAction;
         this.seat = seat;
         this.player = player;
@@ -45,11 +45,11 @@ public class PlayerSeatEvent extends Event implements Cancellable {
         return player;
     }
 
-    public float getSteerAmount() {
+    public int getSteerAmount() {
         return steerAmount;
     }
 
-    public void setSteerAmount(float steerAmount) {
+    public void setSteerAmount(int steerAmount) {
         this.steerAmount = steerAmount;
     }
 

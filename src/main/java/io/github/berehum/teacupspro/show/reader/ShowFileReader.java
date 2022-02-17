@@ -1,10 +1,10 @@
 package io.github.berehum.teacupspro.show.reader;
 
 import io.github.berehum.teacupspro.TeacupsMain;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import io.github.berehum.teacupspro.show.reader.lines.IShowFileLine;
 import io.github.berehum.teacupspro.show.reader.lines.StateShowFileLine;
 import io.github.berehum.teacupspro.show.reader.lines.TickShowFileLine;
-import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import io.github.berehum.teacupspro.utils.config.ConfigProblem;
 import io.github.berehum.teacupspro.utils.config.ConfigProblemDescriptions;
 import org.bukkit.ChatColor;
