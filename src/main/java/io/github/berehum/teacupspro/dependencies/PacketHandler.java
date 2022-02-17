@@ -11,6 +11,7 @@ import io.github.berehum.teacupspro.TeacupsMain;
 import io.github.berehum.teacupspro.attraction.TeacupManager;
 import io.github.berehum.teacupspro.attraction.components.Teacup;
 import io.github.berehum.teacupspro.attraction.components.armorstands.Seat;
+import io.github.berehum.teacupspro.api.events.PlayerSeatEvent;
 import io.github.berehum.teacupspro.utils.wrappers.WrapperPlayClientSteerVehicle;
 import io.github.berehum.teacupspro.utils.wrappers.WrapperPlayClientUseEntity;
 import org.bukkit.Bukkit;
@@ -40,8 +41,14 @@ public class PacketHandler {
                     for (Seat seat : teacup.getSeats()) {
                         if (seat == null || seat.getEntityId() != packet.getTargetID()) continue;
                         if (seat.isLocked() || seat.getPlayer() != null) return;
+
+                        PlayerSeatEvent playerSeatEvent = new PlayerSeatEvent(PlayerSeatEvent.SeatAction.ENTER, seat, player);
+                        playerSeatEvent.setCancelled(seat.isLocked() || seat.getPlayer() != null);
+                        Bukkit.getPluginManager().callEvent(playerSeatEvent);
+                        if (event.isCancelled()) return;
+
                         Bukkit.getScheduler().runTask(plugin, () -> {
-                            seat.mount(player);
+                            seat.mount(event.getPlayer());
                             teacup.autoStart(PacketHandler.this.plugin);
                         });
                         return;
@@ -60,7 +67,11 @@ public class PacketHandler {
 
                 for (Seat seat : teacupManager.getSeats()) {
                     if (seat == null || seat.getPlayer() != player) continue;
-                    if (seat.isLocked()) return;
+
+                    PlayerSeatEvent playerSeatEvent = new PlayerSeatEvent(PlayerSeatEvent.SeatAction.LEAVE, seat, player);
+                    playerSeatEvent.setCancelled(seat.isLocked());
+                    Bukkit.getPluginManager().callEvent(playerSeatEvent);
+                    if (event.isCancelled()) return;
                     Bukkit.getScheduler().runTask(plugin, seat::dismount);
                     return;
                 }

@@ -1,7 +1,7 @@
 package io.github.berehum.teacupspro.show.actions.messageactions;
 
 import io.github.berehum.teacupspro.TeacupsMain;
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionType;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

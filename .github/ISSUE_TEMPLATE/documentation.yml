@@ -1,6 +1,6 @@
 name: Documentation
 description: Suggest changes to the documentation/wiki
-labels: ['documentation', 'needs investigating']
+labels: [ 'documentation', 'needs investigating' ]
 assignees: [ 'Berehum' ]
 body:
   - type: dropdown

@@ -1,12 +1,13 @@
-package io.github.berehum.teacupspro.show.reader.lines.type;
+package io.github.berehum.teacupspro.show.actions.type;
 
-import io.github.berehum.teacupspro.events.RegisterShowActionTypesEvent;
+import io.github.berehum.teacupspro.api.events.RegisterShowActionTypesEvent;
 import io.github.berehum.teacupspro.exceptions.ClashingActionTypesException;
 import io.github.berehum.teacupspro.show.actions.*;
 import io.github.berehum.teacupspro.show.actions.messageactions.ActionBarShowAction;
 import io.github.berehum.teacupspro.show.actions.messageactions.ChatShowAction;
 import org.bukkit.Bukkit;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -49,6 +50,10 @@ public class ShowActionTypeRegistry {
         }
 
         typeSet.add(type);
+    }
+
+    public Set<ShowActionType> getTypeSet() {
+        return Collections.unmodifiableSet(typeSet);
     }
 
     public ShowActionType get(String string) {

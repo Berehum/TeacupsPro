@@ -64,6 +64,11 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
         return getEntity(event.getPlayer().getWorld());
     }
 
+    /**
+     * @param itemSlot  slot to put the item
+     * @param itemStack item to put in the slot
+     * @apiNote Support for SlotStackPair was added in ProtocolLib version 4.7.0
+     */
     public void setSlotStack(ItemSlot itemSlot, ItemStack itemStack) {
         setSlotStackPairList(Collections.singletonList(new Pair<>(itemSlot, itemStack)));
     }

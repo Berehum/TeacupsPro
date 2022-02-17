@@ -5,7 +5,7 @@ import io.github.berehum.teacupspro.attraction.components.Cart;
 import io.github.berehum.teacupspro.attraction.components.CartGroup;
 import io.github.berehum.teacupspro.attraction.components.Teacup;
 import io.github.berehum.teacupspro.show.reader.ShowFileReader;
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionType;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import io.github.berehum.teacupspro.utils.config.ConfigProblem;
 import io.github.berehum.teacupspro.utils.config.ConfigProblemDescriptions;
 import org.jetbrains.annotations.NotNull;

@@ -1,17 +1,19 @@
 package io.github.berehum.teacupspro;
 
+import io.github.berehum.teacupspro.api.TeacupsAPI;
 import io.github.berehum.teacupspro.attraction.TeacupManager;
 import io.github.berehum.teacupspro.command.CommandManager;
 import io.github.berehum.teacupspro.dependencies.PacketHandler;
 import io.github.berehum.teacupspro.dependencies.PlaceholderApi;
 import io.github.berehum.teacupspro.listeners.PlayerListener;
 import io.github.berehum.teacupspro.show.ShowManager;
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionTypeRegistry;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import io.github.berehum.teacupspro.utils.Version;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -48,6 +50,15 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        TeacupsAPI teacupsAPI = new TeacupsAPI(this);
+
+        try {
+            getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setInstance(this);
         loadConfig();
 
