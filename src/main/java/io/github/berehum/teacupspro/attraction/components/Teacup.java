@@ -31,6 +31,9 @@ public class Teacup {
     private final String id;
 
     private final double radius;
+    private final int playerInputSensitivity;
+    private final int playerInputRpmLimit;
+
     private final Location location;
     private final Map<String, CartGroup> cartGroups = new HashMap<>();
 
@@ -41,7 +44,10 @@ public class Teacup {
 
     private int rpm = 0;
     private double circleOffset = 0.0;
+
     private boolean locked = false;
+    private boolean acceptPlayerInput = false;
+
     private boolean commenceStart = false;
     private boolean active = false;
 
@@ -55,6 +61,8 @@ public class Teacup {
                 config.getDouble("settings.location.z"));
 
         this.radius = config.getDouble("settings.radius");
+        this.playerInputSensitivity = config.getInt("settings.player-input.sensitivity");
+        this.playerInputRpmLimit = config.getInt("settings.player-input.rpm-limit");
         this.autoStartDelay = config.getInt("settings.show.auto-start-delay");
         this.defaultShow = config.getString("settings.show.default-show");
 
@@ -245,6 +253,24 @@ public class Teacup {
         getSeats().forEach(seat -> seat.setLocked(locked));
     }
 
+    public boolean acceptsPlayerInput() {
+        return acceptPlayerInput;
+    }
+
+    public void setAcceptPlayerInput(boolean acceptPlayerInput) {
+        if (this.acceptPlayerInput == acceptPlayerInput) return;
+        this.acceptPlayerInput = acceptPlayerInput;
+        for (CartGroup cartGroup : getCartGroups().values()) {
+            for (Cart cart : cartGroup.getCarts().values()) {
+                cart.setAcceptPlayerInput(acceptPlayerInput, playerInputRpmLimit);
+            }
+        }
+    }
+
+    public int getPlayerInputSensitivity() {
+        return playerInputSensitivity;
+    }
+
     public void kickAll() {
         getSeats().forEach(PacketArmorStand::dismount);
     }
@@ -265,4 +291,7 @@ public class Teacup {
         this.activeShow = activeShow;
     }
 
+    public double getPlayerInputRpmLimit() {
+        return playerInputRpmLimit;
+    }
 }

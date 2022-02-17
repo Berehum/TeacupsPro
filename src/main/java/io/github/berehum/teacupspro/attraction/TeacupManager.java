@@ -7,6 +7,7 @@ import io.github.berehum.teacupspro.attraction.components.armorstands.Model;
 import io.github.berehum.teacupspro.attraction.components.armorstands.Seat;
 import io.github.berehum.teacupspro.utils.config.CustomConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -89,6 +90,17 @@ public class TeacupManager {
         return teacupsAttractions;
     }
 
+    public List<Teacup> getTeacupsInProximity(Location location, double distance) {
+        List<Teacup> inProximity = new ArrayList<>();
+        for (Teacup teacup : teacupsAttractions.values()) {
+            if (teacup.getLocation().distance(location) < distance) {
+                inProximity.add(teacup);
+            }
+        }
+        inProximity.sort(Comparator.comparingDouble(o -> o.getLocation().distance(location)));
+        return inProximity;
+    }
+
     public List<Seat> getSeats() {
         List<Seat> seats = new ArrayList<>();
         teacupsAttractions.values().forEach(teacup -> seats.addAll(teacup.getSeats()));
@@ -102,7 +114,7 @@ public class TeacupManager {
     }
 
     //This method basically controls the teacup's movement
-    public BukkitTask updateTeacups(int tickDelay) {
+    private BukkitTask updateTeacups(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (Teacup teacup : teacupsAttractions.values()) {
                 int tcRpm = teacup.getRpm();
@@ -131,7 +143,7 @@ public class TeacupManager {
         }, 0L, tickDelay);
     }
 
-    public BukkitTask updatePacketRecipients(int tickDelay) {
+    private BukkitTask updatePacketRecipients(int tickDelay) {
         return Bukkit.getScheduler().runTaskTimer(plugin,
                 () -> Bukkit.getOnlinePlayers().forEach(this::updatePacketRecipient), 0L, tickDelay);
     }

@@ -1,6 +1,6 @@
-package io.github.berehum.teacupspro.events;
+package io.github.berehum.teacupspro.api.events;
 
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionTypeRegistry;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -13,14 +13,14 @@ public class RegisterShowActionTypesEvent extends Event {
         this.showActionTypeRegistry = showActionTypeRegistry;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     @NotNull
     @Override
     public HandlerList getHandlers() {
         return getHandlerList();
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 
     public ShowActionTypeRegistry getShowActionTypeRegistry() {

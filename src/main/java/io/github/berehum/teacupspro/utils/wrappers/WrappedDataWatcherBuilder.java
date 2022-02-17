@@ -7,6 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * @author Bram
+ * Not heavily tested, but works for the use in this plugin.
+ */
 public class WrappedDataWatcherBuilder {
     private final WrappedDataWatcher dataWatcher;
 

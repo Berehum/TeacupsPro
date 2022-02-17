@@ -1,0 +1,37 @@
+#executes the command 'say start' when the teacup starts
+start cmd say start
+  #locks the teacup on start
+start lock true
+  #executes the command 'say tick 0' on tick 0
+0 console say tick 0
+  #Change the rpm of the teacup to 10 on tick 0
+0 rpm teacup 10
+  #Change the rpm of the teacup to 20 on tick 10
+10 rpm teacup 20
+20 rpm teacup 30
+  
+  #test comment
+  #Comments start with a '#' and are not reported as problems.
+
+100 console say tick 100
+  #Sends '&2100!!!' in the chat to the players in the teacup (it will translate color codes)
+100 chat &2100!!!
+  #Sends '&c100!!' in the actionbar to the players in the teacup (it will translate color codes)
+100 actionbar &c100!!
+  #Executes the command 'say 100' for every player on the teacup
+100 player say 100
+100 rpm teacup 50
+
+150 rpm teacup 30
+175 rpm teacup 15
+185 rpm teacup 10
+190 rpm teacup 5
+
+200 console say tick 200
+200 rpm teacup 0
+  #Kicks all players from the teacup
+stop kick
+stop cmd say stop
+  #Disables the lock of the teacup
+stop lock false
+

@@ -4,8 +4,8 @@
 <h1 align="center">TeacupsPro</h1>
 </p>
 
-Initially this plugin's name was 'TeacupsPro', but it was renamed to avoid confusion with another plugin.
-That is why 'Teacups' might be referenced in the wiki.
+Initially this plugin's name was 'TeacupsPro', but it was renamed to avoid confusion with another plugin. That is why '
+Teacups' might be referenced in the wiki.
 
 #### Quick Navigation
 
@@ -17,8 +17,8 @@ That is why 'Teacups' might be referenced in the wiki.
 
 ## 📖 Documentation / Wiki
 
-TeacupsPro has a [wiki](https://github.com/Berehum/TeacupsPro/wiki/) that contains the most important aspects of the plugin.
-Including the layout of the config files and developer API.
+TeacupsPro has a [wiki](https://github.com/Berehum/TeacupsPro/wiki/) that contains the most important aspects of the
+plugin. Including the layout of the config files and developer API.
 
 #### 🌟 Highlighted Articles
 
@@ -34,12 +34,12 @@ in [CONTRIBUTING.md](https://github.com/Berehum/TeacupsPro/blob/master/CONTRIBUT
 
 ## 💾 Downloads / Building
 
-The latest release version of TeacupsPro can be found on [Spigot](https://www.spigotmc.org/resources/teacupspro.99766/). The latest build of
-TeacupsPro (development version)
+The latest release version of TeacupsPro can be found on [Spigot](https://www.spigotmc.org/resources/teacupspro.99766/).
+The latest build of TeacupsPro (development version)
 can be found on [GitHub](https://github.com/Berehum/TeacupsPro/releases/latest).
 
-Alternatively, you can build TeacupsPro via Maven. Release versions of TeacupsPro are built using **Java 8**, you can change
-the target version in ``pom.xml``.
+Alternatively, you can build TeacupsPro via Maven. Release versions of TeacupsPro are built using **Java 8**, you can
+change the target version in ``pom.xml``.
 
 * ensure Java 8 is installed on your machine
 * clone this repository

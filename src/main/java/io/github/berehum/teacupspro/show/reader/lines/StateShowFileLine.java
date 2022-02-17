@@ -1,6 +1,6 @@
 package io.github.berehum.teacupspro.show.reader.lines;
 
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionType;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 
 public class StateShowFileLine extends IShowFileLine {
 

@@ -6,43 +6,39 @@ import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import io.github.berehum.teacupspro.show.reader.ShowFileReader;
 import io.github.berehum.teacupspro.utils.config.ConfigProblem;
 import io.github.berehum.teacupspro.utils.config.ConfigProblemDescriptions;
-import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
 
+public class PlayerInputShowAction implements IShowAction {
 
-public class ConsoleShowAction implements IShowAction {
+    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("playerinput");
 
-    private static final ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get("console");
     private boolean loaded = false;
 
-    private ConsoleCommandSender sender;
-    private String command;
+    private boolean playerinput;
 
     @Override
     public boolean load(String filename, int line, String[] args) {
-        sender = Bukkit.getConsoleSender();
-
-        StringBuilder builder = new StringBuilder();
-        for (String arg : args) {
-            builder.append(arg).append(" ");
-        }
-        command = builder.substring(0, builder.length() - 1);
-
-        if (command.isEmpty()) {
+        if (args.length < 1) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription("No command given."), String.valueOf(line)));
+                    ConfigProblemDescriptions.MISSING_ARGUMENT.getDescription("<true/false>"), String.valueOf(line)));
             return loaded;
         }
 
-        loaded = true;
-        return true;
+        try {
+            playerinput = Boolean.parseBoolean(args[0]);
+            loaded = true;
+        } catch (Exception e) {
+            ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
+                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription(args[0]), String.valueOf(line)));
+        }
+
+        return loaded;
     }
 
     @Override
     public void execute(Teacup teacup) {
         if (!loaded) return;
-        Bukkit.dispatchCommand(sender, command);
+        teacup.setAcceptPlayerInput(playerinput);
     }
 
     @Override

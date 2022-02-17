@@ -16,12 +16,6 @@ public final class ConfigProblem {
         this.line = (line == null) ? "?" : line;
     }
 
-    public ConfigProblem(ConfigProblemType type, String description) {
-        this.type = type;
-        this.description = (description == null) ? "?" : description;
-        this.line = "?";
-    }
-
     public ConfigProblemType getType() {
         return type;
     }

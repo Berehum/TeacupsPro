@@ -1,10 +1,10 @@
 package io.github.berehum.teacupspro.show.reader;
 
 import io.github.berehum.teacupspro.TeacupsMain;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
 import io.github.berehum.teacupspro.show.reader.lines.IShowFileLine;
 import io.github.berehum.teacupspro.show.reader.lines.StateShowFileLine;
 import io.github.berehum.teacupspro.show.reader.lines.TickShowFileLine;
-import io.github.berehum.teacupspro.show.reader.lines.type.ShowActionType;
 import io.github.berehum.teacupspro.utils.config.ConfigProblem;
 import io.github.berehum.teacupspro.utils.config.ConfigProblemDescriptions;
 import org.bukkit.ChatColor;
@@ -53,6 +53,7 @@ public class ShowFileReader {
         }
         IShowFileLine showFileLine;
         String[] args = line.split(" ");
+        if (args.length == 0) return null;
 
         final String time = args[0];
 
@@ -86,7 +87,7 @@ public class ShowFileReader {
             }
         }
 
-        final String command = args[0];
+        final String command = args[1];
 
         ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get(command);
         if (type == null) {
@@ -112,13 +113,6 @@ public class ShowFileReader {
 
     public static Map<String, List<ConfigProblem>> getConfigProblems() {
         return configProblems;
-    }
-
-    public static void addConfigProblems(String fileName, List<ConfigProblem> configProblemList) {
-        List<ConfigProblem> problems = configProblems.get(fileName);
-        if (problems == null) problems = new ArrayList<>();
-        problems.addAll(configProblemList);
-        configProblems.put(fileName, problems);
     }
 
     public static void addConfigProblem(String fileName, ConfigProblem configProblem) {

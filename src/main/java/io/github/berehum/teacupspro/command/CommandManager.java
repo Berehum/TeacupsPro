@@ -46,6 +46,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
                 new SpawnCommand(plugin, this),
                 new ReloadCommand(plugin, this),
                 new LockCommand(plugin, this),
+                new PlayerInputCommand(plugin, this),
                 new KickCommand(plugin, this),
                 new ActionCommand(plugin, this),
                 new ExecuteCommand(plugin, this),

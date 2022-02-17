@@ -1,12 +1,13 @@
-package io.github.berehum.teacupspro.show.reader.lines.type;
+package io.github.berehum.teacupspro.show.actions.type;
 
-import io.github.berehum.teacupspro.events.RegisterShowActionTypesEvent;
+import io.github.berehum.teacupspro.api.events.RegisterShowActionTypesEvent;
 import io.github.berehum.teacupspro.exceptions.ClashingActionTypesException;
 import io.github.berehum.teacupspro.show.actions.*;
 import io.github.berehum.teacupspro.show.actions.messageactions.ActionBarShowAction;
 import io.github.berehum.teacupspro.show.actions.messageactions.ChatShowAction;
 import org.bukkit.Bukkit;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -26,7 +27,9 @@ public class ShowActionTypeRegistry {
         try {
             register(new ShowActionType("rpm", new String[]{"setrpm"}, RpmShowAction::new));
             register(new ShowActionType("kick", new String[]{"kickall"}, KickShowAction::new));
-            register(new ShowActionType("lock", new String[0], LockShowAction::new));
+            register(new ShowActionType("lock", new String[]{"setlock", "locked"}, LockShowAction::new));
+            register(new ShowActionType("playerinput", new String[]{"steering", "input", "setplayerinput"},
+                    PlayerInputShowAction::new));
             register(new ShowActionType("console", new String[]{"cmd", "command"}, ConsoleShowAction::new));
             register(new ShowActionType("player", new String[]{"playercmd", "playercommand"}, PlayerShowAction::new));
             register(new ShowActionType("actionbar", new String[]{"bar"}, ActionBarShowAction::new));
@@ -49,6 +52,10 @@ public class ShowActionTypeRegistry {
         }
 
         typeSet.add(type);
+    }
+
+    public Set<ShowActionType> getTypeSet() {
+        return Collections.unmodifiableSet(typeSet);
     }
 
     public ShowActionType get(String string) {
