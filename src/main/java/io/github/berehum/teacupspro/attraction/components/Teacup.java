@@ -31,7 +31,9 @@ public class Teacup {
     private final String id;
 
     private final double radius;
-    private final double playerInputSensitivity;
+    private final int playerInputSensitivity;
+    private final int playerInputRpmLimit;
+
     private final Location location;
     private final Map<String, CartGroup> cartGroups = new HashMap<>();
 
@@ -59,7 +61,8 @@ public class Teacup {
                 config.getDouble("settings.location.z"));
 
         this.radius = config.getDouble("settings.radius");
-        this.playerInputSensitivity = config.getDouble("settings.player-input-sensitivity");
+        this.playerInputSensitivity = config.getInt("settings.player-input.sensitivity");
+        this.playerInputRpmLimit = config.getInt("settings.player-input.rpm-limit");
         this.autoStartDelay = config.getInt("settings.show.auto-start-delay");
         this.defaultShow = config.getString("settings.show.default-show");
 
@@ -251,15 +254,20 @@ public class Teacup {
     }
 
     public boolean acceptsPlayerInput() {
-        return locked;
+        return acceptPlayerInput;
     }
 
     public void setAcceptPlayerInput(boolean acceptPlayerInput) {
         if (this.acceptPlayerInput == acceptPlayerInput) return;
         this.acceptPlayerInput = acceptPlayerInput;
+        for (CartGroup cartGroup :getCartGroups().values()) {
+            for (Cart cart : cartGroup.getCarts().values()) {
+                cart.setAcceptPlayerInput(acceptPlayerInput, playerInputRpmLimit);
+            }
+        }
     }
 
-    public double getPlayerInputSensitivity() {
+    public int getPlayerInputSensitivity() {
         return playerInputSensitivity;
     }
 
@@ -283,4 +291,7 @@ public class Teacup {
         this.activeShow = activeShow;
     }
 
+    public double getPlayerInputRpmLimit() {
+        return playerInputRpmLimit;
+    }
 }

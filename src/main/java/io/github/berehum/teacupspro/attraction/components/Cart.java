@@ -17,6 +17,9 @@ public class Cart extends Component {
     private final SeatLayout seatLayout;
     private final List<Seat> seats;
 
+    private boolean acceptPlayerInput;
+    private int playerInputLimit;
+
     public Cart(String id, Location location, double radius, Model model, SeatLayout seatLayout) {
         super(id, location, radius, model, Collections.emptyMap());
         this.seatLayout = seatLayout;
@@ -61,6 +64,28 @@ public class Cart extends Component {
     public List<Seat> getSeats() {
         return seats;
     }
+
+    @Override
+    public void setRpm(int rpm) {
+        if (acceptPlayerInput) return;
+        super.setRpm(rpm);
+    }
+
+    public void setAcceptPlayerInput(boolean acceptPlayerInput, int limit) {
+        if (this.acceptPlayerInput == acceptPlayerInput) return;
+        this.acceptPlayerInput = acceptPlayerInput;
+        super.setRpm(0);
+    }
+
+    public boolean acceptsPlayerInput() {
+        return acceptPlayerInput;
+    }
+
+    public void addPlayerInput(int input) {
+        if (!acceptPlayerInput || getRpm() > playerInputLimit) return;
+        super.setRpm(getRpm() + input);
+    }
+
 
     @Override
     public void updateChildLocations() {

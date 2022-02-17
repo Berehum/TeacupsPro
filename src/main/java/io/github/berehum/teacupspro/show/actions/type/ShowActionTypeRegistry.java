@@ -27,7 +27,9 @@ public class ShowActionTypeRegistry {
         try {
             register(new ShowActionType("rpm", new String[]{"setrpm"}, RpmShowAction::new));
             register(new ShowActionType("kick", new String[]{"kickall"}, KickShowAction::new));
-            register(new ShowActionType("lock", new String[0], LockShowAction::new));
+            register(new ShowActionType("lock", new String[]{"setlock", "locked"}, LockShowAction::new));
+            register(new ShowActionType("playerinput", new String[]{"steering", "input", "setplayerinput"},
+                    PlayerInputShowAction::new));
             register(new ShowActionType("console", new String[]{"cmd", "command"}, ConsoleShowAction::new));
             register(new ShowActionType("player", new String[]{"playercmd", "playercommand"}, PlayerShowAction::new));
             register(new ShowActionType("actionbar", new String[]{"bar"}, ActionBarShowAction::new));

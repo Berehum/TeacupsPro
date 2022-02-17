@@ -88,7 +88,7 @@ public class PacketHandler {
                     });
                 }
 
-                /*
+
                 if (packet.getSideways() != 0) {
                     Teacup teacup = teacupsAPI.getTeacup(player).get();
                     Cart cart = teacupsAPI.getCart(player).get();
@@ -98,10 +98,15 @@ public class PacketHandler {
                     Bukkit.getScheduler().runTask(plugin, () -> {
                         Bukkit.getPluginManager().callEvent(playerSeatEvent);
                         if (playerSeatEvent.isCancelled()) return;
-                        cart.setRpm((int) (cart.getRpm() + teacup.getPlayerInputSensitivity() * playerSeatEvent.getSteerAmount()));
+
+                        if (playerSeatEvent.getSteerAmount() > 0) {
+                            cart.addPlayerInput(teacup.getPlayerInputSensitivity());
+                        } else {
+                            cart.addPlayerInput(teacup.getPlayerInputSensitivity() * -1);
+                        }
                     });
                 }
-                 */
+
 
             }
         });
