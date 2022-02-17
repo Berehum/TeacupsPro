@@ -26,6 +26,8 @@ public class PlayerInputShowAction implements IShowAction {
 
         try {
             playerinput = Boolean.parseBoolean(args[0]);
+            System.out.println(args[0]);
+            System.out.println(playerinput);
             loaded = true;
         } catch (Exception e) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
