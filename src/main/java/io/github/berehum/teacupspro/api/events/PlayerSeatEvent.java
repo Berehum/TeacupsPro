@@ -13,12 +13,14 @@ public class PlayerSeatEvent extends Event implements Cancellable {
     private final SeatAction seatAction;
     private final Seat seat;
     private final Player player;
+    private float steerAmount;
     private boolean cancelled = false;
 
-    public PlayerSeatEvent(SeatAction seatAction, Seat seat, Player player) {
+    public PlayerSeatEvent(SeatAction seatAction, Seat seat, Player player, float steerAmount) {
         this.seatAction = seatAction;
         this.seat = seat;
         this.player = player;
+        this.steerAmount = steerAmount;
     }
 
     public static HandlerList getHandlerList() {
@@ -43,6 +45,14 @@ public class PlayerSeatEvent extends Event implements Cancellable {
         return player;
     }
 
+    public float getSteerAmount() {
+        return steerAmount;
+    }
+
+    public void setSteerAmount(float steerAmount) {
+        this.steerAmount = steerAmount;
+    }
+
     @Override
     public boolean isCancelled() {
         return cancelled;
@@ -54,7 +64,7 @@ public class PlayerSeatEvent extends Event implements Cancellable {
     }
 
     public enum SeatAction {
-        ENTER, LEAVE
+        ENTER, LEAVE, STEER
     }
 
 }

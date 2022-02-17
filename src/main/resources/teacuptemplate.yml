@@ -5,6 +5,7 @@ settings:
     y: 5
     z: -60.5
   radius: 10
+  player-input-sensitivity: 0.5
   show:
     auto-start-delay: 15
     default-show: defaultshow

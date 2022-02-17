@@ -31,6 +31,7 @@ public class Teacup {
     private final String id;
 
     private final double radius;
+    private final double playerInputSensitivity;
     private final Location location;
     private final Map<String, CartGroup> cartGroups = new HashMap<>();
 
@@ -41,7 +42,10 @@ public class Teacup {
 
     private int rpm = 0;
     private double circleOffset = 0.0;
+
     private boolean locked = false;
+    private boolean acceptPlayerInput = false;
+
     private boolean commenceStart = false;
     private boolean active = false;
 
@@ -55,6 +59,7 @@ public class Teacup {
                 config.getDouble("settings.location.z"));
 
         this.radius = config.getDouble("settings.radius");
+        this.playerInputSensitivity = config.getDouble("settings.player-input-sensitivity");
         this.autoStartDelay = config.getInt("settings.show.auto-start-delay");
         this.defaultShow = config.getString("settings.show.default-show");
 
@@ -243,6 +248,19 @@ public class Teacup {
         if (this.locked == locked) return;
         this.locked = locked;
         getSeats().forEach(seat -> seat.setLocked(locked));
+    }
+
+    public boolean acceptsPlayerInput() {
+        return locked;
+    }
+
+    public void setAcceptPlayerInput(boolean acceptPlayerInput) {
+        if (this.acceptPlayerInput == acceptPlayerInput) return;
+        this.acceptPlayerInput = acceptPlayerInput;
+    }
+
+    public double getPlayerInputSensitivity() {
+        return playerInputSensitivity;
     }
 
     public void kickAll() {

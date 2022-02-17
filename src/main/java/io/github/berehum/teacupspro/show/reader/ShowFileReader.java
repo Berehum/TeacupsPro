@@ -53,6 +53,7 @@ public class ShowFileReader {
         }
         IShowFileLine showFileLine;
         String[] args = line.split(" ");
+        if (args.length == 0) return null;
 
         final String time = args[0];
 
@@ -86,7 +87,7 @@ public class ShowFileReader {
             }
         }
 
-        final String command = args[0];
+        final String command = args[1];
 
         ShowActionType type = TeacupsMain.getInstance().getShowActionTypes().get(command);
         if (type == null) {

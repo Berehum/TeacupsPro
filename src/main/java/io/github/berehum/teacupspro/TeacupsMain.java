@@ -9,6 +9,7 @@ import io.github.berehum.teacupspro.listeners.PlayerListener;
 import io.github.berehum.teacupspro.show.ShowManager;
 import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import io.github.berehum.teacupspro.utils.Version;
+import io.github.berehum.teacupspro.utils.config.CustomConfig;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +31,7 @@ public final class TeacupsMain extends JavaPlugin {
     private ShowManager showManager;
     private TeacupManager teacupManager;
     private PacketHandler packetHandler;
+    private TeacupsAPI teacupsAPI;
 
     private boolean placeholderApiEnabled = false;
 
@@ -51,7 +54,7 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        TeacupsAPI teacupsAPI = new TeacupsAPI(this);
+        teacupsAPI = new TeacupsAPI(this);
 
         try {
             getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
@@ -133,7 +136,8 @@ public final class TeacupsMain extends JavaPlugin {
     public void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
+        CustomConfig config = new CustomConfig(this, new File(getDataFolder().getAbsolutePath() + "/shows", "defaultshow.yml"));
+        config.saveDefaultConfig("defaultshow.yml");
     }
 
     public String format(Player player, String input) {
@@ -169,6 +173,10 @@ public final class TeacupsMain extends JavaPlugin {
 
     public ShowActionTypeRegistry getShowActionTypes() {
         return showActionTypeRegistry;
+    }
+
+    public TeacupsAPI getTeacupsAPI() {
+        return teacupsAPI;
     }
 
     public boolean isPlaceholderApiEnabled() {
