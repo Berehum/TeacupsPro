@@ -23,7 +23,12 @@ public class ShowActionTypeRegistry {
     }
 
     public void registerTypes() {
+        //Lol would this even work??? The other plugins depending on this one should load AFTER this one has been loaded.
+        //Meaning that they won't be able to listen for the event....
+
+        //just keeping this till version 2.0 to keep stuff from breaking (which is very unlikely if stuff is handled properly)
         Bukkit.getPluginManager().callEvent(new RegisterShowActionTypesEvent(this));
+
         try {
             register(new ShowActionType("rpm", new String[]{"setrpm"}, RpmShowAction::new));
             register(new ShowActionType("kick", new String[]{"kickall"}, KickShowAction::new));

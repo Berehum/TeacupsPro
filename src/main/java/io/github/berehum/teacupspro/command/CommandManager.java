@@ -25,7 +25,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
 
         this.bukkitAudiences = BukkitAudiences.create(plugin);
 
-        if (this.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
+        if (this.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
             this.registerBrigadier();
             final CloudBrigadierManager<?, ?> brigManager = this.brigadierManager();
             if (brigManager != null) {
@@ -37,7 +37,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
 
         registerExceptions();
 
-        if (this.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+        if (this.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
             this.registerAsynchronousCompletions();
         }
 
@@ -65,8 +65,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
                 .apply(this, this.bukkitAudiences::sender);
 
 
-        setCaptionRegistry(new TeacupCaptionRegistry<>());
-
+        captionRegistry(new TeacupCaptionRegistry<>());
     }
 
     public void registerSubcommand(UnaryOperator<Command.Builder<CommandSender>> builderModifier) {
@@ -74,7 +73,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
     }
 
     private Command.@NonNull Builder<CommandSender> rootBuilder() {
-        return this.commandBuilder("teacup", "Teacups")
+        return this.commandBuilder("teacup", "teacups")
                 .meta(CommandMeta.DESCRIPTION, "Teacups command. '/teacup help'");
     }
 

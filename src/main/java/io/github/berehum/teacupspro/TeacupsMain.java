@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 public final class TeacupsMain extends JavaPlugin {
 
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+    //beh stop static abuse -> it's fine in this instance because the instance is 'immutable'
     private static TeacupsMain instance;
     private ShowActionTypeRegistry showActionTypeRegistry;
 
@@ -40,6 +41,7 @@ public final class TeacupsMain extends JavaPlugin {
     }
 
     public static void setInstance(TeacupsMain instance) {
+        //Set new instance if there isn't an instance active.
         if (TeacupsMain.instance != null)
             throw new UnsupportedOperationException("Instance already exists");
         TeacupsMain.instance = instance;
@@ -47,6 +49,7 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        //Load the showactiontypes so that they can be used in the other classes
         showActionTypeRegistry = new ShowActionTypeRegistry(getLogger());
         showActionTypeRegistry.registerTypes();
     }
@@ -54,18 +57,18 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        teacupsAPI = new TeacupsAPI(this);
-
-        try {
-            getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         setInstance(this);
+
         loadConfig();
 
         calculateDependencies();
+
+        try {
+            new CommandManager(this);
+        } catch (Exception e) {
+            this.getLogger().log(Level.WARNING, "Failed to initialize command manager", e);
+            this.setEnabled(false);
+        }
 
         showManager = new ShowManager(this);
         showManager.init(true);
@@ -78,12 +81,14 @@ public final class TeacupsMain extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
+        teacupsAPI = new TeacupsAPI(this);
+
         try {
-            new CommandManager(this);
+            getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
         } catch (Exception e) {
-            this.getLogger().log(Level.WARNING, "Failed to initialize command manager", e);
-            this.setEnabled(false);
+            e.printStackTrace();
         }
+
     }
 
     private void calculateDependencies() {
@@ -127,9 +132,9 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        teacupManager.shutdown();
-        showManager.shutdown();
-        packetHandler.removePacketListeners();
+        if (teacupManager != null) teacupManager.shutdown();
+        if (showManager != null) showManager.shutdown();
+        if (packetHandler != null) packetHandler.removePacketListeners();
         loadConfig();
     }
 

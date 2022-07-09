@@ -64,9 +64,12 @@ public class PacketArmorStand {
 
         recipients.forEach(player -> sendTeleportPacket(player, location, entityId));
 
+        /*
+        //@todo fix
         if (mountedPlayer != null) {
             sendVehicleMovePacket(mountedPlayer, location);
         }
+         */
         this.location = location.clone();
     }
 

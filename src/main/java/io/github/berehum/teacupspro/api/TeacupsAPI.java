@@ -8,6 +8,7 @@ import io.github.berehum.teacupspro.attraction.components.armorstands.Seat;
 import io.github.berehum.teacupspro.exceptions.ClashingActionTypesException;
 import io.github.berehum.teacupspro.show.Show;
 import io.github.berehum.teacupspro.show.actions.type.ShowActionType;
+import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -31,6 +32,10 @@ public class TeacupsAPI {
 
     public Set<ShowActionType> getShowActions() {
         return plugin.getShowActionTypes().getTypeSet();
+    }
+
+    public ShowActionTypeRegistry getShowActionRegistry() {
+        return plugin.getShowActionTypes();
     }
 
     public Map<String, Teacup> getTeacups() {
