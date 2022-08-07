@@ -5,7 +5,6 @@ import io.github.berehum.teacupspro.attraction.components.armorstands.Seat;
 import io.github.berehum.teacupspro.utils.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -16,8 +15,7 @@ public abstract class Component {
     private final Map<String, Component> subComponents;
     private final double radius;
     private final boolean hasModel;
-    private final @Nullable
-    Model model;
+    private final Model model;
 
     private Location location;
     private int rpm = 0;

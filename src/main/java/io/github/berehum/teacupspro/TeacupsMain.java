@@ -10,6 +10,7 @@ import io.github.berehum.teacupspro.show.ShowManager;
 import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import io.github.berehum.teacupspro.utils.Version;
 import io.github.berehum.teacupspro.utils.config.CustomConfig;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +34,8 @@ public final class TeacupsMain extends JavaPlugin {
     private TeacupManager teacupManager;
     private PacketHandler packetHandler;
     private TeacupsAPI teacupsAPI;
+
+    private CommandManager commandManager;
 
     private boolean placeholderApiEnabled = false;
 
@@ -64,10 +67,11 @@ public final class TeacupsMain extends JavaPlugin {
         calculateDependencies();
 
         try {
-            new CommandManager(this);
+            commandManager = new CommandManager(this);
         } catch (Exception e) {
-            this.getLogger().log(Level.WARNING, "Failed to initialize command manager", e);
-            this.setEnabled(false);
+            this.getLogger().log(Level.WARNING, "Error whilst initializing command manager", e);
+            this.stop("failed to initialize command manager");
+            return;
         }
 
         showManager = new ShowManager(this);
@@ -76,12 +80,12 @@ public final class TeacupsMain extends JavaPlugin {
         teacupManager = new TeacupManager(this);
         teacupManager.init();
 
+        teacupsAPI = new TeacupsAPI(this);
+
         packetHandler = new PacketHandler(this);
         packetHandler.addPacketListeners();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
-
-        teacupsAPI = new TeacupsAPI(this);
 
         try {
             getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
@@ -95,8 +99,8 @@ public final class TeacupsMain extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         if (!pluginManager.isPluginEnabled("ProtocolLib")) {
-            this.getLogger().log(Level.WARNING, "Disabling plugin, ProtocolLib isn't enabled.");
-            this.setEnabled(false);
+            this.stop("ProtocolLib isn't enabled.");
+            return;
         }
 
         if (getConfig().getBoolean("check-protocollib-version")) {
@@ -122,8 +126,8 @@ public final class TeacupsMain extends JavaPlugin {
             }
 
             if (!valid) {
-                this.getLogger().log(Level.WARNING, String.format("Disabling plugin, invalid ProtocolLib version detected: %s.", protocolLibVersion));
-                this.setEnabled(false);
+                this.stop(String.format("invalid ProtocolLib version detected: %s.", protocolLibVersion));
+                return;
             }
         }
 
@@ -135,6 +139,12 @@ public final class TeacupsMain extends JavaPlugin {
         if (teacupManager != null) teacupManager.shutdown();
         if (showManager != null) showManager.shutdown();
         if (packetHandler != null) packetHandler.removePacketListeners();
+        if (commandManager != null) {
+            BukkitAudiences audiences = commandManager.getBukkitAudiences();
+            if (audiences != null) {
+                audiences.close();
+            }
+        }
         loadConfig();
     }
 
@@ -145,6 +155,11 @@ public final class TeacupsMain extends JavaPlugin {
         config.saveDefaultConfig("defaultshow.yml");
     }
 
+    public void stop(String reason) {
+        this.getLogger().log(Level.WARNING, "Disabling plugin; " + reason);
+        this.setEnabled(false);
+    }
+
     public String format(Player player, String input) {
         return format(player, true, input);
     }
@@ -153,7 +168,10 @@ public final class TeacupsMain extends JavaPlugin {
         if (placeholderApiEnabled) {
             input = PlaceholderApi.setPlaceholders(player, input);
         }
-        return color(input);
+        if (color) {
+            return color(input);
+        }
+        return input;
     }
 
     public String color(String input) {

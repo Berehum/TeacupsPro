@@ -65,16 +65,9 @@ public class Cart extends Component {
         return seats;
     }
 
-    @Override
-    public void setRpm(int rpm) {
-        if (acceptPlayerInput) return;
-        super.setRpm(rpm);
-    }
-
     public void setAcceptPlayerInput(boolean acceptPlayerInput, int playerInputRpmLimit) {
         if (this.acceptPlayerInput == acceptPlayerInput) return;
         this.acceptPlayerInput = acceptPlayerInput;
-        super.setRpm(0);
         if (acceptPlayerInput) {
             this.playerInputRpmLimit = playerInputRpmLimit;
         }

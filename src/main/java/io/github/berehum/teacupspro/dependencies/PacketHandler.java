@@ -24,16 +24,15 @@ import java.util.Optional;
 public class PacketHandler {
     private final TeacupsMain plugin;
     private final ProtocolManager manager;
-    private final TeacupsAPI teacupsAPI;
 
     public PacketHandler(TeacupsMain plugin) {
         this.plugin = plugin;
         manager = ProtocolLibrary.getProtocolManager();
-        teacupsAPI = plugin.getTeacupsAPI();
     }
 
     public void addPacketListeners() {
         final TeacupManager teacupManager = plugin.getTeacupManager();
+        final TeacupsAPI teacupsAPI = plugin.getTeacupsAPI();
 
         //Player click seat listener
         manager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.HIGH, PacketType.Play.Client.USE_ENTITY) {

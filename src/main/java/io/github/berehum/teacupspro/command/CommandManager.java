@@ -27,13 +27,12 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
 
         if (this.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
             this.registerBrigadier();
+
             final CloudBrigadierManager<?, ?> brigManager = this.brigadierManager();
             if (brigManager != null) {
                 brigManager.setNativeNumberSuggestions(false);
             }
         }
-
-        new TeacupCaptionRegistry<>();
 
         registerExceptions();
 
@@ -57,13 +56,8 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
 
     public void registerExceptions() {
         new MinecraftExceptionHandler<CommandSender>()
-                .withArgumentParsingHandler()
-                .withInvalidSenderHandler()
-                .withInvalidSyntaxHandler()
-                .withNoPermissionHandler()
-                .withCommandExecutionHandler()
-                .apply(this, this.bukkitAudiences::sender);
-
+                .withDefaultHandlers()
+                .apply(this, bukkitAudiences::sender);
 
         captionRegistry(new TeacupCaptionRegistry<>());
     }
