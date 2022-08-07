@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//@todo refactor this shit...
 public class SeatLayout {
     private final String layout;
     private final Map<Character, ItemStack> referenceMap = new HashMap<>();
@@ -28,7 +29,9 @@ public class SeatLayout {
     public static SeatLayout readFromConfig(ConfigurationSection section) {
         if (section == null) return null;
         String layout = section.getString("seatlayout");
-        if (layout == null || layout.isEmpty()) layout = "aaaa";
+        if (layout == null || layout.isEmpty()) {
+            return getDefault();
+        }
         SeatLayout seatLayout = new SeatLayout(layout);
         ConfigurationSection models = section.getConfigurationSection("models");
         if (models == null) {

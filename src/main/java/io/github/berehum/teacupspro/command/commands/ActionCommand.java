@@ -50,14 +50,14 @@ public class ActionCommand extends TeacupCommand {
         final Optional<Boolean> override = context.getOptional(OVERRIDE);
         final Optional<Show> show = context.getOptional("show");
 
-        if (!show.isPresent()) {
-            if (!teacup.start(plugin, override.orElse(Boolean.FALSE))) {
-                sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
+        if (show.isPresent()) {
+            if (!teacup.start(plugin, show.get(), override.orElse(Boolean.FALSE))) {
+                sender.sendMessage(ChatColor.RED + String.format("Starting teacup '%s' is not possible. Check the console for errors.", teacup.getId()));
                 return;
             }
         } else {
-            if (!teacup.start(plugin, show.get(), override.orElse(Boolean.FALSE))) {
-                sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't start teacup '%s'.", teacup.getId()));
+            if (!teacup.start(plugin, override.orElse(Boolean.FALSE))) {
+                sender.sendMessage(ChatColor.RED + String.format("Starting teacup '%s' is not possible. Check the console for errors.", teacup.getId()));
                 return;
             }
         }
@@ -70,7 +70,7 @@ public class ActionCommand extends TeacupCommand {
         final Optional<Boolean> override = context.getOptional(OVERRIDE);
 
         if (!teacup.stop(override.orElse(Boolean.FALSE))) {
-            sender.sendMessage(ChatColor.RED + String.format("Sorry, but couldn't stop teacup '%s'.", teacup.getId()));
+            sender.sendMessage(ChatColor.RED + String.format("Stopping teacup '%s' is not possible. Check the console for errors.", teacup.getId()));
             return;
         }
         sender.sendMessage(ChatColor.GREEN + String.format("Successfully stopped teacup '%s'.", teacup.getId()));

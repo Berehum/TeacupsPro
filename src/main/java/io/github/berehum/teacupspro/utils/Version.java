@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import java.util.List;
 
 public enum Version {
+    UNKNOWN,
     v1_8_R1,
     v1_8_R2,
     v1_8_R3,
@@ -21,14 +22,22 @@ public enum Version {
     v1_16_R2,
     v1_16_R3,
     v1_17_R1,
-    v1_18_R1;
+    v1_18_R1,
+    v1_18_R2,
+    v1_19_R1,
+    v1_19_R2;
 
     public static final Version Current;
 
     static {
         String[] split = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
         String version = split[split.length - 1];
-        Current = Version.valueOf(version);
+        Version current = Version.UNKNOWN;
+        try {
+            current = Version.valueOf(version);
+        } catch (IllegalArgumentException ignore) {
+        }
+        Current = current;
     }
 
     public static boolean onlyAllow(List<Version> versions) {

@@ -36,14 +36,13 @@ public class RpmShowAction implements IShowAction {
         switch (affect) {
             case "cup":
             case "teacup":
-                loadTeacup(filename, line, args);
-                break;
             case "group":
             case "cartgroup":
-                loadCartGroup(filename, line, args);
-                break;
+            case "groups":
+            case "cartgroups":
             case "cart":
-                loadCart(filename, line, args);
+            case "carts":
+                load2(filename, line, args);
                 break;
             default:
                 ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
@@ -52,40 +51,15 @@ public class RpmShowAction implements IShowAction {
         return loaded;
     }
 
-    private void loadTeacup(String filename, int line, String[] args) {
-        data = new String[0];
+    private void load2(String filename, int line, String[] args) {
+        int dataLength = args.length - 2;
+        data = new String[dataLength];
+        System.arraycopy(args, 1, data, 0, dataLength);
         try {
-            rpm = Integer.parseInt(args[1]);
+            rpm = Integer.parseInt(args[dataLength + 1]);
         } catch (Exception e) {
             ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription(args[1]), String.valueOf(line)));
-            return;
-        }
-        loaded = true;
-    }
-
-    private void loadCartGroup(String filename, int line, String[] args) {
-        data = new String[1];
-        data[0] = args[1];
-        try {
-            rpm = Integer.parseInt(args[2]);
-        } catch (Exception e) {
-            ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription(args[2]), String.valueOf(line)));
-            return;
-        }
-        loaded = true;
-    }
-
-    private void loadCart(String filename, int line, String[] args) {
-        data = new String[2];
-        data[0] = args[1];
-        data[1] = args[2];
-        try {
-            rpm = Integer.parseInt(args[3]);
-        } catch (Exception e) {
-            ShowFileReader.addConfigProblem(filename, new ConfigProblem(ConfigProblem.ConfigProblemType.ERROR,
-                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription(args[3]), String.valueOf(line)));
+                    ConfigProblemDescriptions.INVALID_ARGUMENT.getDescription(args[dataLength + 1]), String.valueOf(line)));
             return;
         }
         loaded = true;
@@ -97,13 +71,22 @@ public class RpmShowAction implements IShowAction {
 
         switch (affect) {
             case "teacup":
+            case "cup":
                 executeTeacup(teacup);
                 return;
             case "cartgroup":
+            case "group":
                 executeCartGroup(teacup);
                 return;
             case "cart":
                 executeCart(teacup);
+                return;
+            case "cartgroups":
+            case "groups":
+                executeCartGroups(teacup);
+                return;
+            case "carts":
+                executeCarts(teacup);
         }
     }
 
@@ -122,6 +105,13 @@ public class RpmShowAction implements IShowAction {
         if (cartGroup == null) return;
         Cart cart = cartGroup.getCarts().get(data[1]);
         cart.setRpm(rpm);
+    }
+
+    private void executeCartGroups(Teacup teacup) {
+        teacup.getCartGroups().values().forEach(group -> group.setRpm(rpm));
+    }
+    private void executeCarts(Teacup teacup) {
+        teacup.getCartGroups().values().forEach(group -> group.getCarts().values().forEach(cart -> cart.setRpm(rpm)));
     }
 
     @Override

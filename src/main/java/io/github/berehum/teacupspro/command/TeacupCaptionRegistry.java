@@ -1,8 +1,8 @@
 package io.github.berehum.teacupspro.command;
 
-import cloud.commandframework.captions.SimpleCaptionRegistry;
+import cloud.commandframework.bukkit.BukkitCaptionRegistry;
 
-public class TeacupCaptionRegistry<C> extends SimpleCaptionRegistry<C> {
+public class TeacupCaptionRegistry<C> extends BukkitCaptionRegistry<C> {
 
     /**
      * Default caption for {@link TeacupCaptionKeys#ARGUMENT_PARSE_FAILURE_TEACUP}

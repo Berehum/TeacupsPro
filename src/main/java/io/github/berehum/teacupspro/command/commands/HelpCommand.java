@@ -38,7 +38,8 @@ public class HelpCommand extends TeacupCommand {
 
     @Override
     public void register() {
-        final CommandHelpHandler<CommandSender> commandHelpHandler = this.commandManager.getCommandHelpHandler();
+        //used to suggest commands as arguments
+        final CommandHelpHandler<CommandSender> commandHelpHandler = this.commandManager.createCommandHelpHandler();
         final CommandArgument<CommandSender, String> helpQueryArgument = StringArgument.<CommandSender>newBuilder("query")
                 .greedy()
                 .asOptional()

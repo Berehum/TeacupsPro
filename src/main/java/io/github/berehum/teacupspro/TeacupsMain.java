@@ -10,6 +10,7 @@ import io.github.berehum.teacupspro.show.ShowManager;
 import io.github.berehum.teacupspro.show.actions.type.ShowActionTypeRegistry;
 import io.github.berehum.teacupspro.utils.Version;
 import io.github.berehum.teacupspro.utils.config.CustomConfig;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,6 +26,7 @@ import java.util.regex.Pattern;
 public final class TeacupsMain extends JavaPlugin {
 
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+    //beh stop static abuse -> it's fine in this instance because the instance is 'immutable'
     private static TeacupsMain instance;
     private ShowActionTypeRegistry showActionTypeRegistry;
 
@@ -33,6 +35,8 @@ public final class TeacupsMain extends JavaPlugin {
     private PacketHandler packetHandler;
     private TeacupsAPI teacupsAPI;
 
+    private CommandManager commandManager;
+
     private boolean placeholderApiEnabled = false;
 
     public static TeacupsMain getInstance() {
@@ -40,6 +44,7 @@ public final class TeacupsMain extends JavaPlugin {
     }
 
     public static void setInstance(TeacupsMain instance) {
+        //Set new instance if there isn't an instance active.
         if (TeacupsMain.instance != null)
             throw new UnsupportedOperationException("Instance already exists");
         TeacupsMain.instance = instance;
@@ -47,6 +52,7 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        //Load the showactiontypes so that they can be used in the other classes
         showActionTypeRegistry = new ShowActionTypeRegistry(getLogger());
         showActionTypeRegistry.registerTypes();
     }
@@ -54,18 +60,19 @@ public final class TeacupsMain extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        teacupsAPI = new TeacupsAPI(this);
-
-        try {
-            getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         setInstance(this);
+
         loadConfig();
 
         calculateDependencies();
+
+        try {
+            commandManager = new CommandManager(this);
+        } catch (Exception e) {
+            this.getLogger().log(Level.WARNING, "Error whilst initializing command manager", e);
+            this.stop("failed to initialize command manager");
+            return;
+        }
 
         showManager = new ShowManager(this);
         showManager.init(true);
@@ -73,25 +80,27 @@ public final class TeacupsMain extends JavaPlugin {
         teacupManager = new TeacupManager(this);
         teacupManager.init();
 
+        teacupsAPI = new TeacupsAPI(this);
+
         packetHandler = new PacketHandler(this);
         packetHandler.addPacketListeners();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
         try {
-            new CommandManager(this);
+            getServer().getServicesManager().register(TeacupsAPI.class, teacupsAPI, this, ServicePriority.Normal);
         } catch (Exception e) {
-            this.getLogger().log(Level.WARNING, "Failed to initialize command manager", e);
-            this.setEnabled(false);
+            e.printStackTrace();
         }
+
     }
 
     private void calculateDependencies() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         if (!pluginManager.isPluginEnabled("ProtocolLib")) {
-            this.getLogger().log(Level.WARNING, "Disabling plugin, ProtocolLib isn't enabled.");
-            this.setEnabled(false);
+            this.stop("ProtocolLib isn't enabled.");
+            return;
         }
 
         if (getConfig().getBoolean("check-protocollib-version")) {
@@ -117,8 +126,8 @@ public final class TeacupsMain extends JavaPlugin {
             }
 
             if (!valid) {
-                this.getLogger().log(Level.WARNING, String.format("Disabling plugin, invalid ProtocolLib version detected: %s.", protocolLibVersion));
-                this.setEnabled(false);
+                this.stop(String.format("invalid ProtocolLib version detected: %s.", protocolLibVersion));
+                return;
             }
         }
 
@@ -127,9 +136,15 @@ public final class TeacupsMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        teacupManager.shutdown();
-        showManager.shutdown();
-        packetHandler.removePacketListeners();
+        if (teacupManager != null) teacupManager.shutdown();
+        if (showManager != null) showManager.shutdown();
+        if (packetHandler != null) packetHandler.removePacketListeners();
+        if (commandManager != null) {
+            BukkitAudiences audiences = commandManager.getBukkitAudiences();
+            if (audiences != null) {
+                audiences.close();
+            }
+        }
         loadConfig();
     }
 
@@ -140,6 +155,11 @@ public final class TeacupsMain extends JavaPlugin {
         config.saveDefaultConfig("defaultshow.yml");
     }
 
+    public void stop(String reason) {
+        this.getLogger().log(Level.WARNING, "Disabling plugin; " + reason);
+        this.setEnabled(false);
+    }
+
     public String format(Player player, String input) {
         return format(player, true, input);
     }
@@ -148,7 +168,10 @@ public final class TeacupsMain extends JavaPlugin {
         if (placeholderApiEnabled) {
             input = PlaceholderApi.setPlaceholders(player, input);
         }
-        return color(input);
+        if (color) {
+            return color(input);
+        }
+        return input;
     }
 
     public String color(String input) {

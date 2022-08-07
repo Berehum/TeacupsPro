@@ -5,6 +5,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+
+/**
+ * @deprecated Useless event -> is called whenever your plugin shouldn't be loaded.
+ * Register your show actions in the onLoad method of your plugin using the TeacupsAPI class.
+ */
 public class RegisterShowActionTypesEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final ShowActionTypeRegistry showActionTypeRegistry;

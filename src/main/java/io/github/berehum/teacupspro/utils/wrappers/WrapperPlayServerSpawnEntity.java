@@ -7,11 +7,15 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.PacketConstructor;
 import com.comphenix.protocol.reflect.IntEnum;
+import io.github.berehum.teacupspro.utils.Version;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class WrapperPlayServerSpawnEntity extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.SPAWN_ENTITY;
@@ -208,13 +212,26 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
         handle.getIntegers().write(3, (int) (value * 8000.0D));
     }
 
+
+    /* Be aware of changes that happened in 1.19
+     * https://bugs.mojang.com/browse/MC-176621
+     *
+     * Instead of using integers for head rotation (pitch, yaw)
+     * Minecraft now uses bytes directly
+     */
+
     /**
      * Retrieve the pitch.
      *
      * @return The current pitch.
      */
     public float getPitch() {
-        return (handle.getIntegers().read(4) * 360.F) / 256.0F;
+        //@todo replace the check with an abstraction to lower cpu usage lmao
+        //or protocollib could do cool stuff
+        if (Version.Current.isLower(Version.v1_19_R1)) {
+            return (handle.getIntegers().read(4) * 360.F) / 256.0F;
+        }
+        return (handle.getBytes().read(0) * 360.F) / 256.0F;
     }
 
     /**
@@ -223,7 +240,11 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
      * @param value - new pitch.
      */
     public void setPitch(float value) {
-        handle.getIntegers().write(4, (int) (value * 256.0F / 360.0F));
+        if (Version.Current.isLower(Version.v1_19_R1)) {
+            handle.getIntegers().write(4, (int) (value * 256.0F / 360.0F));
+            return;
+        }
+        handle.getBytes().write(0, (byte) (value * 256.0F / 360.0F));
     }
 
     /**
@@ -232,7 +253,10 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
      * @return The current Yaw
      */
     public float getYaw() {
-        return (handle.getIntegers().read(5) * 360.F) / 256.0F;
+        if (Version.Current.isLower(Version.v1_19_R1)) {
+            return (handle.getIntegers().read(5) * 360.F) / 256.0F;
+        }
+        return (handle.getBytes().read(1) * 360.F) / 256.0F;
     }
 
     /**
@@ -241,7 +265,11 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
      * @param value - new yaw.
      */
     public void setYaw(float value) {
-        handle.getIntegers().write(5, (int) (value * 256.0F / 360.0F));
+        if (Version.Current.isLower(Version.v1_19_R1)) {
+            handle.getIntegers().write(5, (int) (value * 256.0F / 360.0F));
+            return;
+        }
+        handle.getBytes().write(1, (byte) (value * 256.0F / 360.0F));
     }
 
     /**
@@ -347,7 +375,7 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
         /**
          * The singleton instance. Can also be retrieved from the parent class.
          */
-        private static ObjectTypes INSTANCE = new ObjectTypes();
+        private static final ObjectTypes INSTANCE = new ObjectTypes();
 
         /**
          * Retrieve an instance of the object types enum.

@@ -11,7 +11,6 @@ import java.util.logging.Level;
 
 public class CustomConfig {
     private final JavaPlugin plugin;
-    private final String name;
     private final File file;
     private FileConfiguration configuration;
 
@@ -21,7 +20,6 @@ public class CustomConfig {
 
     public CustomConfig(JavaPlugin plugin, File file) {
         this.plugin = plugin;
-        this.name = file.getName();
         this.file = file;
     }
 
@@ -50,7 +48,7 @@ public class CustomConfig {
     }
 
     public void saveDefaultConfig() {
-        saveDefaultConfig(name);
+        saveDefaultConfig(file.getName());
     }
 
     public void saveDefaultConfig(String resourcePath) {

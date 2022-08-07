@@ -47,8 +47,8 @@ public class ShowFileReader {
 
     //START rpm teacup cartgroup cart 100
     private static IShowFileLine getShowFileLine(String fileName, int lineNo, String line) {
-        //skip empty lines
-        if (line.isEmpty()) {
+        //skip empty lines and comments
+        if (line.isEmpty() || line.startsWith("#")) {
             return null;
         }
         IShowFileLine showFileLine;
@@ -56,11 +56,6 @@ public class ShowFileReader {
         if (args.length == 0) return null;
 
         final String time = args[0];
-
-        //allow comments with #
-        if (time.startsWith("#")) {
-            return null;
-        }
 
         boolean isTickLine = true;
 
